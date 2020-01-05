@@ -27,7 +27,13 @@ router.get('/add', function (req, res) {
 
 	let ingredient = req.query.ingredient;
 	let contents = fs.readFileSync(ingredientsFilename, 'utf-8');
-	let json = JSON.parse(contents);
+    let json = JSON.parse(contents);
+    
+    if (!ingredient) {
+        response = error('No ingredient specified');
+        res.status(errorCode).send(response).json();
+        return;
+    }
 
 	json['ingredients'].push(ingredient);
 
@@ -50,7 +56,9 @@ router.get('/delete', function (req, res) {
 	let contents = fs.readFileSync(ingredientsFilename, 'utf-8');
     let json = JSON.parse(contents)['ingredients'];
     
+    console.log(ingredient)
     if (json[ingredient] === undefined) {
+        console.log('got undef')
         response = notFound(`Could not find '${ingredient}' to delete`);
         res.status(notFoundCode).send(response);
         return;
@@ -62,7 +70,8 @@ router.get('/delete', function (req, res) {
 
 	fs.writeFileSync(ingredientsFilename, JSON.stringify(json)), 'utf-8';
 
-	res.status(successCode).send('OK');
+    response = success('Success')
+	res.status(successCode).send(response);
 });
 
 function success(message) {
