@@ -11,6 +11,11 @@ router.get('/', function (req, res) {
     res.status(successCode).send('OK');
 });
 
+router.get('/:name', function (req, res) {
+	let recipeName = req.params.name;
+    res.status(successCode).send('OK');
+});
+
 router.get('/add', function (req, res) {
     res.status(successCode).send('OK');
 });

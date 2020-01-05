@@ -3,6 +3,7 @@ var app = express();
 var bodyParser = require('body-parser')
 
 var ingredientsRoutes = require('./routes/ingredients-routes')
+var recipeRoutes = require('./routes/recipe-routes')
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -12,6 +13,7 @@ app.get('/', function (req, res) {
 });
 
 app.use('/ingredients', ingredientsRoutes);
+app.use('/recipes', recipeRoutes);
 
 var port = 3001;
 app.listen(port, function () { });
