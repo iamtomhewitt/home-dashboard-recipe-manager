@@ -1,6 +1,6 @@
 # Home Dashboard Recipe Manager
 
-A Node Express app for managing recipes and ingredients for my [home dashboard](github.com/iamtomhewitt/home-dashboard).
+A Node Express app for managing recipes and ingredients for my [home dashboard](https://github.com/iamtomhewitt/home-dashboard).
 
 ## Endpoints
 
