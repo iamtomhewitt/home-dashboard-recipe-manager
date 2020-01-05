@@ -25,21 +25,27 @@ router.get('/add', function (req, res) {
 		return;
 	}
 
-	let ingredient = req.query.ingredient;
+	let name = req.query.name;
+	let type = req.query.type;
 	let contents = fs.readFileSync(ingredientsFilename, 'utf-8');
     let json = JSON.parse(contents);
     
-    if (!ingredient) {
-        response = error('No ingredient specified');
+    if (!name || !type) {
+        response = error('Missing parameter from request query');
         res.status(errorCode).send(response).json();
         return;
     }
+
+	let ingredient = {
+		"name": name,
+		"type": type
+	}
 
 	json['ingredients'].push(ingredient);
 
 	fs.writeFileSync(ingredientsFilename, JSON.stringify(json)), 'utf-8';
 
-	response = success("'" + ingredient + "' successfully added");
+	response = success("'" + name + "' successfully added");
 	res.status(successCode).send(response);
 });
 

@@ -9,17 +9,21 @@ A Node Express app for managing recipes and ingredients for my [home dashboard](
 * `200 success`
 ```json
 {
-    "ingredients": [
-        "onion",
-        "peppers",
-        "tomato puree",
-        "etc..."
-    ]
+	"ingredients": [
+		{
+			"name": "pepper",
+			"type": "vegetable"
+		},
+		{
+			"name": "chicken",
+			"type": "meat"
+		}
+	]
 }
 ```
 
 ### `/ingredients/add`
-* Adds a new ingredient using the name specified in the query parameter
+* Adds a new ingredient using the name and type specified in the query parameter
 * `200 success`
 ```json
 {
