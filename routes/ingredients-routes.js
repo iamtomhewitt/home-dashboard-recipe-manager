@@ -58,21 +58,16 @@ router.get('/delete', function (req, res) {
 		return;
 	}
 
-	let ingredient = req.query.ingredient;
+	let name = req.query.name;
 	let contents = fs.readFileSync(ingredientsFilename, 'utf-8');
-    let json = JSON.parse(contents)['ingredients'];
+    let ingredients = JSON.parse(contents)['ingredients'];
     
-    console.log(ingredient)
-    if (json[ingredient] === undefined) {
-        console.log('got undef')
-        response = notFound(`Could not find '${ingredient}' to delete`);
-        res.status(notFoundCode).send(response);
-        return;
-    }
+	const index = ingredients.findIndex(x => x.name === name);
+	if (index !== undefined) ingredients.splice(index, 1);
 
-    let index = json.indexOf(ingredient);
-
-	json.splice(index, 1);
+	let json = {
+		"ingredients": ingredients
+	}
 
 	fs.writeFileSync(ingredientsFilename, JSON.stringify(json)), 'utf-8';
 
