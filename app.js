@@ -16,7 +16,7 @@ app.use('/ingredients', ingredientsRoutes);
 app.use('/recipes', recipeRoutes);
 
 var port = 3001;
-app.listen(port, function () { });
+app.listen(process.env.PORT || port, function () { });
 
 console.log("Listening on port: " + port);
 
