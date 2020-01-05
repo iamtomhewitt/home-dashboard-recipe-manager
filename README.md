@@ -153,3 +153,5 @@ A Node Express app for managing recipes and ingredients for my [home dashboard](
     "message": "<recipe> not found"
 }
 ```
+
+URL: https://home-dashboard-recipe-manager.herokuapp.com/ingredients
