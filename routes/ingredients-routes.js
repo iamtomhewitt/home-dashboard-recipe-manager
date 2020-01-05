@@ -61,8 +61,15 @@ router.get('/delete', function (req, res) {
 	let name = req.query.name;
 	let contents = fs.readFileSync(ingredientsFilename, 'utf-8');
     let ingredients = JSON.parse(contents)['ingredients'];
-    
+	
 	const index = ingredients.findIndex(x => x.name === name);
+	
+	if (index === -1) {
+		response = notFound(`${name} not found`)
+		res.status(notFoundCode).send(response);
+		return;
+	}
+
 	if (index !== undefined) ingredients.splice(index, 1);
 
 	let json = {
