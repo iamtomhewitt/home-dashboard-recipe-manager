@@ -4,7 +4,7 @@ A Node Express app for managing recipes and ingredients for my [home dashboard](
 
 ## Endpoints
 
-### `/ingredients`
+### `/ingredients (GET)`
 * Returns all the stored ingredients
 * `200 success`
 ```json
@@ -26,7 +26,7 @@ A Node Express app for managing recipes and ingredients for my [home dashboard](
 }
 ```
 
-### `/ingredients/add`
+### `/ingredients/add (GET)`
 * Adds a new ingredient using the name and type specified in the query parameter
 * `200 success`
 ```json
@@ -43,7 +43,7 @@ A Node Express app for managing recipes and ingredients for my [home dashboard](
 }
 ```
 
-### `/ingredients/delete`
+### `/ingredients/delete (GET)`
 * Deletes an ingredient using the name specified in the query parameter.
 * `200 success`
 ```json
@@ -68,7 +68,7 @@ A Node Express app for managing recipes and ingredients for my [home dashboard](
 ```
 
 
-### `/recipes`
+### `/recipes (GET)`
 * Returns all the stored recipe names we currently have.
 * `200 success`
 ```json
@@ -99,8 +99,8 @@ A Node Express app for managing recipes and ingredients for my [home dashboard](
 
 * Specifying a name parameter returns a single recipe `/recipes?name=Pasta Bake`
 
-### `/recipes/add`
-* Adds a new recipe using the name specified in the query parameter.
+### `/recipes/add (POST)`
+* Adds a new recipe using the name specified in the JSON payload.
 * The ingredients, and their amounts should be sent in the JSON payload.
 * `200 success`
 ```json
@@ -118,7 +118,7 @@ A Node Express app for managing recipes and ingredients for my [home dashboard](
 }
 ```
 
-### `/recipes/delete`
+### `/recipes/delete (GET)`
 * Deletes a recipe using the name specified in the query parameter.
 * `200 success`
 ```json
