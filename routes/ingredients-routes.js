@@ -1,119 +1,120 @@
-var express = require('express')
-var fs = require('fs');
-var path = require('path')
-var router = express.Router();
+const express = require('express');
+const fs = require('fs');
+const path = require('path');
 
-var successCode = 200;
-var errorCode = 502;
-var notFoundCode = 404;
+const router = express.Router();
 
-var ingredientsFilename = path.join(__dirname, '..', 'data', 'ingredients.json');
+const successCode = 200;
+const errorCode = 502;
+const notFoundCode = 404;
 
-router.get('/', function (req, res) {
-	let response;
+const ingredientsFilename = path.join(__dirname, '..', 'data', 'ingredients.json');
 
-	if (!fs.existsSync(ingredientsFilename)) {
-		response = error(`Could not get ingredients: ${ingredientsFilename} does not exist`);
-		res.status(errorCode).send(response).json();
-		return;
-	}
+function success(message) {
+    return {
+        status: successCode,
+        message,
+    };
+}
 
-	let contents = fs.readFileSync(ingredientsFilename, 'utf-8');
-	response = success('Success')
-	response['ingredients'] = JSON.parse(contents)['ingredients'];
-	res.status(successCode).send(response);
+function error(message) {
+    return {
+        status: errorCode,
+        message,
+    };
+}
+
+function notFound(message) {
+    return {
+        status: notFoundCode,
+        message,
+    };
+}
+
+router.get('/', (req, res) => {
+    let response;
+
+    if (!fs.existsSync(ingredientsFilename)) {
+        response = error(`Could not get ingredients: ${ingredientsFilename} does not exist`);
+        res.status(errorCode).send(response).json();
+        return;
+    }
+
+    const contents = fs.readFileSync(ingredientsFilename, 'utf-8');
+    response = success('Success');
+    response.ingredients = JSON.parse(contents).ingredients;
+    res.status(successCode).send(response);
 });
 
-router.post('/add', function (req, res) {
-	let response;
+router.post('/add', (req, res) => {
+    let response;
 
-	if (!fs.existsSync(ingredientsFilename)) {
-		response = error(`${ingredientsFilename} does not exist`);
-		res.status(errorCode).send(response).json();
-		return;
-	}
+    if (!fs.existsSync(ingredientsFilename)) {
+        response = error(`${ingredientsFilename} does not exist`);
+        res.status(errorCode).send(response).json();
+        return;
+    }
 
-	let name = req.body.name;
-	let type = req.body.type;
-	let contents = fs.readFileSync(ingredientsFilename, 'utf-8');
-    let json = JSON.parse(contents);
-    
+    const { name } = req.body;
+    const { type } = req.body;
+    const contents = fs.readFileSync(ingredientsFilename, 'utf-8');
+    const json = JSON.parse(contents);
+
     if (!name || !type) {
         response = error(`${name} could not be added: Missing 'name' or 'type' parameter from JSON payload`);
         res.status(errorCode).send(response).json();
         return;
     }
 
-	let ingredient = {
-		"name": name,
-		"type": type
-	}
+    const ingredient = {
+        name,
+        type,
+    };
 
-	json['ingredients'].push(ingredient);
+    json.ingredients.push(ingredient);
 
-	fs.writeFileSync(ingredientsFilename, JSON.stringify(json)), 'utf-8';
+    fs.writeFileSync(ingredientsFilename, JSON.stringify(json)), 'utf-8';
 
-	response = success(`${name} successfully added`);
-	res.status(successCode).send(response);
+    response = success(`${name} successfully added`);
+    res.status(successCode).send(response);
 });
 
-router.delete('/delete', function (req, res) {
-	let response;
+router.delete('/delete', (req, res) => {
+    let response;
 
-	if (!fs.existsSync(ingredientsFilename)) {
-		response = error(`Could not delete ingredient: ${ingredientsFilename} does not exist`);
-		res.status(errorCode).send(response).json();
-		return;
-	}
-
-	let name = req.body.name;
-	if (!name) {
-        response = error(`Could not delete ingredient: Missing 'name' parameter from JSON payload`);
+    if (!fs.existsSync(ingredientsFilename)) {
+        response = error(`Could not delete ingredient: ${ingredientsFilename} does not exist`);
         res.status(errorCode).send(response).json();
         return;
-	}
-	
-	let contents = fs.readFileSync(ingredientsFilename, 'utf-8');
-    let ingredients = JSON.parse(contents)['ingredients'];
-	
-	const index = ingredients.findIndex(x => x.name === name);
-	if (index === -1) {
-		response = notFound(`Could not delete ingredient: '${name}' not found`)
-		res.status(notFoundCode).send(response);
-		return;
-	}
+    }
 
-	if (index !== undefined) ingredients.splice(index, 1);
+    const { name } = req.body;
+    if (!name) {
+        response = error('Could not delete ingredient: Missing \'name\' parameter from JSON payload');
+        res.status(errorCode).send(response).json();
+        return;
+    }
 
-	let json = {
-		"ingredients": ingredients
-	}
+    const contents = fs.readFileSync(ingredientsFilename, 'utf-8');
+    const { ingredients } = JSON.parse(contents);
 
-	fs.writeFileSync(ingredientsFilename, JSON.stringify(json)), 'utf-8';
+    const index = ingredients.findIndex((x) => x.name === name);
+    if (index === -1) {
+        response = notFound(`Could not delete ingredient: '${name}' not found`);
+        res.status(notFoundCode).send(response);
+        return;
+    }
 
-    response = success('Success')
-	res.status(successCode).send(response);
+    if (index !== undefined) ingredients.splice(index, 1);
+
+    const json = {
+        ingredients,
+    };
+
+    fs.writeFileSync(ingredientsFilename, JSON.stringify(json)), 'utf-8';
+
+    response = success('Success');
+    res.status(successCode).send(response);
 });
-
-function success(message) {
-	return response = {
-		"status": successCode,
-		"message": message
-	}
-}
-
-function error(message) {
-	return response = {
-		"status": errorCode,
-		"message": message
-	}
-}
-
-function notFound(message) {
-	return response = {
-		"status": notFoundCode,
-		"message": message
-	}
-}
 
 module.exports = router;
