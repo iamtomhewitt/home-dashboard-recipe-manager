@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', function (req, res) {
-    res.status(200).send('SERVER OK');
+    res.status(200).send('Recipe manager is up and running!');
 });
 
 app.use('/ingredients', ingredientsRoutes);
