@@ -1,57 +1,57 @@
-var request = require('supertest');
+const request = require('supertest');
 
-describe('Planner route tests', function () {
-	var server;
-	
-	before(function () {
-		server = require('../app').listen(3002);
-	});
+describe('Planner route tests', () => {
+    let server;
 
-	after(function () {
-		server.close();
-	});
+    before(() => {
+        server = require('../app').listen(3002);
+    });
 
-	it('/planner should give 200', function test(done) {
-		request(server)
-			.get('/planner')
-			.expect(200, done);
-	});
+    after(() => {
+        server.close();
+    });
 
-	it('/planner?day=Monday should give 200', function test(done) {
-		request(server)
-			.get('/planner?day=Monday')
-			.expect(200, done);
-	});
+    it('/planner should give 200', (done) => {
+        request(server)
+            .get('/planner')
+            .expect(200, done);
+    });
 
-	it('/planner?day=invalid should give 502', function test(done) {
-		request(server)
-			.get('/planner?day=invalid')
-			.expect(502, done);
-	});
+    it('/planner?day=Monday should give 200', (done) => {
+        request(server)
+            .get('/planner?day=Monday')
+            .expect(200, done);
+    });
 
-	it('/planner/add with JSON payload should give 200', function test(done) {
-		request(server)
-			.post('/planner/add')
-			.send({
-					"day": "Monday",
-					"recipe": "Some recipe"
-				})
-			.expect(200, done);
-	});
+    it('/planner?day=invalid should give 502', (done) => {
+        request(server)
+            .get('/planner?day=invalid')
+            .expect(502, done);
+    });
 
-	it('/planner/add should give 502', function test(done) {
-		request(server)
-			.post('/planner/add')
-			.expect(502, done);
-	});
+    it('/planner/add with JSON payload should give 200', (done) => {
+        request(server)
+            .post('/planner/add')
+            .send({
+                day: 'Monday',
+                recipe: 'Some recipe',
+            })
+            .expect(200, done);
+    });
 
-	it('/planner/add with JSON payload and incorrect day should give 502', function test(done) {
-		request(server)
-			.post('/planner/add')
-			.send({
-					"day": "MadeupDay",
-					"recipe": "Some recipe"
-				})
-			.expect(502, done);
-	});
+    it('/planner/add should give 502', (done) => {
+        request(server)
+            .post('/planner/add')
+            .expect(502, done);
+    });
+
+    it('/planner/add with JSON payload and incorrect day should give 502', (done) => {
+        request(server)
+            .post('/planner/add')
+            .send({
+                day: 'MadeupDay',
+                recipe: 'Some recipe',
+            })
+            .expect(502, done);
+    });
 });

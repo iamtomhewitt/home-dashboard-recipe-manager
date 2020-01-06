@@ -1,15 +1,16 @@
-var express = require('express');
-var app = express();
-var bodyParser = require('body-parser')
+const express = require('express');
 
-var ingredientsRoutes = require('./routes/ingredients-routes')
-var recipeRoutes = require('./routes/recipe-routes')
-var plannerRoutes = require('./routes/planner-routes')
+const app = express();
+const bodyParser = require('body-parser');
+
+const ingredientsRoutes = require('./routes/ingredients-routes');
+const recipeRoutes = require('./routes/recipe-routes');
+const plannerRoutes = require('./routes/planner-routes');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/', function (req, res) {
+app.get('/', (req, res) => {
     res.status(200).send('Recipe manager is up and running!');
 });
 
@@ -17,9 +18,7 @@ app.use('/ingredients', ingredientsRoutes);
 app.use('/recipes', recipeRoutes);
 app.use('/planner', plannerRoutes);
 
-var port = 3001;
-app.listen(process.env.PORT || port, function () { });
-
-console.log("Listening on port: " + port);
+const port = 3001;
+app.listen(process.env.PORT || port, () => { });
 
 module.exports = app;
