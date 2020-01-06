@@ -13,7 +13,7 @@ router.get('/', function (req, res) {
 	let day = req.query.day;
 
 	if (!fs.existsSync(plannerFilename)) {
-		response = error(`${plannerFilename} does not exist`);
+		response = error(`Could not get planner: ${plannerFilename} does not exist`);
 		res.status(errorCode).send(response).json();
 		return;
 	}
@@ -26,7 +26,7 @@ router.get('/', function (req, res) {
 		const found = days.find(x => x.day === day);
 		
 		if (!found) {
-			response = error(`${day} not a valid day`)
+			response = error(`Could not get planner: ${day} not a valid day`)
 			res.status(errorCode).send(response);
 			return;
 		}
@@ -67,7 +67,7 @@ router.post('/add', function (req, res) {
 	const foundDay = days.find(x => x.day === day);
 		
 	if (!foundDay) {
-		response = error(`${day} not a valid day`)
+		response = error(`Planner could not be updated: ${day} not a valid day`)
 		res.status(errorCode).send(response);
 		return;
 	}
