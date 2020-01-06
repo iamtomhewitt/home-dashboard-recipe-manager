@@ -19,13 +19,17 @@ describe('Ingredient route tests', function () {
 
 	it('/ingredients/add?name=pepper&type=vegetable should give 200', function test(done) {
 		request(server)
-			.get('/ingredients/add?name=pepper&type=vegetable')
+			.post('/ingredients/add')
+			.send({
+				"name": "pepper",
+				"type": "vegetable"
+			})
 			.expect(200, done);
 	});
 
 	it('/ingredients/add should give 502', function test(done) {
 		request(server)
-			.get('/ingredients/add')
+			.post('/ingredients/add')
 			.expect(502, done);
 	});
 
