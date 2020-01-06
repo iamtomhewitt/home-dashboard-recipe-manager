@@ -73,20 +73,6 @@ A Node Express app for managing recipes and ingredients for my [home dashboard](
 * `200 success`
 ```json
 {
-    "recipes": [
-        "Pasta Bake",
-        "Burgers",
-        "Thai Chicken",
-        "etc..."
-    ]
-}
-```
-
-### `/recipes/<recipe name>`
-* Returns the recipe identified by the name along with the ingredients and amounts
-* `200 success`
-```json
-{
     "recipe": {
         "name": "Pasta Bake",
         "ingredients": [
@@ -110,6 +96,8 @@ A Node Express app for managing recipes and ingredients for my [home dashboard](
     }
 }
 ```
+
+* Specifying a name parameter returns a single recipe `/recipes?name=Pasta Bake`
 
 ### `/recipes/add`
 * Adds a new recipe using the name specified in the query parameter.
