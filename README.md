@@ -49,8 +49,8 @@ A Node Express app for managing recipes and ingredients for my [home dashboard](
 }
 ```
 
-### `/ingredients/delete (GET)`
-* Deletes an ingredient using the name specified in the query parameter.
+### `/ingredients/delete (DELETE)`
+* Deletes an ingredient using the name specified in the JSON payload.
 * `200 success`
 ```json
 {
@@ -124,8 +124,8 @@ A Node Express app for managing recipes and ingredients for my [home dashboard](
 }
 ```
 
-### `/recipes/delete (GET)`
-* Deletes a recipe using the name specified in the query parameter.
+### `/recipes/delete (DELETE)`
+* Deletes a recipe using the name specified in the JSON payload.
 * `200 success`
 ```json
 {
