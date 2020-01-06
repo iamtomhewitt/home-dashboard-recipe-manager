@@ -39,7 +39,7 @@ router.post('/add', function (req, res) {
     let json = JSON.parse(contents);
     
     if (!name || !type) {
-        response = error(`${name} could not be added: Missing parameter from request query`);
+        response = error(`${name} could not be added: Missing 'name' or 'type' parameter from JSON payload`);
         res.status(errorCode).send(response).json();
         return;
     }
@@ -57,7 +57,7 @@ router.post('/add', function (req, res) {
 	res.status(successCode).send(response);
 });
 
-router.get('/delete', function (req, res) {
+router.delete('/delete', function (req, res) {
 	let response;
 
 	if (!fs.existsSync(ingredientsFilename)) {
@@ -66,14 +66,19 @@ router.get('/delete', function (req, res) {
 		return;
 	}
 
-	let name = req.query.name;
+	let name = req.body.name;
+	if (!name) {
+        response = error(`Could not delete ingredient: Missing 'name' parameter from JSON payload`);
+        res.status(errorCode).send(response).json();
+        return;
+	}
+	
 	let contents = fs.readFileSync(ingredientsFilename, 'utf-8');
     let ingredients = JSON.parse(contents)['ingredients'];
 	
 	const index = ingredients.findIndex(x => x.name === name);
-	
 	if (index === -1) {
-		response = notFound(`Could not delete ingredient: ${name} not found`)
+		response = notFound(`Could not delete ingredient: '${name}' not found`)
 		res.status(notFoundCode).send(response);
 		return;
 	}

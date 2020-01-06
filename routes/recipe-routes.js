@@ -68,7 +68,7 @@ router.post('/add', function (req, res) {
 	res.status(successCode).send(response);
 });
 
-router.get('/delete', function (req, res) {
+router.delete('/delete', function (req, res) {
 	let response;
 
 	if (!fs.existsSync(recipesFilename)) {
@@ -77,14 +77,14 @@ router.get('/delete', function (req, res) {
 		return;
 	}
 
-	let name = req.query.name;
+	let name = req.body.name;
 	let contents = fs.readFileSync(recipesFilename, 'utf-8');
     let recipes = JSON.parse(contents)['recipes'];
 	
 	const index = recipes.findIndex(x => x.name === name);
 	
 	if (index === -1) {
-		response = notFound(`${name} not found`)
+		response = notFound(`Could not delete recipe: '${name}' not found`);
 		res.status(notFoundCode).send(response);
 		return;
 	}
