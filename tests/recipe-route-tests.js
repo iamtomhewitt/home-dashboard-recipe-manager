@@ -17,7 +17,7 @@ describe('Recipe route tests', function () {
 			.expect(200, done);
 	});
 
-	it('/recipes/add should give 200', function test(done) {
+	it('/recipes/add with JSON payload should give 200', function test(done) {
 		request(server)
 			.post('/recipes/add')
 			.send({
