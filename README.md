@@ -1,4 +1,4 @@
-# Home Dashboard Recipe Manager
+# Home Dashboard Recipe Manager [![Build Status](https://travis-ci.org/iamtomhewitt/home-dashboard-recipe-manager.svg?branch=master)](https://travis-ci.org/iamtomhewitt/home-dashboard-recipe-manager)
 
 A Node Express app for managing recipes and ingredients for my [home dashboard](https://github.com/iamtomhewitt/home-dashboard).
 
