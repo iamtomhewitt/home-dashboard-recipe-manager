@@ -32,8 +32,8 @@ A Node Express app for managing recipes and ingredients for my [home dashboard](
 }
 ```
 
-### `/ingredients/add (GET)`
-* Adds a new ingredient using the name and type specified in the query parameter
+### `/ingredients/add (POST)`
+* Adds a new ingredient using the name and type specified in the JSON payload
 * `200 success`
 ```json
 {

@@ -24,7 +24,7 @@ router.get('/', function (req, res) {
 	res.status(successCode).send(response);
 });
 
-router.get('/add', function (req, res) {
+router.post('/add', function (req, res) {
 	let response;
 
 	if (!fs.existsSync(ingredientsFilename)) {
@@ -33,8 +33,8 @@ router.get('/add', function (req, res) {
 		return;
 	}
 
-	let name = req.query.name;
-	let type = req.query.type;
+	let name = req.body.name;
+	let type = req.body.type;
 	let contents = fs.readFileSync(ingredientsFilename, 'utf-8');
     let json = JSON.parse(contents);
     
