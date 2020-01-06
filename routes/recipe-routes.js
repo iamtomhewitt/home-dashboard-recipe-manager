@@ -12,7 +12,7 @@ var recipesFilename = path.join(__dirname, '..', 'data', 'recipes.json');
 router.get('/', function (req, res) {
     let response;
     if(!fs.existsSync(recipesFilename)) {
-        response = error(`${recipesFilename} does not exist`);
+        response = error(`Could not get recipes: ${recipesFilename} does not exist`);
         res.status(errorCode).send(response);
         return;
     }
@@ -40,8 +40,32 @@ router.get('/', function (req, res) {
 	res.status(successCode).send(response);
 });
 
-router.get('/add', function (req, res) {
-	res.status(successCode).send('OK');
+router.post('/add', function (req, res) {
+    let recipeName = req.body.name;
+    let ingredients = req.body.ingredients;
+    let response;
+
+    if (!recipeName || !ingredients) {
+        response = error('Recipe could not be added: Missing data from JSON body');
+        res.status(errorCode).send(response);
+        return;
+    }
+
+    if(!fs.existsSync(recipesFilename)) {
+        response = error(`Recipe could not be added: ${recipesFilename} does not exist`);
+        res.status(errorCode).send(response);
+        return;
+    }
+
+    let contents = fs.readFileSync(recipesFilename, 'utf-8');
+    let json = JSON.parse(contents);
+    let recipe = req.body;
+
+    json['recipes'].push(recipe);
+    fs.writeFileSync(recipesFilename, JSON.stringify(json)), 'utf-8';
+    
+    response = success(`Recipe '${recipeName}' added`);
+	res.status(successCode).send(response);
 });
 
 router.get('/delete', function (req, res) {
