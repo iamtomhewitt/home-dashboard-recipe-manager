@@ -69,7 +69,36 @@ router.post('/add', function (req, res) {
 });
 
 router.get('/delete', function (req, res) {
-	res.status(successCode).send('OK');
+	let response;
+
+	if (!fs.existsSync(recipesFilename)) {
+		response = error(`${recipesFilename} does not exist`);
+		res.status(errorCode).send(response).json();
+		return;
+	}
+
+	let name = req.query.name;
+	let contents = fs.readFileSync(recipesFilename, 'utf-8');
+    let recipes = JSON.parse(contents)['recipes'];
+	
+	const index = recipes.findIndex(x => x.name === name);
+	
+	if (index === -1) {
+		response = notFound(`${name} not found`)
+		res.status(notFoundCode).send(response);
+		return;
+	}
+
+	if (index !== undefined) recipes.splice(index, 1);
+
+	let json = {
+		"recipes": recipes
+	}
+
+	fs.writeFileSync(recipesFilename, JSON.stringify(json)), 'utf-8';
+
+    response = success(`'${name}' deleted`);
+	res.status(successCode).send(response);
 });
 
 function success(message) {
