@@ -43,8 +43,37 @@ router.get('/', function (req, res) {
 	}
 });
 
-router.get('/add', function (req, res) {
+router.post('/add', function (req, res) {
+	let day = req.body.day;
+    let recipeName = req.body.recipe;
+    let response;
 
+    if (!recipeName || !day) {
+        response = error('Planner could not be updated: Missing data from JSON body');
+        res.status(errorCode).send(response);
+        return;
+	}
+	
+	if(!fs.existsSync(plannerFilename)) {
+        response = error(`Planner could not be updated: ${plannerFilename} does not exist`);
+        res.status(errorCode).send(response);
+        return;
+	}
+	
+	let contents = fs.readFileSync(plannerFilename, 'utf-8');
+	let json = JSON.parse(contents);
+    let days = json['planner'];
+
+	days.forEach(function(d) {
+		if (d.day === day) {
+			d.recipe = recipeName;
+		}
+	});
+	
+    fs.writeFileSync(plannerFilename, JSON.stringify(json)), 'utf-8';
+    
+    response = success(`Recipe '${recipeName}' added`);
+	res.status(successCode).send(response);
 });
 
 function success(message) {
