@@ -165,8 +165,11 @@ A Node Express app for managing recipes and ingredients for my [home dashboard](
         {
             "name": "Tuesday",
             "type": "Chicken Curry"
+		},
+        {
+            "name": "and so on",
+            "type": "and so on"
 		}
-		// And so on
     ]
 }
 ```
