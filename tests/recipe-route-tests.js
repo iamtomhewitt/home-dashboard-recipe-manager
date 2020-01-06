@@ -42,15 +42,21 @@ describe('Recipe route tests', function () {
 			.expect(502, done);
 	});
 
-	it('/recipes/delete?name=invalid should give 404', function test(done) {
+	it('/recipes/delete should give 404', function test(done) {
 		request(server)
-			.get('/recipes/delete?name=invalid')
+			.delete('/recipes/delete')
+			.send({
+				"name": "invalid"
+			})
 			.expect(404, done);
 	});
 
-	it('/recipes/delete?name=New should give 200', function test(done) {
+	it('/recipes/delete should give 200', function test(done) {
 		request(server)
-			.get('/recipes/delete?name=New')
+			.delete('/recipes/delete')
+			.send({
+				"name": "New"
+			})
 			.expect(200, done);
 	});
 });
