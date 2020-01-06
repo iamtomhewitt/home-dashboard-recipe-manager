@@ -72,7 +72,7 @@ router.get('/delete', function (req, res) {
 	let response;
 
 	if (!fs.existsSync(recipesFilename)) {
-		response = error(`${recipesFilename} does not exist`);
+		response = error(`Recipe could not be deleted: ${recipesFilename} does not exist`);
 		res.status(errorCode).send(response).json();
 		return;
 	}
@@ -97,7 +97,7 @@ router.get('/delete', function (req, res) {
 
 	fs.writeFileSync(recipesFilename, JSON.stringify(json)), 'utf-8';
 
-    response = success(`'${name}' deleted`);
+    response = success(`'${name}' successfully deleted`);
 	res.status(successCode).send(response);
 });
 

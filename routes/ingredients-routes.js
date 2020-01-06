@@ -13,7 +13,7 @@ router.get('/', function (req, res) {
 	let response;
 
 	if (!fs.existsSync(ingredientsFilename)) {
-		response = error(`${ingredientsFilename} does not exist`);
+		response = error(`Could not get ingredients: ${ingredientsFilename} does not exist`);
 		res.status(errorCode).send(response).json();
 		return;
 	}
@@ -39,7 +39,7 @@ router.get('/add', function (req, res) {
     let json = JSON.parse(contents);
     
     if (!name || !type) {
-        response = error('Missing parameter from request query');
+        response = error(`${name} could not be added: Missing parameter from request query`);
         res.status(errorCode).send(response).json();
         return;
     }
@@ -53,7 +53,7 @@ router.get('/add', function (req, res) {
 
 	fs.writeFileSync(ingredientsFilename, JSON.stringify(json)), 'utf-8';
 
-	response = success("'" + name + "' successfully added");
+	response = success(`${name} successfully added`);
 	res.status(successCode).send(response);
 });
 
@@ -61,7 +61,7 @@ router.get('/delete', function (req, res) {
 	let response;
 
 	if (!fs.existsSync(ingredientsFilename)) {
-		response = error(`${ingredientsFilename} does not exist`);
+		response = error(`Could not delete ingredient: ${ingredientsFilename} does not exist`);
 		res.status(errorCode).send(response).json();
 		return;
 	}
@@ -73,7 +73,7 @@ router.get('/delete', function (req, res) {
 	const index = ingredients.findIndex(x => x.name === name);
 	
 	if (index === -1) {
-		response = notFound(`${name} not found`)
+		response = notFound(`Could not delete ingredient: ${name} not found`)
 		res.status(notFoundCode).send(response);
 		return;
 	}
