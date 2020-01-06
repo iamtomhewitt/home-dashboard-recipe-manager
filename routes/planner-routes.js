@@ -62,13 +62,17 @@ router.post('/add', function (req, res) {
 	
 	let contents = fs.readFileSync(plannerFilename, 'utf-8');
 	let json = JSON.parse(contents);
-    let days = json['planner'];
-
-	days.forEach(function(d) {
-		if (d.day === day) {
-			d.recipe = recipeName;
-		}
-	});
+	let days = json['planner'];
+	
+	const foundDay = days.find(x => x.day === day);
+		
+	if (!foundDay) {
+		response = error(`${day} not a valid day`)
+		res.status(errorCode).send(response);
+		return;
+	}
+	
+	foundDay.recipe = recipeName;
 	
     fs.writeFileSync(plannerFilename, JSON.stringify(json)), 'utf-8';
     
