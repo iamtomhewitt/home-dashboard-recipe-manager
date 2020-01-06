@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/iamtomhewitt/home-dashboard-recipe-manager.svg?branch=master)](https://travis-ci.org/iamtomhewitt/home-dashboard-recipe-manager) ![Heroku](https://heroku-badge.herokuapp.com/?app=home-dashboard-recipe-manager&style=flat&svg=1)
+[![Build Status](https://travis-ci.org/iamtomhewitt/home-dashboard-recipe-manager.svg?branch=master)](https://travis-ci.org/iamtomhewitt/home-dashboard-recipe-manager) ![Heroku](https://img.shields.io/badge/heroku-deployed-success)
 
 # Home Dashboard Recipe Manager 
 A Node Express app for managing recipes and ingredients for my [home dashboard](https://github.com/iamtomhewitt/home-dashboard).
