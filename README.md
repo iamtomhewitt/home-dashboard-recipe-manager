@@ -1,6 +1,12 @@
-# Home Dashboard Recipe Manager [![Build Status](https://travis-ci.org/iamtomhewitt/home-dashboard-recipe-manager.svg?branch=master)](https://travis-ci.org/iamtomhewitt/home-dashboard-recipe-manager)
+[![Build Status](https://travis-ci.org/iamtomhewitt/home-dashboard-recipe-manager.svg?branch=master)](https://travis-ci.org/iamtomhewitt/home-dashboard-recipe-manager) ![Heroku](https://heroku-badge.herokuapp.com/?app=home-dashboard-recipe-manager&style=flat&svg=1)
 
+# Home Dashboard Recipe Manager 
 A Node Express app for managing recipes and ingredients for my [home dashboard](https://github.com/iamtomhewitt/home-dashboard).
+
+## Pipeline
+* `Travis` tests the repo using `npm test`, which runs `mocha 'tests/**/*.js' --exit`
+* Once the tests pass, `Heroku` deploys the app
+* When the app is deployed, you can make requests to it [here](https://home-dashboard-recipe-manager.herokuapp.com/)
 
 ## Endpoints
 
@@ -142,4 +148,38 @@ A Node Express app for managing recipes and ingredients for my [home dashboard](
 }
 ```
 
-URL: https://home-dashboard-recipe-manager.herokuapp.com/ingredients
+
+
+
+
+### `/planner (GET)`
+* Returns the weekly meal plan
+* `200 success`
+```json
+{
+    "planner": [
+        {
+            "day": "Monday",
+            "recipe": "Pasta Bake"
+        },
+        {
+            "name": "Tuesday",
+            "type": "Chicken Curry"
+		}
+		// And so on
+    ]
+}
+```
+* Specifying a day in the query parameter will return a specific day: `/planner?day=Monday`
+
+### `/planner/add (POST)`
+* Adds a recipe to a specific day of the planner
+* The name of the recipe and the day of the week should be included in the JSON payload
+* Specifying the same day will overwrite the existing entry
+* `200 success`
+```json
+{
+    "status": 200,
+    "message": "<recipe> successfully added to the planner on <day>"
+}
+```
