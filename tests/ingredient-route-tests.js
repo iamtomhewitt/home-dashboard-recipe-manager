@@ -33,16 +33,22 @@ describe('Ingredient route tests', function () {
 			.expect(502, done);
 	});
 
-	it('/ingredients/delete?name=invalid should give 404', function test(done) {
+	it('/ingredients/delete should give 404', function test(done) {
 		request(server)
-			.get('/ingredients/delete?name=invalid')
+			.delete('/ingredients/delete')
+			.send({
+				"name": "invalid"
+			})
 			.expect(404, done);
 	});
 
 
-	it('/ingredients/delete?name=pepper should give 200', function test(done) {
+	it('/ingredients/delete should give 200', function test(done) {
 		request(server)
-			.get('/ingredients/delete?name=pepper')
+			.delete('/ingredients/delete')
+			.send({
+				"name": "pepper"
+			})
 			.expect(200, done);
 	});
 });
