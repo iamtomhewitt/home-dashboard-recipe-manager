@@ -10,8 +10,16 @@ var notFoundCode = 404;
 var ingredientsFilename = path.join(__dirname, '..', 'data', 'ingredients.json');
 
 router.get('/', function (req, res) {
+	let response;
+
+	if (!fs.existsSync(ingredientsFilename)) {
+		response = error(`${ingredientsFilename} does not exist`);
+		res.status(errorCode).send(response).json();
+		return;
+	}
+
 	let contents = fs.readFileSync(ingredientsFilename, 'utf-8');
-	let response = success('Success')
+	response = success('Success')
 	response['ingredients'] = JSON.parse(contents)['ingredients'];
 	res.status(successCode).send(response);
 });
