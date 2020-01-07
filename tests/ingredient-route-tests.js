@@ -17,7 +17,7 @@ describe('Ingredient route tests', () => {
             .expect(200, done);
     });
 
-    it('/ingredients/add?name=pepper&type=vegetable should give 200', (done) => {
+    it('/ingredients/add should give 200', (done) => {
         request(server)
             .post('/ingredients/add')
             .send({
@@ -25,6 +25,16 @@ describe('Ingredient route tests', () => {
                 type: 'vegetable',
             })
             .expect(200, done);
+    });
+
+    it('/ingredients/add should give 502 when sending existing ingredient', (done) => {
+        request(server)
+            .post('/ingredients/add')
+            .send({
+                name: 'pepper',
+                type: 'vegetable',
+            })
+            .expect(502, done);
     });
 
     it('/ingredients/add should give 502', (done) => {
