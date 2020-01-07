@@ -1,7 +1,14 @@
-[![Build Status](https://travis-ci.org/iamtomhewitt/home-dashboard-recipe-manager.svg?branch=master)](https://travis-ci.org/iamtomhewitt/home-dashboard-recipe-manager) ![Heroku](https://img.shields.io/badge/heroku-deployed-success)
 
-# Home Dashboard Recipe Manager 
-A Node Express app for managing recipes and ingredients for my [home dashboard](https://github.com/iamtomhewitt/home-dashboard).
+
+<h1 align="center">Home Dashboard Recipe Manager </h1>
+<p align="center">
+	A Node Express app for managing recipes and ingredients for my <a href="https://github.com/iamtomhewitt/home-dashboard">home dashboard</a>.
+</p>
+<p align="center">
+	<img src="https://travis-ci.org/iamtomhewitt/home-dashboard-recipe-manager.svg"/>
+	<img src="https://heroku-badge.herokuapp.com/?app=home-dashboard-recipe-manager&style=round&svg=1"/>
+</p>
+
 
 ## Pipeline
 * `Travis` tests the repo using `npm test`, which runs `mocha 'tests/**/*.js' --exit`
@@ -140,17 +147,13 @@ A Node Express app for managing recipes and ingredients for my [home dashboard](
     "message": "<recipe> could not be deleted <error message>"
 }
 ```
-* `404 recipe not found`
+* `404` if the recipe is not found
 ```json
 {
     "status": 404,
     "message": "<recipe> not found"
 }
 ```
-
-
-
-
 
 ### `/planner (GET)`
 * Returns the weekly meal plan
@@ -164,11 +167,11 @@ A Node Express app for managing recipes and ingredients for my [home dashboard](
         },
         {
             "name": "Tuesday",
-            "type": "Chicken Curry"
+            "recipe": "Chicken Curry"
         },
         {
             "name": "and so on",
-            "type": "and so on"
+            "recipe": "and so on"
         }
     ]
 }
