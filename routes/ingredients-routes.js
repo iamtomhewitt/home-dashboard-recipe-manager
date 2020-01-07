@@ -59,6 +59,14 @@ router.post('/add', (req, res) => {
     const { type } = req.body;
     const contents = fs.readFileSync(ingredientsFilename, 'utf-8');
     const json = JSON.parse(contents);
+    const currentIngredients = json.ingredients;
+    const ingredientExists = currentIngredients.find((x) => x.name === name) !== undefined;
+
+    if (ingredientExists) {
+        response = error(`Cannot add ingredient: '${name}' already exists`);
+        res.status(errorCode).send(response);
+        return;
+    }
 
     if (!name || !type) {
         response = error(`${name} could not be added: Missing 'name' or 'type' parameter from JSON payload`);
