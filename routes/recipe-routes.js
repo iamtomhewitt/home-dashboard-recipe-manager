@@ -44,7 +44,6 @@ router.get('/', (req, res) => {
 
     if (recipeName) {
         const json = JSON.parse(contents).recipes;
-
         const recipe = json.filter(
             (data) => data.name === recipeName,
         );
@@ -104,9 +103,14 @@ router.delete('/delete', (req, res) => {
     }
 
     const { name } = req.body;
+    if (!name) {
+        response = error('Recipe could not be deleted: Missing \'name\' parameter from JSON body');
+        res.status(errorCode).send(response);
+        return;
+    }
+
     const contents = fs.readFileSync(recipesFilename, 'utf-8');
     const { recipes } = JSON.parse(contents);
-
     const index = recipes.findIndex((x) => x.name === name);
 
     if (index === -1) {

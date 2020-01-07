@@ -37,7 +37,6 @@ router.get('/', (req, res) => {
 
     if (day) {
         const days = JSON.parse(contents).planner;
-
         const found = days.find((x) => x.day === day);
 
         if (!found) {
@@ -76,7 +75,6 @@ router.post('/add', (req, res) => {
     const contents = fs.readFileSync(plannerFilename, 'utf-8');
     const json = JSON.parse(contents);
     const days = json.planner;
-
     const foundDay = days.find((x) => x.day === day);
 
     if (!foundDay) {
