@@ -36,6 +36,25 @@ describe('Recipe route tests', () => {
             .expect(200, done);
     });
 
+    it('/recipes/add with JSON payload of existing recipe should give 502', (done) => {
+        request(server)
+            .post('/recipes/add')
+            .send({
+                name: 'New',
+                ingredients: [
+                    {
+                        name: 'pepper',
+                        type: 'vegetable',
+                    },
+                    {
+                        name: 'ads',
+                        type: 'vegetable',
+                    },
+                ],
+            })
+            .expect(502, done);
+    });
+
     it('/recipes/add should give 502', (done) => {
         request(server)
             .post('/recipes/add')
