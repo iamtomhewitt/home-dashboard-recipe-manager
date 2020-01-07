@@ -77,7 +77,15 @@ router.post('/add', (req, res) => {
 
     const contents = fs.readFileSync(recipesFilename, 'utf-8');
     const json = JSON.parse(contents);
+    const currentRecipes = json.recipes;
     const recipe = req.body;
+    const recipeExists = currentRecipes.find((x) => x.name === recipeName) !== undefined;
+
+    if (recipeExists) {
+        response = error(`Cannot add recipe: '${recipeName}' already exists`);
+        res.status(errorCode).send(response);
+        return;
+    }
 
     json.recipes.push(recipe);
     fs.writeFileSync(recipesFilename, JSON.stringify(json)), 'utf-8';
