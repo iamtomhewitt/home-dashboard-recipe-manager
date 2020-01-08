@@ -97,9 +97,16 @@ router.delete('/delete', (req, res) => {
         return;
     }
 
-    db.collection(collectionName).deleteOne({ name: recipeName }).then(() => {
-        response = success(`'${recipeName}' successfully deleted`);
-        res.status(successCode).send(response);
+    db.collection(collectionName).findOne({ name: recipeName }).then((recipe) => {
+        if (recipe === null) {
+            response = notFound(`Cannot delete recipe: '${recipeName}' not found`);
+            res.status(notFoundCode).send(response);
+        } else {
+            db.collection(collectionName).deleteOne({ name: recipeName }).then(() => {
+                response = success(`'${recipeName}' successfully deleted`);
+                res.status(successCode).send(response);
+            });
+        }
     });
 });
 
