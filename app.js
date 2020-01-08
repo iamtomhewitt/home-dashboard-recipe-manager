@@ -3,7 +3,6 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 
-const ingredientsRoutes = require('./routes/ingredients-routes');
 const recipeRoutes = require('./routes/recipe-routes');
 const plannerRoutes = require('./routes/planner-routes');
 
@@ -14,7 +13,6 @@ app.get('/', (req, res) => {
     res.status(200).send('Recipe manager is up and running!');
 });
 
-app.use('/ingredients', ingredientsRoutes);
 app.use('/recipes', recipeRoutes);
 app.use('/planner', plannerRoutes);
 
