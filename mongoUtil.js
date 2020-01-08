@@ -10,9 +10,9 @@ module.exports = {
     connectToServer(callback) {
         mongo.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
             db = client.db(databaseName);
-            db.createCollection('recipes');
-
+			
             // Create collections
+            db.createCollection('recipes');
             db.collection('planner').updateOne({ planner: { $exists: true } }, {
                 $set: {
                     planner: [
