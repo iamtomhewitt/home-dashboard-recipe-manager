@@ -59,9 +59,13 @@ router.post('/add', (req, res) => {
     const { day } = req.body;
     const recipeName = req.body.recipe;
     let response;
+    const expectedJson = {
+        day: '<day>',
+        recipe: '<recipe>',
+    };
 
     if (!recipeName || !day) {
-        response = error('Planner could not be updated: Missing data from JSON body');
+        response = error(`Planner could not be updated, missing data from JSON body. Expected: ${JSON.stringify(expectedJson)} Got: ${JSON.stringify(req.body)}`);
         res.status(errorCode).send(response);
         return;
     }
