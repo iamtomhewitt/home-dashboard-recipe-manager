@@ -1,9 +1,4 @@
 ---
-before_script:
-    - "sleep 15"
-    - "mongo use recipe_manager"
-    - "mongo db.createCollection('planner');"
-    - "mongo db.createCollection('recipes');"
 install: "npm install"
 language: node_js
 node_js: "8.16.2"
