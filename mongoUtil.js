@@ -8,8 +8,8 @@ let db;
 module.exports = {
 
     connectToServer(callback) {
-        mongo.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
-            db = client.db(databaseName);
+        mongo.connect(process.env.MONGODB_URI || url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
+            db = client.db(process.env.MONGODB_DATABASE_NAME || databaseName);
 
             // Create collections
             db.createCollection('recipes');
