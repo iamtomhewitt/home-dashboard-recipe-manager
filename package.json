@@ -22,6 +22,7 @@
     "express": "^4.17.1",
     "fs": "0.0.1-security",
     "mocha": "^7.0.0",
+    "mongodb": "^3.4.1",
     "path": "^0.12.7",
     "supertest": "^4.0.2"
   },
