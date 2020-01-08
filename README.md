@@ -83,6 +83,7 @@
 
 ### `/recipes (GET)`
 * Returns all the stored recipe names we currently have.
+#### Responses
 * `200 success`
 ```json
 {
@@ -115,6 +116,21 @@
 ### `/recipes/add (POST)`
 * Adds a new recipe using the name specified in the JSON payload.
 * The ingredients, and their amounts should be sent in the JSON payload.
+* Request body
+```json
+{
+    "name": "<recipe name>",
+    "ingredients": [
+        {
+            "name": "<name>",
+            "category": "<category>",
+            "amount": "<amount>",
+            "weight": "<weight>"
+        }
+    ]
+}
+```
+#### Responses
 * `200 success`
 ```json
 {
@@ -133,6 +149,8 @@
 
 ### `/recipes/delete (DELETE)`
 * Deletes a recipe using the name specified in the JSON payload.
+
+#### Responses
 * `200 success`
 ```json
 {
@@ -157,6 +175,8 @@
 
 ### `/planner (GET)`
 * Returns the weekly meal plan
+
+#### Responses
 * `200 success`
 ```json
 {
@@ -182,6 +202,14 @@
 * Adds a recipe to a specific day of the planner
 * The name of the recipe and the day of the week should be included in the JSON payload
 * Specifying the same day will overwrite the existing entry
+#### Request body
+```json
+{
+    "day": "<day>",
+    "recipe": "<recipe name>"
+}
+```
+#### Responses
 * `200 success`
 ```json
 {
