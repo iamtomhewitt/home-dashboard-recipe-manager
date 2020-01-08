@@ -61,9 +61,20 @@ router.post('/add', (req, res) => {
     const recipeName = req.body.name;
     const { ingredients } = req.body;
     let response;
+    const expectedJson = {
+        name: '<recipe name>',
+        ingredients: [
+            {
+                name: '<name>',
+                category: '<category>',
+                amount: '<amount>',
+                weight: '<weight>',
+            },
+        ],
+    };
 
     if (!recipeName || !ingredients) {
-        response = error('Recipe could not be added: Missing data from JSON body');
+        response = error(`Recipe could not be added, missing data from JSON body. Expected: ${JSON.stringify(expectedJson)} Got: ${JSON.stringify(req.body)}`);
         res.status(errorCode).send(response);
         return;
     }
