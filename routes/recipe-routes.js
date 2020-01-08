@@ -52,56 +52,55 @@ router.get('/', (req, res) => {
 
 router.post('/add', (req, res) => {
     const { ingredients } = req.body;
-	const recipeName = req.body.name;
-	const db = mongoUtil.getDb();
+    const recipeName = req.body.name;
+    const db = mongoUtil.getDb();
     const expectedJson = {
-		name: '<recipe name>',
+        name: '<recipe name>',
         ingredients: [
-			{
-				name: '<name>',
+            {
+                name: '<name>',
                 category: '<category>',
                 amount: '<amount>',
                 weight: '<weight>',
             },
         ],
     };
-	let response;
+    let response;
 
     if (!recipeName || !ingredients) {
         response = error(`Recipe could not be added, missing data from JSON body. Expected: ${JSON.stringify(expectedJson)} Got: ${JSON.stringify(req.body)}`);
         res.status(errorCode).send(response);
         return;
-	}
-	
-	db.collection(collectionName).findOne({ name: recipeName }).then((recipe) => {
-		if (recipe !== null) {
-			response = error(`Cannot add recipe: '${recipeName}' already exists`);
-			res.status(errorCode).send(response);
-		}
-		else {
-			db.collection(collectionName).insertOne(req.body);
-			response = success(`Recipe '${recipeName}' added`);
-    		res.status(successCode).send(response);
-		}
-	});
+    }
+
+    db.collection(collectionName).findOne({ name: recipeName }).then((recipe) => {
+        if (recipe !== null) {
+            response = error(`Cannot add recipe: '${recipeName}' already exists`);
+            res.status(errorCode).send(response);
+        } else {
+            db.collection(collectionName).insertOne(req.body);
+            response = success(`Recipe '${recipeName}' added`);
+            res.status(successCode).send(response);
+        }
+    });
 });
 
 router.delete('/delete', (req, res) => {
-	const recipeName = req.body.name;
-	const db = mongoUtil.getDb();
-	
-	let response;
+    const recipeName = req.body.name;
+    const db = mongoUtil.getDb();
+
+    let response;
 
     if (!recipeName) {
         response = error('Recipe could not be deleted: Missing \'name\' parameter from JSON body');
         res.status(errorCode).send(response);
         return;
-	}
-	
-	db.collection(collectionName).deleteOne({ name: recipeName }).then(() => {
-		response = success(`'${recipeName}' successfully deleted`);
-    	res.status(successCode).send(response);
-	});
+    }
+
+    db.collection(collectionName).deleteOne({ name: recipeName }).then(() => {
+        response = success(`'${recipeName}' successfully deleted`);
+        res.status(successCode).send(response);
+    });
 });
 
 module.exports = router;
