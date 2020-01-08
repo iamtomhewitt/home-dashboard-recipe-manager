@@ -13,38 +13,40 @@ module.exports = {
             db.createCollection('recipes');
 
             // Create collections
-            db.collection('planner').updateOne({ planner: { $exists: true } }, {$set:{
-                planner: [
-                    {
-                        day: 'Monday',
-                        recipe: '',
-                    },
-                    {
-                        day: 'Tuesday',
-                        recipe: '',
-                    },
-                    {
-                        day: 'Wednesday',
-                        recipe: '',
-                    },
-                    {
-                        day: 'Thursday',
-                        recipe: '',
-                    },
-                    {
-                        day: 'Friday',
-                        recipe: '',
-                    },
-                    {
-                        day: 'Saturday',
-                        recipe: '',
-                    },
-                    {
-                        day: 'Sunday',
-                        recipe: '',
-                    },
-                ],
-            }}, { upsert: true });
+            db.collection('planner').updateOne({ planner: { $exists: true } }, {
+                $set: {
+                    planner: [
+                        {
+                            day: 'Monday',
+                            recipe: '',
+                        },
+                        {
+                            day: 'Tuesday',
+                            recipe: '',
+                        },
+                        {
+                            day: 'Wednesday',
+                            recipe: '',
+                        },
+                        {
+                            day: 'Thursday',
+                            recipe: '',
+                        },
+                        {
+                            day: 'Friday',
+                            recipe: '',
+                        },
+                        {
+                            day: 'Saturday',
+                            recipe: '',
+                        },
+                        {
+                            day: 'Sunday',
+                            recipe: '',
+                        },
+                    ],
+                },
+            }, { upsert: true });
             return callback(err);
         });
     },
