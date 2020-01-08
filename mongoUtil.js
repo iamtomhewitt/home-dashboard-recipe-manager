@@ -10,8 +10,8 @@ module.exports = {
     connectToServer(callback) {
         mongo.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
             db = client.db(databaseName);
-            db.collection('recipes');
-            db.collection('planner');
+            db.createCollection('recipes');
+            db.createCollection('planner');
             return callback(err);
         });
     },
