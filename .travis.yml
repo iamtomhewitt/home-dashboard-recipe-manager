@@ -3,3 +3,7 @@ language: node_js
 node_js: "8.16.2"
 script: "npm test"
 services: mongodb
+before_script:
+	- sleep 15
+	- mongo recipe_manager --eval 'db.createCollection('planner');'
+	- mongo recipe_manager --eval 'db.createCollection('recipes');'
