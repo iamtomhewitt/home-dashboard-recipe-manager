@@ -1,14 +1,13 @@
 const express = require('express');
-const fs = require('fs');
-const path = require('path');
+const mongoUtil = require('../mongoUtil');
 
 const router = express.Router();
+
+const collectionName = 'recipes';
 
 const successCode = 200;
 const errorCode = 502;
 const notFoundCode = 404;
-
-const recipesFilename = path.join(__dirname, '..', 'data', 'recipes.json');
 
 function success(message) {
     return {
@@ -33,98 +32,82 @@ function notFound(message) {
 
 router.get('/', (req, res) => {
     let response;
-    if (!fs.existsSync(recipesFilename)) {
-        response = error(`Could not get recipes: ${recipesFilename} does not exist`);
-        res.status(errorCode).send(response);
-        return;
-    }
-
-    const contents = fs.readFileSync(recipesFilename, 'utf-8');
     const recipeName = req.query.name;
+    const db = mongoUtil.getDb();
 
     if (recipeName) {
-        const json = JSON.parse(contents).recipes;
-
-        const recipe = json.filter(
-            (data) => data.name === recipeName,
-        );
-
-        response = success('Recipe found');
-        response.recipe = recipe[0];
+        db.collection(collectionName).findOne({ name: recipeName }).then((recipe) => {
+            response = recipe === null ? notFound(`Could not find '${recipeName}'`) : success('Success');
+            response.recipe = recipe;
+            res.status(successCode).send(response);
+        });
     } else {
-        response = success('Success');
-        response.recipes = JSON.parse(contents).recipes;
+        db.collection(collectionName).find().toArray().then((recipes) => {
+            response = success('Success');
+            response.recipes = recipes;
+            res.status(successCode).send(response);
+        });
     }
-    res.status(successCode).send(response);
 });
 
 router.post('/add', (req, res) => {
-    const recipeName = req.body.name;
     const { ingredients } = req.body;
+    const recipeName = req.body.name;
+    const db = mongoUtil.getDb();
+    const expectedJson = {
+        name: '<recipe name>',
+        ingredients: [
+            {
+                name: '<name>',
+                category: '<category>',
+                amount: '<amount>',
+                weight: '<weight>',
+            },
+        ],
+    };
     let response;
 
     if (!recipeName || !ingredients) {
-        response = error('Recipe could not be added: Missing data from JSON body');
+        response = error(`Recipe could not be added, missing data from JSON body. Expected: ${JSON.stringify(expectedJson)} Got: ${JSON.stringify(req.body)}`);
         res.status(errorCode).send(response);
         return;
     }
 
-    if (!fs.existsSync(recipesFilename)) {
-        response = error(`Recipe could not be added: ${recipesFilename} does not exist`);
-        res.status(errorCode).send(response);
-        return;
-    }
-
-    const contents = fs.readFileSync(recipesFilename, 'utf-8');
-    const json = JSON.parse(contents);
-    const currentRecipes = json.recipes;
-    const recipe = req.body;
-    const recipeExists = currentRecipes.find((x) => x.name === recipeName) !== undefined;
-
-    if (recipeExists) {
-        response = error(`Cannot add recipe: '${recipeName}' already exists`);
-        res.status(errorCode).send(response);
-        return;
-    }
-
-    json.recipes.push(recipe);
-    fs.writeFileSync(recipesFilename, JSON.stringify(json)), 'utf-8';
-
-    response = success(`Recipe '${recipeName}' added`);
-    res.status(successCode).send(response);
+    db.collection(collectionName).findOne({ name: recipeName }).then((recipe) => {
+        if (recipe !== null) {
+            response = error(`Cannot add recipe: '${recipeName}' already exists`);
+            res.status(errorCode).send(response);
+        } else {
+            db.collection(collectionName).insertOne(req.body);
+            response = success(`Recipe '${recipeName}' added`);
+            res.status(successCode).send(response);
+        }
+    });
 });
 
 router.delete('/delete', (req, res) => {
+    const recipeName = req.body.name;
+    const db = mongoUtil.getDb();
+
     let response;
 
-    if (!fs.existsSync(recipesFilename)) {
-        response = error(`Recipe could not be deleted: ${recipesFilename} does not exist`);
-        res.status(errorCode).send(response).json();
+    if (!recipeName) {
+        response = error('Recipe could not be deleted: Missing \'name\' parameter from JSON body');
+        res.status(errorCode).send(response);
         return;
     }
 
-    const { name } = req.body;
-    const contents = fs.readFileSync(recipesFilename, 'utf-8');
-    const { recipes } = JSON.parse(contents);
-
-    const index = recipes.findIndex((x) => x.name === name);
-
-    if (index === -1) {
-        response = notFound(`Could not delete recipe: '${name}' not found`);
-        res.status(notFoundCode).send(response);
-        return;
-    }
-
-    if (index !== undefined) recipes.splice(index, 1);
-
-    const json = {
-        recipes,
-    };
-
-    fs.writeFileSync(recipesFilename, JSON.stringify(json)), 'utf-8';
-
-    response = success(`'${name}' successfully deleted`);
-    res.status(successCode).send(response);
+    db.collection(collectionName).findOne({ name: recipeName }).then((recipe) => {
+        if (recipe === null) {
+            response = notFound(`Cannot delete recipe: '${recipeName}' not found`);
+            res.status(notFoundCode).send(response);
+        } else {
+            db.collection(collectionName).deleteOne({ name: recipeName }).then(() => {
+                response = success(`'${recipeName}' successfully deleted`);
+                res.status(successCode).send(response);
+            });
+        }
+    });
 });
 
 module.exports = router;
