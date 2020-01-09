@@ -1,13 +1,12 @@
 const express = require('express');
-const fs = require('fs');
-const path = require('path');
+const mongoUtil = require('../mongoUtil');
 
 const router = express.Router();
 
+const collectionName = 'planner';
+
 const successCode = 200;
 const errorCode = 502;
-
-const plannerFilename = path.join(__dirname, '..', 'data', 'planner.json');
 
 function success(message) {
     return {
@@ -24,45 +23,47 @@ function error(message) {
 }
 
 router.get('/', (req, res) => {
-    let response;
     const { day } = req.query;
+    const db = mongoUtil.getDb();
 
-    if (!fs.existsSync(plannerFilename)) {
-        response = error(`Could not get planner: ${plannerFilename} does not exist`);
-        res.status(errorCode).send(response).json();
-        return;
-    }
+    let response;
 
-    const contents = fs.readFileSync(plannerFilename, 'utf-8');
+    db.collection(collectionName).find().toArray().then((result) => {
+        if (day) {
+            let dayPlan;
+            result[0].planner.forEach((element) => {
+                if (element.day === day) {
+                    dayPlan = element;
+                }
+            });
 
-    if (day) {
-        const days = JSON.parse(contents).planner;
-        const found = days.find((x) => x.day === day);
-
-        if (!found) {
-            response = error(`Could not get planner: ${day} not a valid day`);
-            res.status(errorCode).send(response);
-            return;
+            if (dayPlan) {
+                response = success('Success');
+                response.planner = dayPlan;
+                res.status(successCode).send(response);
+            } else {
+                response = error(`Could not get planner: '${day}' not a valid day`);
+                res.status(errorCode).send(response);
+            }
+        } else {
+            response = success('Success');
+            response.planner = result;
+            res.status(successCode).send(response);
         }
-
-        response = success(`Found plan for '${day}'`);
-        response.planner = found;
-        res.status(successCode).send(response);
-    } else {
-        response = success('Success');
-        response.planner = JSON.parse(contents).planner;
-        res.status(successCode).send(response);
-    }
+    });
 });
 
 router.post('/add', (req, res) => {
     const { day } = req.body;
     const recipeName = req.body.recipe;
-    let response;
+    const db = mongoUtil.getDb();
+    const validDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     const expectedJson = {
         day: '<day>',
         recipe: '<recipe>',
     };
+
+    let response;
 
     if (!recipeName || !day) {
         response = error(`Planner could not be updated, missing data from JSON body. Expected: ${JSON.stringify(expectedJson)} Got: ${JSON.stringify(req.body)}`);
@@ -70,29 +71,26 @@ router.post('/add', (req, res) => {
         return;
     }
 
-    if (!fs.existsSync(plannerFilename)) {
-        response = error(`Planner could not be updated: ${plannerFilename} does not exist`);
+    if (validDays.indexOf(day) < 0) {
+        response = error(`Planner could not be updated: '${day}' not a valid day`);
         res.status(errorCode).send(response);
         return;
     }
 
-    const contents = fs.readFileSync(plannerFilename, 'utf-8');
-    const json = JSON.parse(contents);
-    const days = json.planner;
-    const foundDay = days.find((x) => x.day === day);
+    db.collection(collectionName).find().toArray().then((result) => {
+        result[0].planner.forEach((element) => {
+            if (element.day === day) {
+                const query = { 'planner.day': day };
+                const values = { $set: { 'planner.$.recipe': recipeName } };
+                db.collection(collectionName).updateOne(query, values, (err) => {
+                    if (err) throw err;
 
-    if (!foundDay) {
-        response = error(`Planner could not be updated: ${day} not a valid day`);
-        res.status(errorCode).send(response);
-        return;
-    }
-
-    foundDay.recipe = recipeName;
-
-    fs.writeFileSync(plannerFilename, JSON.stringify(json)), 'utf-8';
-
-    response = success(`Recipe '${recipeName}' added`);
-    res.status(successCode).send(response);
+                    response = success(`Recipe '${recipeName}' added`);
+                    res.status(successCode).send(response);
+                });
+            }
+        });
+    });
 });
 
 module.exports = router;
