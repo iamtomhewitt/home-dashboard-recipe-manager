@@ -1,6 +1,6 @@
 const request = require('supertest');
 
-describe('Planner route tests', () => {
+describe('/planner tests', () => {
     let server;
 
     before(() => {
@@ -27,6 +27,18 @@ describe('Planner route tests', () => {
         request(server)
             .get('/planner?day=invalid')
             .expect(502, done);
+    });
+});
+
+describe('/planner/add tests', () => {
+    let server;
+
+    before(() => {
+        server = require('../app').listen(3002);
+    });
+
+    after(() => {
+        server.close();
     });
 
     it('/planner/add with JSON payload should give 200', (done) => {
