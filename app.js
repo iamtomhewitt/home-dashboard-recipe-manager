@@ -16,7 +16,7 @@ mongoUtil.connectToServer((err) => {
     app.use('/planner', plannerRoutes);
 
     app.get('/', (req, res) => {
-        res.status(200).send('Recipe manager is up and running!');
+        res.status(200).send({ status: '🍽📝 SERVER OK' });
     });
 
     const port = 3001;
