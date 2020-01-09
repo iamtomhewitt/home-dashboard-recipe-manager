@@ -4,7 +4,8 @@
   "description": "A Node Express app for managing recipes and ingredients for my home dashboard.",
   "main": "app.js",
   "scripts": {
-    "pretest": "eslint --ignore-path .gitignore .",
+	"pretest": "eslint --ignore-path .gitignore .",
+	"applylint": "npm run pretest -- --fix",
     "test": "mocha 'tests/**/*.js' --exit"
   },
   "repository": {
