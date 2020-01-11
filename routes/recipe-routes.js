@@ -66,12 +66,26 @@ router.post('/add', (req, res) => {
         ],
     };
     let response;
+    let missingParameter = false;
 
     if (!recipeName || !ingredients) {
         response = error(`Recipe could not be added, missing data from JSON body. Expected: ${JSON.stringify(expectedJson)} Got: ${JSON.stringify(req.body)}`);
         res.status(errorCode).send(response);
         return;
     }
+
+    ingredients.forEach((ingredient) => {
+        if (missingParameter) return;
+
+        if (!('name' in ingredient) || !('category' in ingredient) || !('amount' in ingredient) || !('weight' in ingredient)) {
+            missingParameter = true;
+            response = error(`Recipe could not be added, missing data from JSON body. Expected: ${JSON.stringify(expectedJson)} Got: ${JSON.stringify(req.body)}`);
+            res.status(errorCode).send(response);
+        }
+    });
+
+    // Stop processing, exit from method
+    if (missingParameter) return;
 
     db.collection(collectionName).findOne({ name: recipeName }).then((recipe) => {
         if (recipe !== null) {

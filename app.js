@@ -7,6 +7,8 @@ const app = express();
 const recipeRoutes = require('./routes/recipe-routes');
 const plannerRoutes = require('./routes/planner-routes');
 
+const { version } = require('./package.json');
+
 mongoUtil.connectToServer((err) => {
     if (err) throw err;
 
@@ -16,7 +18,7 @@ mongoUtil.connectToServer((err) => {
     app.use('/planner', plannerRoutes);
 
     app.get('/', (req, res) => {
-        res.status(200).send('Recipe manager is up and running!');
+        res.status(200).send({ status: '🍽📝 SERVER OK', version });
     });
 
     const port = 3001;
