@@ -1,6 +1,8 @@
 const mongo = require('mongodb').MongoClient;
 
 const url = process.env.MONGODB_URI || 'mongodb://localhost:27017/recipe_manager';
+const recipesCollectionName = 'recipes';
+const plannerCollectionName = 'planner';
 
 let db;
 
@@ -12,6 +14,51 @@ module.exports = {
                 console.error(err);
             } else {
                 db = client.db();
+                db.listCollections({ name: plannerCollectionName }).next((error, collection) => {
+                    if (!collection) {
+                        console.warn(`'${plannerCollectionName}' collection does not exist, creating it`);
+                        db.collection(plannerCollectionName).updateOne({ planner: { $exists: true } }, {
+                            $set: {
+                                planner: [
+                                    {
+                                        day: 'Monday',
+                                        recipe: '',
+                                    },
+                                    {
+                                        day: 'Tuesday',
+                                        recipe: '',
+                                    },
+                                    {
+                                        day: 'Wednesday',
+                                        recipe: '',
+                                    },
+                                    {
+                                        day: 'Thursday',
+                                        recipe: '',
+                                    },
+                                    {
+                                        day: 'Friday',
+                                        recipe: '',
+                                    },
+                                    {
+                                        day: 'Saturday',
+                                        recipe: '',
+                                    },
+                                    {
+                                        day: 'Sunday',
+                                        recipe: '',
+                                    },
+                                ],
+                            },
+                        }, { upsert: true });
+                    }
+                });
+                db.listCollections({ name: recipesCollectionName }).next((error, collection) => {
+                    if (!collection) {
+                        console.warn(`'${recipesCollectionName}' collection does not exist, creating it`);
+                        db.createCollection(recipesCollectionName);
+                    }
+                });
             }
             return callback(err);
         });
