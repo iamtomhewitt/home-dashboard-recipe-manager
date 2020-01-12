@@ -9,47 +9,9 @@ module.exports = {
     connectToServer(callback) {
         mongo.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
             if (err) {
-                console.log(err);
+                console.error(err);
             } else {
-                console.log(`Connected to: ${url}`);
                 db = client.db();
-
-                // Create collections
-                db.createCollection('recipes');
-                db.collection('planner').updateOne({ planner: { $exists: true } }, {
-                    $set: {
-                        planner: [
-                            {
-                                day: 'Monday',
-                                recipe: '',
-                            },
-                            {
-                                day: 'Tuesday',
-                                recipe: '',
-                            },
-                            {
-                                day: 'Wednesday',
-                                recipe: '',
-                            },
-                            {
-                                day: 'Thursday',
-                                recipe: '',
-                            },
-                            {
-                                day: 'Friday',
-                                recipe: '',
-                            },
-                            {
-                                day: 'Saturday',
-                                recipe: '',
-                            },
-                            {
-                                day: 'Sunday',
-                                recipe: '',
-                            },
-                        ],
-                    },
-                }, { upsert: true });
             }
             return callback(err);
         });
