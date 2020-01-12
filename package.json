@@ -1,6 +1,6 @@
 {
   "name": "home-dashboard-recipe-manager",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A Node Express app for managing recipes and ingredients for my home dashboard.",
   "main": "app.js",
   "scripts": {
