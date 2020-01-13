@@ -16,6 +16,56 @@
 
 ## Endpoints
 
+### `/ (GET)`
+The root endpoint, returning information about the app.
+
+#### Responses
+* `200 success`
+```json
+{
+    "status": "🍽📝 SERVER OK",
+    "version": "1.0.1",
+    "endpoints": [
+        {
+            "path": "/recipes",
+            "methods": [
+                "GET"
+            ]
+        },
+        {
+            "path": "/recipes/add",
+            "methods": [
+                "POST"
+            ]
+        },
+        {
+            "path": "/recipes/delete",
+            "methods": [
+                "DELETE"
+            ]
+        },
+        {
+            "path": "/planner",
+            "methods": [
+                "GET"
+            ]
+        },
+        {
+            "path": "/planner/add",
+            "methods": [
+                "POST"
+            ]
+        },
+        {
+            "path": "/",
+            "methods": [
+                "GET"
+            ]
+        }
+    ]
+}
+```
+
 ### `/recipes (GET)`
 Returns all the stored recipe names we currently have. Specifying a name parameter returns a single recipe: `/recipes?name=Pasta Bake`
 #### Responses
