@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const listEndpoints = require('express-list-endpoints');
 const mongoUtil = require('./mongoUtil');
 
 const app = express();
@@ -18,7 +19,7 @@ mongoUtil.connectToServer((err) => {
     app.use('/planner', plannerRoutes);
 
     app.get('/', (req, res) => {
-        res.status(200).send({ status: '🍽📝 SERVER OK', version });
+        res.status(200).send({ status: '🍽📝 SERVER OK', version, endpoints: listEndpoints(app) });
     });
 
     const port = 3001;
