@@ -121,7 +121,15 @@ Adds a new recipe.
 }
 ```
 
-* `400 error` if the recipe could not be added
+* `400 error` if JSON payload was incorrect
+```json
+{
+    "status": 400,
+    "message": "<recipe> could not be added <error message>"
+}
+```
+
+* `502 error` if the recipe could not be saved
 ```json
 {
     "status": 400,
@@ -157,6 +165,14 @@ Deletes a recipe.
 {
     "status": 404,
     "message": "<recipe> not found"
+}
+```
+
+* `502 error` if the recipe could not be saved
+```json
+{
+    "status": 400,
+    "message": "<recipe> could not be added <error message>"
 }
 ```
 
@@ -199,5 +215,20 @@ Adds a recipe to a specific day of the planner. Specifying the same day will ove
 {
     "status": 200,
     "message": "<recipe> successfully added to the planner on <day>"
+}
+```
+* `404` if the recipe is not found
+```json
+{
+    "status": 404,
+    "message": "<recipe> not found"
+}
+```
+
+* `502 error` if the recipe could not be saved
+```json
+{
+    "status": 400,
+    "message": "<recipe> could not be added <error message>"
 }
 ```
