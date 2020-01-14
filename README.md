@@ -121,10 +121,10 @@ Adds a new recipe.
 }
 ```
 
-* `502 error` if the recipe could not be added
+* `400 error` if the recipe could not be added
 ```json
 {
-    "status": 502,
+    "status": 400,
     "message": "<recipe> could not be added <error message>"
 }
 ```
@@ -145,10 +145,10 @@ Deletes a recipe.
     "message": "<recipe> successfully deleted"
 }
 ```
-* `502 error` if the recipe could not be deleted
+* `400 error` if the recipe could not be deleted
 ```json
 {
-    "status": 502,
+    "status": 400,
     "message": "<recipe> could not be deleted <error message>"
 }
 ```
