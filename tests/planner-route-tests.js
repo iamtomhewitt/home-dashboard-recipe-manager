@@ -42,10 +42,10 @@ describe('/planner tests', () => {
             });
     });
 
-    it('/planner?day=invalid should give 502', (done) => {
+    it('/planner?day=invalid should give 400', (done) => {
         request(server)
             .get('/planner?day=invalid')
-            .expect(502)
+            .expect(400)
             .end((err, response) => {
                 if (err) {
                     return done(err);
@@ -86,10 +86,10 @@ describe('/planner/add tests', () => {
             });
     });
 
-    it('/planner/add should give 502', (done) => {
+    it('/planner/add should give 400', (done) => {
         request(server)
             .post('/planner/add')
-            .expect(502)
+            .expect(400)
             .end((err, response) => {
                 if (err) {
                     return done(err);
@@ -100,14 +100,14 @@ describe('/planner/add tests', () => {
             });
     });
 
-    it('/planner/add with JSON payload and incorrect day should give 502', (done) => {
+    it('/planner/add with JSON payload and incorrect day should give 400', (done) => {
         request(server)
             .post('/planner/add')
             .send({
                 day: 'MadeupDay',
                 recipe: 'Some recipe',
             })
-            .expect(502)
+            .expect(400)
             .end((err, response) => {
                 if (err) {
                     return done(err);

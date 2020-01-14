@@ -61,7 +61,7 @@ describe('/recipes/add tests', () => {
             });
     });
 
-    it('/recipes/add with JSON payload that has missing parameters in the ingredients should give 502', (done) => {
+    it('/recipes/add with JSON payload that has missing parameters in the ingredients should give 400', (done) => {
         request(server)
             .post('/recipes/add')
             .send({
@@ -75,7 +75,7 @@ describe('/recipes/add tests', () => {
                     },
                 ],
             })
-            .expect(502)
+            .expect(400)
             .end((err, response) => {
                 if (err) {
                     return done(err);
@@ -86,7 +86,7 @@ describe('/recipes/add tests', () => {
             });
     });
 
-    it('/recipes/add with JSON payload of existing recipe should give 502', (done) => {
+    it('/recipes/add with JSON payload of existing recipe should give 400', (done) => {
         request(server)
             .post('/recipes/add')
             .send({
@@ -106,7 +106,7 @@ describe('/recipes/add tests', () => {
                     },
                 ],
             })
-            .expect(502)
+            .expect(400)
             .end((err, response) => {
                 if (err) {
                     return done(err);
@@ -117,10 +117,10 @@ describe('/recipes/add tests', () => {
             });
     });
 
-    it('/recipes/add should give 502', (done) => {
+    it('/recipes/add should give 400', (done) => {
         request(server)
             .post('/recipes/add')
-            .expect(502)
+            .expect(400)
             .end((err, response) => {
                 if (err) {
                     return done(err);
