@@ -8,10 +8,18 @@ const collectionName = 'recipes';
 const successCode = 200;
 const errorCode = 502;
 const notFoundCode = 404;
+const clientErrorCode = 400;
 
 function success(message) {
     return {
         status: successCode,
+        message,
+    };
+}
+
+function clientError(message) {
+    return {
+        status: clientErrorCode,
         message,
     };
 }
@@ -37,9 +45,10 @@ router.get('/', (req, res) => {
 
     if (recipeName) {
         db.collection(collectionName).findOne({ name: recipeName }).then((recipe) => {
+            const code = recipe === null ? notFoundCode : successCode;
             response = recipe === null ? notFound(`Could not find '${recipeName}'`) : success('Success');
             response.recipe = recipe;
-            res.status(successCode).send(response);
+            res.status(code).send(response);
         });
     } else {
         db.collection(collectionName).find().toArray().then((recipes) => {
@@ -69,8 +78,8 @@ router.post('/add', (req, res) => {
     let missingParameter = false;
 
     if (!recipeName || !ingredients) {
-        response = error(`Recipe could not be added, missing data from JSON body. Expected: ${JSON.stringify(expectedJson)} Got: ${JSON.stringify(req.body)}`);
-        res.status(errorCode).send(response);
+        response = clientError(`Recipe could not be added, missing data from JSON body. Expected: ${JSON.stringify(expectedJson)} Got: ${JSON.stringify(req.body)}`);
+        res.status(clientErrorCode).send(response);
         return;
     }
 
@@ -79,8 +88,8 @@ router.post('/add', (req, res) => {
 
         if (!('name' in ingredient) || !('category' in ingredient) || !('amount' in ingredient) || !('weight' in ingredient)) {
             missingParameter = true;
-            response = error(`Recipe could not be added, missing data from JSON body. Expected: ${JSON.stringify(expectedJson)} Got: ${JSON.stringify(req.body)}`);
-            res.status(errorCode).send(response);
+            response = clientError(`Recipe could not be added, missing data from JSON body. Expected: ${JSON.stringify(expectedJson)} Got: ${JSON.stringify(req.body)}`);
+            res.status(clientErrorCode).send(response);
         }
     });
 

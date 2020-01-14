@@ -6,6 +6,7 @@ const router = express.Router();
 const collectionName = 'planner';
 
 const successCode = 200;
+const clientErrorCode = 400;
 const errorCode = 502;
 
 function success(message) {
@@ -43,7 +44,7 @@ router.get('/', (req, res) => {
                 res.status(successCode).send(response);
             } else {
                 response = error(`Could not get planner: '${day}' not a valid day`);
-                res.status(errorCode).send(response);
+                res.status(clientErrorCode).send(response);
             }
         } else {
             response = success('Success');
@@ -67,13 +68,13 @@ router.post('/add', (req, res) => {
 
     if (!recipeName || !day) {
         response = error(`Planner could not be updated, missing data from JSON body. Expected: ${JSON.stringify(expectedJson)} Got: ${JSON.stringify(req.body)}`);
-        res.status(errorCode).send(response);
+        res.status(clientErrorCode).send(response);
         return;
     }
 
     if (validDays.indexOf(day) < 0) {
         response = error(`Planner could not be updated: '${day}' not a valid day`);
-        res.status(errorCode).send(response);
+        res.status(clientErrorCode).send(response);
         return;
     }
 
@@ -83,7 +84,11 @@ router.post('/add', (req, res) => {
                 const query = { 'planner.day': day };
                 const values = { $set: { 'planner.$.recipe': recipeName } };
                 db.collection(collectionName).updateOne(query, values, (err) => {
-                    if (err) throw err;
+                    if (err) {
+                        response = error(err.message);
+                        res.status(successCode).send(response);
+                        return;
+                    }
 
                     response = success(`Recipe '${recipeName}' added`);
                     res.status(successCode).send(response);
