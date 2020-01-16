@@ -125,14 +125,14 @@ Adds a new recipe.
 ```json
 {
     "status": 400,
-    "message": "<recipe> could not be added <error message>"
+    "message": "Recipe could not be added, missing data from JSON body. Expected: <JSON> Got: <JSON>"
 }
 ```
 
 * `502 error` if the recipe could not be saved
 ```json
 {
-    "status": 400,
+    "status": 502,
     "message": "<recipe> could not be added <error message>"
 }
 ```
@@ -153,13 +153,15 @@ Deletes a recipe.
     "message": "<recipe> successfully deleted"
 }
 ```
-* `400 error` if the recipe could not be deleted
+
+* `400 error` if the JSON payload was incorrect
 ```json
 {
     "status": 400,
-    "message": "<recipe> could not be deleted <error message>"
+    "message": "Recipe could not be deleted: Missing 'name' parameter from JSON body"
 }
 ```
+
 * `404` if the recipe is not found
 ```json
 {
@@ -171,7 +173,7 @@ Deletes a recipe.
 * `502 error` if the recipe could not be saved
 ```json
 {
-    "status": 400,
+    "status": 502,
     "message": "<recipe> could not be added <error message>"
 }
 ```
@@ -183,6 +185,7 @@ Returns the weekly meal plan. Specifying a day in the query parameter will retur
 * `200 success`
 ```json
 {
+	"status": 200,
     "planner": [
         {
             "day": "Monday",
@@ -217,18 +220,18 @@ Adds a recipe to a specific day of the planner. Specifying the same day will ove
     "message": "<recipe> successfully added to the planner on <day>"
 }
 ```
-* `404` if the recipe is not found
+* `400` if the JSON payload is incorrect
 ```json
 {
-    "status": 404,
-    "message": "<recipe> not found"
+    "status": 400,
+    "message": "Recipe could not be added, missing data from JSON body. Expected: <JSON> Got: <JSON>"
 }
 ```
 
 * `502 error` if the recipe could not be saved
 ```json
 {
-    "status": 400,
+    "status": 502,
     "message": "<recipe> could not be added <error message>"
 }
 ```

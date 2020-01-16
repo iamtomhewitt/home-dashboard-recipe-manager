@@ -115,8 +115,8 @@ router.delete('/delete', (req, res) => {
     let response;
 
     if (!recipeName) {
-        response = error('Recipe could not be deleted: Missing \'name\' parameter from JSON body');
-        res.status(errorCode).send(response);
+        response = clientError('Recipe could not be deleted: Missing \'name\' parameter from JSON body');
+        res.status(clientErrorCode).send(response);
         return;
     }
 

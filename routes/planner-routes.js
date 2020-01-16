@@ -16,6 +16,13 @@ function success(message) {
     };
 }
 
+function clientError(message) {
+    return {
+        status: clientErrorCode,
+        message,
+    };
+}
+
 function error(message) {
     return {
         status: errorCode,
@@ -67,13 +74,13 @@ router.post('/add', (req, res) => {
     let response;
 
     if (!recipeName || !day) {
-        response = error(`Planner could not be updated, missing data from JSON body. Expected: ${JSON.stringify(expectedJson)} Got: ${JSON.stringify(req.body)}`);
+        response = clientError(`Planner could not be updated, missing data from JSON body. Expected: ${JSON.stringify(expectedJson)} Got: ${JSON.stringify(req.body)}`);
         res.status(clientErrorCode).send(response);
         return;
     }
 
     if (validDays.indexOf(day) < 0) {
-        response = error(`Planner could not be updated: '${day}' not a valid day`);
+        response = clientError(`Planner could not be updated: '${day}' not a valid day`);
         res.status(clientErrorCode).send(response);
         return;
     }
