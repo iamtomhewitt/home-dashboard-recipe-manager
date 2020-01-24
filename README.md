@@ -11,8 +11,8 @@
 
 ## Pipeline
 * `Travis` tests the repo using `npm test`, which runs `mocha 'tests/**/*.js' --exit`
-* Once the tests pass, `Heroku` deploys the app
-* When the app is deployed, you can make requests to it [here](https://home-dashboard-recipe-manager.herokuapp.com/)
+* Once the tests pass, `Heroku` deploys the app.
+* When the app is deployed, you can make requests to it.
 
 ## Endpoints
 
