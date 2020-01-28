@@ -5,35 +5,36 @@ const router = express.Router();
 
 const collectionName = 'recipes';
 
-const successCode = 200;
-const errorCode = 502;
-const notFoundCode = 404;
-const clientErrorCode = 400;
+const success = 200;
+const created = 201;
+const badRequest = 400;
+const notFound = 404;
+const serverError = 500;
 
-function success(message) {
+function successResponse(message) {
     return {
-        status: successCode,
+        status: success,
         message,
     };
 }
 
-function clientError(message) {
+function badRequestResponse(message) {
     return {
-        status: clientErrorCode,
+        status: badRequest,
         message,
     };
 }
 
-function error(message) {
+function errorResponse(message) {
     return {
-        status: errorCode,
+        status: serverError,
         message,
     };
 }
 
-function notFound(message) {
+function notFoundResponse(message) {
     return {
-        status: notFoundCode,
+        status: notFound,
         message,
     };
 }
@@ -45,16 +46,16 @@ router.get('/', (req, res) => {
 
     if (recipeName) {
         db.collection(collectionName).findOne({ name: recipeName }).then((recipe) => {
-            const code = recipe === null ? notFoundCode : successCode;
-            response = recipe === null ? notFound(`Could not find '${recipeName}'`) : success('Success');
+            const code = recipe === null ? notFound : success;
+            response = recipe === null ? badRequestResponse(`Could not find '${recipeName}'`) : successResponse('Success');
             response.recipe = recipe;
             res.status(code).send(response);
         });
     } else {
         db.collection(collectionName).find().toArray().then((recipes) => {
-            response = success('Success');
+            response = successResponse('Success');
             response.recipes = recipes;
-            res.status(successCode).send(response);
+            res.status(success).send(response);
         });
     }
 });
@@ -78,8 +79,8 @@ router.post('/add', (req, res) => {
     let missingParameter = false;
 
     if (!recipeName || !ingredients) {
-        response = clientError(`Recipe could not be added, missing data from JSON body. Expected: ${JSON.stringify(expectedJson)} Got: ${JSON.stringify(req.body)}`);
-        res.status(clientErrorCode).send(response);
+        response = badRequestResponse(`Recipe could not be added, missing data from JSON body. Expected: ${JSON.stringify(expectedJson)} Got: ${JSON.stringify(req.body)}`);
+        res.status(badRequest).send(response);
         return;
     }
 
@@ -88,8 +89,8 @@ router.post('/add', (req, res) => {
 
         if (!('name' in ingredient) || !('category' in ingredient) || !('amount' in ingredient) || !('weight' in ingredient)) {
             missingParameter = true;
-            response = clientError(`Recipe could not be added, missing data from JSON body. Expected: ${JSON.stringify(expectedJson)} Got: ${JSON.stringify(req.body)}`);
-            res.status(clientErrorCode).send(response);
+            response = badRequestResponse(`Recipe could not be added, missing data from JSON body. Expected: ${JSON.stringify(expectedJson)} Got: ${JSON.stringify(req.body)}`);
+            res.status(badRequest).send(response);
         }
     });
 
@@ -98,12 +99,12 @@ router.post('/add', (req, res) => {
 
     db.collection(collectionName).findOne({ name: recipeName }).then((recipe) => {
         if (recipe !== null) {
-            response = error(`Cannot add recipe: '${recipeName}' already exists`);
-            res.status(errorCode).send(response);
+            response = errorResponse(`Cannot add recipe: '${recipeName}' already exists`);
+            res.status(serverError).send(response);
         } else {
             db.collection(collectionName).insertOne(req.body);
-            response = success(`Recipe '${recipeName}' added`);
-            res.status(successCode).send(response);
+            response = successResponse(`Recipe '${recipeName}' added`);
+            res.status(created).send(response);
         }
     });
 });
@@ -115,19 +116,19 @@ router.delete('/delete', (req, res) => {
     let response;
 
     if (!recipeName) {
-        response = clientError('Recipe could not be deleted: Missing \'name\' parameter from JSON body');
-        res.status(clientErrorCode).send(response);
+        response = badRequestResponse('Recipe could not be deleted: Missing \'name\' parameter from JSON body');
+        res.status(badRequest).send(response);
         return;
     }
 
     db.collection(collectionName).findOne({ name: recipeName }).then((recipe) => {
         if (recipe === null) {
-            response = notFound(`Cannot delete recipe: '${recipeName}' not found`);
-            res.status(notFoundCode).send(response);
+            response = notFoundResponse(`Cannot delete recipe: '${recipeName}' not found`);
+            res.status(notFound).send(response);
         } else {
             db.collection(collectionName).deleteOne({ name: recipeName }).then(() => {
-                response = success(`'${recipeName}' successfully deleted`);
-                res.status(successCode).send(response);
+                response = successResponse(`'${recipeName}' successfully deleted`);
+                res.status(success).send(response);
             });
         }
     });

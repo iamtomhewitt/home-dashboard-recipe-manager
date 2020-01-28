@@ -68,14 +68,14 @@ describe('/planner/add tests', () => {
         server.close();
     });
 
-    it('/planner/add with JSON payload should give 200', (done) => {
+    it('/planner/add with JSON payload should give 201', (done) => {
         request(server)
             .post('/planner/add')
             .send({
                 day: 'Monday',
                 recipe: 'Some recipe',
             })
-            .expect(200)
+            .expect(201)
             .end((err, response) => {
                 if (err) {
                     return done(err);

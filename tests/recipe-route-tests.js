@@ -30,7 +30,7 @@ describe('/recipes/add tests', () => {
         server.close();
     });
 
-    it('/recipes/add with JSON payload should give 200', (done) => {
+    it('/recipes/add with JSON payload should give 201', (done) => {
         request(server)
             .post('/recipes/add')
             .send({
@@ -50,7 +50,7 @@ describe('/recipes/add tests', () => {
                     },
                 ],
             })
-            .expect(200)
+            .expect(201)
             .end((err, response) => {
                 if (err) {
                     return done(err);
@@ -86,7 +86,7 @@ describe('/recipes/add tests', () => {
             });
     });
 
-    it('/recipes/add with JSON payload of existing recipe should give 502', (done) => {
+    it('/recipes/add with JSON payload of existing recipe should give 500', (done) => {
         request(server)
             .post('/recipes/add')
             .send({
@@ -106,7 +106,7 @@ describe('/recipes/add tests', () => {
                     },
                 ],
             })
-            .expect(502)
+            .expect(500)
             .end((err, response) => {
                 if (err) {
                     return done(err);
