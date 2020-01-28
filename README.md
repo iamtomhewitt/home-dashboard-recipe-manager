@@ -129,10 +129,10 @@ Adds a new recipe.
 }
 ```
 
-* `502 error` if the recipe could not be saved
+* `500` error if the recipe could not be saved
 ```json
 {
-    "status": 502,
+    "status": 500,
     "message": "<recipe> could not be added <error message>"
 }
 ```
@@ -170,10 +170,10 @@ Deletes a recipe.
 }
 ```
 
-* `502 error` if the recipe could not be saved
+* `500` error if the recipe could not be saved
 ```json
 {
-    "status": 502,
+    "status": 500,
     "message": "<recipe> could not be added <error message>"
 }
 ```
@@ -228,10 +228,10 @@ Adds a recipe to a specific day of the planner. Specifying the same day will ove
 }
 ```
 
-* `502 error` if the recipe could not be saved
+* `500` error if the recipe could not be saved
 ```json
 {
-    "status": 502,
+    "status": 500,
     "message": "<recipe> could not be added <error message>"
 }
 ```
