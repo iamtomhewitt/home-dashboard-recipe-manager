@@ -4,8 +4,11 @@ const assert = require('assert');
 describe('/recipe tests', () => {
     let server;
 
-    before(() => {
+    before((done) => {
         server = require('../app').listen(3002);
+        setTimeout(() => {
+            done();
+        }, 500);
     });
 
     after(() => {
