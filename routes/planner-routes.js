@@ -56,7 +56,7 @@ router.get('/', (req, res) => {
             }
         } else {
             response = successResponse('Success');
-            response.planner = result;
+            response.planner = result[0].planner;
             res.status(success).send(response);
         }
     });
