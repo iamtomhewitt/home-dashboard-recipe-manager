@@ -22,7 +22,6 @@ describe('/planner tests', () => {
                 }
 
                 assert.notEqual(response.body.planner, undefined);
-                assert.equal(response.body.planner[0].day, 'Monday');
 
                 return done();
             });
