@@ -20,7 +20,7 @@
 The root endpoint, returning information about the app.
 
 #### Responses
-* `200 success`
+* `200` success
 ```json
 {
     "status": "🍽📝 SERVER OK",
@@ -69,7 +69,7 @@ The root endpoint, returning information about the app.
 ### `/recipes (GET)`
 Returns all the stored recipe names we currently have. Specifying a name parameter returns a single recipe: `/recipes?name=Pasta Bake`
 #### Responses
-* `200 success`
+* `200` success
 ```json
 {
     "recipe": {
@@ -113,7 +113,7 @@ Adds a new recipe.
 }
 ```
 #### Responses
-* `200 success`
+* `200` success
 ```json
 {
     "status": 200,
@@ -121,7 +121,7 @@ Adds a new recipe.
 }
 ```
 
-* `400 error` if JSON payload was incorrect
+* `400` error if JSON payload was incorrect
 ```json
 {
     "status": 400,
@@ -137,6 +137,59 @@ Adds a new recipe.
 }
 ```
 
+
+
+
+### `/recipes/edit (PUT)`
+Updates an existing recipe.
+#### Request Body
+```json
+{
+	"originalName": "<recipe name>",
+    "newName": "<recipe name>",
+    "ingredients": [
+        {
+            "name": "<name>",
+            "category": "<category>",
+            "amount": "<amount>",
+            "weight": "<weight>"
+        }
+    ]
+}
+```
+#### Responses
+* `200` success
+```json
+{
+    "status": 200,
+    "message": "<recipe name> successfully updated"
+}
+```
+
+* `201` created if an attempt was made to update a non existing recipe
+```json
+{
+    "status": 201,
+    "message": "<recipe name> could not be updated as it does not exist, so it was created instead"
+}
+```
+
+* `400` error if JSON payload was incorrect
+```json
+{
+    "status": 400,
+    "message": "Recipe could not be updated, missing data from JSON body. Expected: <JSON> Got: <JSON>"
+}
+```
+
+* `500` error if the recipe could not be saved
+```json
+{
+    "status": 500,
+    "message": "<recipe> could not be updated <error message>"
+}
+```
+
 ### `/recipes/delete (DELETE)`
 Deletes a recipe.
 #### Request Body
@@ -146,7 +199,7 @@ Deletes a recipe.
 }
 ```
 #### Responses
-* `200 success`
+* `200` success
 ```json
 {
     "status": 200,
@@ -154,7 +207,7 @@ Deletes a recipe.
 }
 ```
 
-* `400 error` if the JSON payload was incorrect
+* `400` error if the JSON payload was incorrect
 ```json
 {
     "status": 400,
@@ -182,7 +235,7 @@ Deletes a recipe.
 Returns the weekly meal plan. Specifying a day in the query parameter will return a specific day: `/planner?day=Monday`
 
 #### Responses
-* `200 success`
+* `200` success
 ```json
 {
 	"status": 200,
@@ -213,7 +266,7 @@ Adds a recipe to a specific day of the planner. Specifying the same day will ove
 }
 ```
 #### Responses
-* `200 success`
+* `200` success
 ```json
 {
     "status": 200,
