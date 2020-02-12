@@ -109,6 +109,67 @@ router.post('/add', (req, res) => {
     });
 });
 
+router.put('/update', (req, res) => {
+    const { originalName } = req.body;
+    const { newName } = req.body;
+    const { ingredients } = req.body;
+    const db = mongoUtil.getDb();
+    const expectedJson = {
+        originalName: '<recipe name>',
+        newName: '<recipe name>',
+        ingredients: [
+            {
+                name: '<name>',
+                category: '<category>',
+                amount: '<amount>',
+                weight: '<weight>',
+            },
+        ],
+    };
+
+    let response;
+    let missingParameter = false;
+
+    if (!originalName || !ingredients) {
+        response = badRequestResponse(`Recipe could not be updated, missing data from JSON body. Expected: ${JSON.stringify(expectedJson)} Got: ${JSON.stringify(req.body)} ('newName' is an optional parameter)`);
+        res.status(badRequest).send(response);
+        return;
+    }
+
+    // Check if each parameter is in the ingredients array
+    ingredients.forEach((ingredient) => {
+        if (missingParameter) return;
+
+        if (!('name' in ingredient) || !('category' in ingredient) || !('amount' in ingredient) || !('weight' in ingredient)) {
+            missingParameter = true;
+            response = badRequestResponse(`Recipe could not be updated, missing data from JSON body. Expected: ${JSON.stringify(expectedJson)} Got: ${JSON.stringify(req.body)}`);
+            res.status(badRequest).send(response);
+        }
+    });
+
+    // Stop processing, exit from method
+    if (missingParameter) return;
+
+    db.collection(collectionName).findOne({ name: originalName }).then((recipe) => {
+        if (recipe !== null) {
+            // Found recipe, update
+            const recipeName = newName !== null ? newName : originalName;
+            db.collection(collectionName).updateOne({ name: originalName }, { $set: { name: recipeName, ingredients } });
+            response = successResponse(`'${recipeName}' successfully updated`);
+            res.status(success).send(response);
+        } else {
+            // Recipe not found, create
+            const newRecipe = {
+                name: originalName,
+                ingredients,
+            };
+            db.collection(collectionName).insertOne(newRecipe);
+            response = successResponse(`'${originalName}' could not be updated as it does not exist, so it was created instead`);
+            res.status(created).send(response);
+        }
+    });
+});
+
 router.delete('/delete', (req, res) => {
     const recipeName = req.body.name;
     const db = mongoUtil.getDb();
