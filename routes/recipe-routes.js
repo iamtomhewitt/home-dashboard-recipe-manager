@@ -153,7 +153,7 @@ router.put('/update', (req, res) => {
     db.collection(collectionName).findOne({ name: originalName }).then((recipe) => {
         if (recipe !== null) {
             // Found recipe, update
-            const recipeName = newName !== null ? newName : originalName;
+            const recipeName = newName !== undefined ? newName : originalName;
             db.collection(collectionName).updateOne({ name: originalName }, { $set: { name: recipeName, ingredients } });
             response = successResponse(`'${recipeName}' successfully updated`);
             res.status(success).send(response);
