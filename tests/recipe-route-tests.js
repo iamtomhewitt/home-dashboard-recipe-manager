@@ -135,6 +135,84 @@ describe('/recipes/add tests', () => {
     });
 });
 
+describe('/recipes/update tests', () => {
+    let server;
+
+    before(() => {
+        server = require('../app').listen(3002);
+    });
+
+    after(() => {
+        server.close();
+    });
+
+    it('/recipes/update should give 201 if recipe does not exist', (done) => {
+        request(server)
+            .put('/recipes/update')
+            .send({
+                originalName: 'test',
+                ingredients: [
+                    {
+                        name: '1',
+                        category: '2',
+                        amount: '3',
+                        weight: '4',
+                    },
+                ],
+            })
+            .expect(201)
+            .end((err, response) => {
+                if (err) {
+                    return done(err);
+                }
+
+                assert.equal(response.body.message, "'test' could not be updated as it does not exist, so it was created instead");
+                return done();
+            });
+    });
+
+    it('/recipes/update should give 200 when updating existing recipe', (done) => {
+        request(server)
+            .put('/recipes/update')
+            .send({
+                originalName: 'test',
+                newName: 'testNew',
+                ingredients: [
+                    {
+                        name: '1',
+                        category: '2',
+                        amount: '3',
+                        weight: '4',
+                    },
+                ],
+            })
+            .expect(200)
+            .end((err, response) => {
+                if (err) {
+                    return done(err);
+                }
+
+                assert.equal(response.body.message, "'testNew' successfully updated");
+                return done();
+            });
+    });
+
+    it('/recipes/update should give 400 if payload is incorrect', (done) => {
+        request(server)
+            .put('/recipes/update')
+            .send({})
+            .expect(400)
+            .end((err, response) => {
+                if (err) {
+                    return done(err);
+                }
+
+                assert.equal(response.body.message, 'Recipe could not be updated, missing data from JSON body. Expected: {"originalName":"<recipe name>","newName":"<recipe name>","ingredients":[{"name":"<name>","category":"<category>","amount":"<amount>","weight":"<weight>"}]} Got: {} (\'newName\' is an optional parameter)');
+                return done();
+            });
+    });
+});
+
 describe('/recipe/delete tests', () => {
     let server;
 
