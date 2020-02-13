@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoUtil = require('../mongoUtil');
+require('dotenv').config();
 
 const router = express.Router();
 
@@ -8,6 +9,7 @@ const collectionName = 'planner';
 const success = 200;
 const created = 201;
 const badRequest = 400;
+const unauthorised = 401;
 const serverError = 500;
 
 function successResponse(message) {
@@ -31,11 +33,43 @@ function errorResponse(message) {
     };
 }
 
+function unauthorisedResponse(message) {
+    return {
+        status: unauthorised,
+        message,
+    };
+}
+
+function checkApiKey(apiKey) {
+    if (!apiKey) {
+        return {
+            response: badRequestResponse('No API key specified'),
+            code: badRequest,
+        };
+    }
+
+    if (apiKey !== process.env.API_KEY) {
+        return {
+            response: unauthorisedResponse('API key is incorrect'),
+            code: unauthorised,
+        };
+    }
+
+    return null;
+}
+
 router.get('/', (req, res) => {
     const { day } = req.query;
+    const { apiKey } = req.query;
     const db = mongoUtil.getDb();
 
     let response;
+
+    const failedCheck = checkApiKey(apiKey);
+    if (failedCheck) {
+        res.status(failedCheck.code).send(failedCheck.response);
+        return;
+    }
 
     db.collection(collectionName).find().toArray().then((result) => {
         if (day) {
@@ -64,6 +98,7 @@ router.get('/', (req, res) => {
 
 router.post('/add', (req, res) => {
     const { day } = req.body;
+    const { apiKey } = req.body;
     const recipeName = req.body.recipe;
     const db = mongoUtil.getDb();
     const validDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -73,6 +108,12 @@ router.post('/add', (req, res) => {
     };
 
     let response;
+
+    const failedCheck = checkApiKey(apiKey);
+    if (failedCheck) {
+        res.status(failedCheck.code).send(failedCheck.response);
+        return;
+    }
 
     if (!recipeName || !day) {
         response = badRequestResponse(`Planner could not be updated, missing data from JSON body. Expected: ${JSON.stringify(expectedJson)} Got: ${JSON.stringify(req.body)}`);
