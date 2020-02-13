@@ -24,7 +24,7 @@ The root endpoint, returning information about the app.
 ```json
 {
     "status": "🍽📝 SERVER OK",
-    "version": "1.0.1",
+    "version": "1.1.0",
     "endpoints": [
         {
             "path": "/recipes",
@@ -36,6 +36,12 @@ The root endpoint, returning information about the app.
             "path": "/recipes/add",
             "methods": [
                 "POST"
+            ]
+        },
+        {
+            "path": "/recipes/update",
+            "methods": [
+                "PUT"
             ]
         },
         {
@@ -67,7 +73,7 @@ The root endpoint, returning information about the app.
 ```
 
 ### `/recipes (GET)`
-Returns all the stored recipe names we currently have. Specifying a name parameter returns a single recipe: `/recipes?name=Pasta Bake`
+Returns all the stored recipe names we currently have. An API key must be specified. Specifying a name parameter returns a single recipe: `/recipes?name=Pasta Bake&apiKey=<key>`
 #### Responses
 * `200` success
 ```json
@@ -109,7 +115,8 @@ Adds a new recipe.
             "amount": "<amount>",
             "weight": "<weight>"
         }
-    ]
+	],
+	"apiKey": "<key>"
 }
 ```
 #### Responses
@@ -129,6 +136,14 @@ Adds a new recipe.
 }
 ```
 
+* `401` if unauthorised
+```json
+{
+    "status": 401,
+    "message": "API key is incorrect"
+}
+```
+
 * `500` error if the recipe could not be saved
 ```json
 {
@@ -136,8 +151,6 @@ Adds a new recipe.
     "message": "<recipe> could not be added <error message>"
 }
 ```
-
-
 
 
 ### `/recipes/edit (PUT)`
@@ -154,7 +167,8 @@ Updates an existing recipe.
             "amount": "<amount>",
             "weight": "<weight>"
         }
-    ]
+	],
+	"apiKey": "<key>"
 }
 ```
 #### Responses
@@ -182,6 +196,14 @@ Updates an existing recipe.
 }
 ```
 
+* `401` if unauthorised
+```json
+{
+    "status": 401,
+    "message": "API key is incorrect"
+}
+```
+
 * `500` error if the recipe could not be saved
 ```json
 {
@@ -195,7 +217,8 @@ Deletes a recipe.
 #### Request Body
 ```json
 {
-    "name": "<recipe name>"
+	"name": "<recipe name>",
+	"apiKey": "<key>"
 }
 ```
 #### Responses
@@ -212,6 +235,14 @@ Deletes a recipe.
 {
     "status": 400,
     "message": "Recipe could not be deleted: Missing 'name' parameter from JSON body"
+}
+```
+
+* `401` if unauthorised
+```json
+{
+    "status": 401,
+    "message": "API key is incorrect"
 }
 ```
 
@@ -232,7 +263,7 @@ Deletes a recipe.
 ```
 
 ### `/planner (GET)`
-Returns the weekly meal plan. Specifying a day in the query parameter will return a specific day: `/planner?day=Monday`
+Returns the weekly meal plan. An API key is required. Specifying a day in the query parameter will return a specific day: `/planner?day=Monday&apiKey=<key>`
 
 #### Responses
 * `200` success
@@ -262,7 +293,8 @@ Adds a recipe to a specific day of the planner. Specifying the same day will ove
 ```json
 {
     "day": "<day>",
-    "recipe": "<recipe name>"
+	"recipe": "<recipe name>",
+	"apiKey": "<key>"
 }
 ```
 #### Responses
@@ -273,11 +305,20 @@ Adds a recipe to a specific day of the planner. Specifying the same day will ove
     "message": "<recipe> successfully added to the planner on <day>"
 }
 ```
+
 * `400` if the JSON payload is incorrect
 ```json
 {
     "status": 400,
     "message": "Recipe could not be added, missing data from JSON body. Expected: <JSON> Got: <JSON>"
+}
+```
+
+* `401` if unauthorised
+```json
+{
+    "status": 401,
+    "message": "API key is incorrect"
 }
 ```
 
