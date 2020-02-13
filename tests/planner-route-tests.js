@@ -17,7 +17,7 @@ describe('/planner tests', () => {
 
     it('/planner should give 200', (done) => {
         request(server)
-            .get('/planner')
+            .get(`/planner?apiKey=${process.env.API_KEY}`)
             .expect(200)
             .end((err, response) => {
                 if (err) {
@@ -32,7 +32,7 @@ describe('/planner tests', () => {
 
     it('/planner?day=Monday should give 200', (done) => {
         request(server)
-            .get('/planner?day=Monday')
+            .get(`/planner?day=Monday&apiKey=${process.env.API_KEY}`)
             .expect(200)
             .end((err, response) => {
                 if (err) {
@@ -45,9 +45,37 @@ describe('/planner tests', () => {
             });
     });
 
-    it('/planner?day=invalid should give 400', (done) => {
+    it('/planner?day=invalid should give 401 if api key is incorrect', (done) => {
+        request(server)
+            .get('/planner?day=invalid&apiKey=incorrect')
+            .expect(401)
+            .end((err, response) => {
+                if (err) {
+                    return done(err);
+                }
+
+                assert.equal(response.body.message, 'API key is incorrect');
+                return done();
+            });
+    });
+
+    it('/planner?day=invalid should give 400 if api key is not specified', (done) => {
         request(server)
             .get('/planner?day=invalid')
+            .expect(400)
+            .end((err, response) => {
+                if (err) {
+                    return done(err);
+                }
+
+                assert.equal(response.body.message, 'No API key specified');
+                return done();
+            });
+    });
+
+    it('/planner?day=invalid should give 400', (done) => {
+        request(server)
+            .get(`/planner?day=invalid&apiKey=${process.env.API_KEY}`)
             .expect(400)
             .end((err, response) => {
                 if (err) {
@@ -77,6 +105,7 @@ describe('/planner/add tests', () => {
             .send({
                 day: 'Monday',
                 recipe: 'Some recipe',
+                apiKey: process.env.API_KEY,
             })
             .expect(201)
             .end((err, response) => {
@@ -89,16 +118,56 @@ describe('/planner/add tests', () => {
             });
     });
 
-    it('/planner/add should give 400', (done) => {
+    it('/planner/add with no JSON payload should give 400', (done) => {
         request(server)
             .post('/planner/add')
+            .send({
+                apiKey: process.env.API_KEY,
+            })
             .expect(400)
             .end((err, response) => {
                 if (err) {
                     return done(err);
                 }
 
-                assert.equal(response.body.message, 'Planner could not be updated, missing data from JSON body. Expected: {"day":"<day>","recipe":"<recipe>"} Got: {}');
+                assert.equal(response.body.message, `Planner could not be updated, missing data from JSON body. Expected: {"day":"<day>","recipe":"<recipe>"} Got: {"apiKey":"${process.env.API_KEY}"}`);
+                return done();
+            });
+    });
+
+    it('/planner/add should give 400 if api key is not specified', (done) => {
+        request(server)
+            .post('/planner/add')
+            .send({
+                day: 'Monday',
+                recipe: 'Some recipe',
+            })
+            .expect(400)
+            .end((err, response) => {
+                if (err) {
+                    return done(err);
+                }
+
+                assert.equal(response.body.message, 'No API key specified');
+                return done();
+            });
+    });
+
+    it('/planner/add should give 401 if api key is incorrect', (done) => {
+        request(server)
+            .post('/planner/add')
+            .send({
+                day: 'Monday',
+                recipe: 'Some recipe',
+                apiKey: 'incorrect',
+            })
+            .expect(401)
+            .end((err, response) => {
+                if (err) {
+                    return done(err);
+                }
+
+                assert.equal(response.body.message, 'API key is incorrect');
                 return done();
             });
     });
@@ -109,6 +178,7 @@ describe('/planner/add tests', () => {
             .send({
                 day: 'MadeupDay',
                 recipe: 'Some recipe',
+                apiKey: process.env.API_KEY,
             })
             .expect(400)
             .end((err, response) => {
