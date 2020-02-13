@@ -1,5 +1,6 @@
 const request = require('supertest');
 const assert = require('assert');
+require('dotenv').config();
 
 describe('/recipe tests', () => {
     let server;
@@ -17,8 +18,36 @@ describe('/recipe tests', () => {
 
     it('/recipes should give 200', (done) => {
         request(server)
-            .get('/recipes')
+            .get(`/recipes?apiKey=${process.env.API_KEY}`)
             .expect(200, done);
+    });
+
+    it('/recipes should give 400 when no api key specified', (done) => {
+        request(server)
+            .get('/recipes')
+            .expect(400)
+            .end((err, response) => {
+                if (err) {
+                    return done(err);
+                }
+
+                assert.equal(response.body.message, 'No API key specified');
+                return done();
+            });
+    });
+
+    it('/recipes should give 401 when api key is incorrect', (done) => {
+        request(server)
+            .get('/recipes?apiKey=incorrect')
+            .expect(401)
+            .end((err, response) => {
+                if (err) {
+                    return done(err);
+                }
+
+                assert.equal(response.body.message, 'API key is incorrect');
+                return done();
+            });
     });
 });
 
@@ -52,6 +81,7 @@ describe('/recipes/add tests', () => {
                         weight: 'grams',
                     },
                 ],
+                apiKey: process.env.API_KEY,
             })
             .expect(201)
             .end((err, response) => {
@@ -77,6 +107,7 @@ describe('/recipes/add tests', () => {
                         name: 'chicken',
                     },
                 ],
+                apiKey: process.env.API_KEY,
             })
             .expect(400)
             .end((err, response) => {
@@ -84,7 +115,7 @@ describe('/recipes/add tests', () => {
                     return done(err);
                 }
 
-                assert.equal(response.body.message, 'Recipe could not be added, missing data from JSON body. Expected: {"name":"<recipe name>","ingredients":[{"name":"<name>","category":"<category>","amount":"<amount>","weight":"<weight>"}]} Got: {"name":"Missing","ingredients":[{"name":"pepper"},{"name":"chicken"}]}');
+                assert.equal(response.body.message, `Recipe could not be added, missing data from JSON body. Expected: {"name":"<recipe name>","ingredients":[{"name":"<name>","category":"<category>","amount":"<amount>","weight":"<weight>"}]} Got: {"name":"Missing","ingredients":[{"name":"pepper"},{"name":"chicken"}],"apiKey":"${process.env.API_KEY}"}`);
                 return done();
             });
     });
@@ -108,6 +139,7 @@ describe('/recipes/add tests', () => {
                         weight: 'grams',
                     },
                 ],
+                apiKey: process.env.API_KEY,
             })
             .expect(500)
             .end((err, response) => {
@@ -123,13 +155,48 @@ describe('/recipes/add tests', () => {
     it('/recipes/add should give 400', (done) => {
         request(server)
             .post('/recipes/add')
+            .send({
+                apiKey: process.env.API_KEY,
+            })
             .expect(400)
             .end((err, response) => {
                 if (err) {
                     return done(err);
                 }
 
-                assert.equal(response.body.message, 'Recipe could not be added, missing data from JSON body. Expected: {"name":"<recipe name>","ingredients":[{"name":"<name>","category":"<category>","amount":"<amount>","weight":"<weight>"}]} Got: {}');
+                assert.equal(response.body.message, `Recipe could not be added, missing data from JSON body. Expected: {"name":"<recipe name>","ingredients":[{"name":"<name>","category":"<category>","amount":"<amount>","weight":"<weight>"}]} Got: {"apiKey":"${process.env.API_KEY}"}`);
+                return done();
+            });
+    });
+
+    it('/recipes/add should give 401 if api key is incorrect', (done) => {
+        request(server)
+            .post('/recipes/add')
+            .send({
+                apiKey: 'incorrect',
+            })
+            .expect(401)
+            .end((err, response) => {
+                if (err) {
+                    return done(err);
+                }
+
+                assert.equal(response.body.message, 'API key is incorrect');
+                return done();
+            });
+    });
+
+    it('/recipes/add should give 400 if api key is not specified', (done) => {
+        request(server)
+            .post('/recipes/add')
+            .send({})
+            .expect(400)
+            .end((err, response) => {
+                if (err) {
+                    return done(err);
+                }
+
+                assert.equal(response.body.message, 'No API key specified');
                 return done();
             });
     });
@@ -159,6 +226,7 @@ describe('/recipes/update tests', () => {
                         weight: '4',
                     },
                 ],
+                apiKey: process.env.API_KEY,
             })
             .expect(201)
             .end((err, response) => {
@@ -185,6 +253,7 @@ describe('/recipes/update tests', () => {
                         weight: '4',
                     },
                 ],
+                apiKey: process.env.API_KEY,
             })
             .expect(200)
             .end((err, response) => {
@@ -197,7 +266,7 @@ describe('/recipes/update tests', () => {
             });
     });
 
-    it('/recipes/update should give 400 if payload is incorrect', (done) => {
+    it('/recipes/update should give 400 if api key is not specified', (done) => {
         request(server)
             .put('/recipes/update')
             .send({})
@@ -207,7 +276,41 @@ describe('/recipes/update tests', () => {
                     return done(err);
                 }
 
-                assert.equal(response.body.message, 'Recipe could not be updated, missing data from JSON body. Expected: {"originalName":"<recipe name>","newName":"<recipe name>","ingredients":[{"name":"<name>","category":"<category>","amount":"<amount>","weight":"<weight>"}]} Got: {} (\'newName\' is an optional parameter)');
+                assert.equal(response.body.message, 'No API key specified');
+                return done();
+            });
+    });
+
+    it('/recipes/update should give 401 if api key is incorrect', (done) => {
+        request(server)
+            .put('/recipes/update')
+            .send({
+                apiKey: 'incorrect',
+            })
+            .expect(401)
+            .end((err, response) => {
+                if (err) {
+                    return done(err);
+                }
+
+                assert.equal(response.body.message, 'API key is incorrect');
+                return done();
+            });
+    });
+
+    it('/recipes/update should give 400 if payload is incorrect', (done) => {
+        request(server)
+            .put('/recipes/update')
+            .send({
+                apiKey: process.env.API_KEY,
+            })
+            .expect(400)
+            .end((err, response) => {
+                if (err) {
+                    return done(err);
+                }
+
+                assert.equal(response.body.message, `Recipe could not be updated, missing data from JSON body. Expected: {"originalName":"<recipe name>","newName":"<recipe name>","ingredients":[{"name":"<name>","category":"<category>","amount":"<amount>","weight":"<weight>"}]} Got: {"apiKey":"${process.env.API_KEY}"} ('newName' is an optional parameter)`);
                 return done();
             });
     });
@@ -224,11 +327,47 @@ describe('/recipe/delete tests', () => {
         server.close();
     });
 
+    it('/recipes/delete should give 400 if no API key specified', (done) => {
+        request(server)
+            .delete('/recipes/delete')
+            .send({
+                name: 'invalid',
+            })
+            .expect(400)
+            .end((err, response) => {
+                if (err) {
+                    return done(err);
+                }
+
+                assert.equal(response.body.message, 'No API key specified');
+                return done();
+            });
+    });
+
+    it('/recipes/delete should give 401 if API key incorrect', (done) => {
+        request(server)
+            .delete('/recipes/delete')
+            .send({
+                name: 'invalid',
+                apiKey: 'incorrect',
+            })
+            .expect(401)
+            .end((err, response) => {
+                if (err) {
+                    return done(err);
+                }
+
+                assert.equal(response.body.message, 'API key is incorrect');
+                return done();
+            });
+    });
+
     it('/recipes/delete should give 404', (done) => {
         request(server)
             .delete('/recipes/delete')
             .send({
                 name: 'invalid',
+                apiKey: process.env.API_KEY,
             })
             .expect(404)
             .end((err, response) => {
@@ -246,6 +385,7 @@ describe('/recipe/delete tests', () => {
             .delete('/recipes/delete')
             .send({
                 name: 'New',
+                apiKey: process.env.API_KEY,
             })
             .expect(200)
             .end((err, response) => {
