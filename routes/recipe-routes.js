@@ -87,6 +87,9 @@ router.get('/', (req, res) => {
         });
     } else {
         db.collection(collectionName).find().toArray().then((recipes) => {
+			recipes = recipes.sort(function(a,b) {
+				return a.name.localeCompare(b.name);
+			});
             response = successResponse('Success');
             response.recipes = recipes;
             res.status(success).send(response);
