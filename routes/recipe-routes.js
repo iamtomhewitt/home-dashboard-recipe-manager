@@ -86,10 +86,8 @@ router.get('/', (req, res) => {
             res.status(code).send(response);
         });
     } else {
-        db.collection(collectionName).find().toArray().then((recipes) => {
-			recipes = recipes.sort(function(a,b) {
-				return a.name.localeCompare(b.name);
-			});
+        db.collection(collectionName).find().toArray().then((data) => {
+            const recipes = data.sort((a, b) => a.name.localeCompare(b.name));
             response = successResponse('Success');
             response.recipes = recipes;
             res.status(success).send(response);
