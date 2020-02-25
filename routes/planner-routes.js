@@ -135,9 +135,9 @@ router.post('/add', (req, res) => {
 
     db.collection(collectionName).find({ id: plannerId }).toArray().then((result) => {
         if (result[0] === undefined) {
-			response = errorResponse(`'${plannerId}' planner ID could not be found`);
-			res.status(serverError).send(response);
-			return;
+            response = errorResponse(`'${plannerId}' planner ID could not be found`);
+            res.status(serverError).send(response);
+            return;
         }
 
         result[0].plan.forEach((element) => {
