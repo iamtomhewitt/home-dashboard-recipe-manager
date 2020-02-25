@@ -19,7 +19,7 @@ module.exports = {
                         console.warn(`'${plannerCollectionName}' collection does not exist, creating it`);
                         db.collection(plannerCollectionName).updateOne({ planner: { $exists: true } }, {
                             $set: {
-                                "test-planner": { plan: [{ day: 'Monday', recipe: '' }, { day: 'Tuesday', recipe: '' }, { day: 'Wednesday', recipe: '' }, { day: 'Thursday', recipe: '' }, { day: 'Friday', recipe: '' }, { day: 'Saturday', recipe: '' }, { day: 'Sunday', recipe: '' }] },
+                                'test-planner': { plan: [{ day: 'Monday', recipe: '' }, { day: 'Tuesday', recipe: '' }, { day: 'Wednesday', recipe: '' }, { day: 'Thursday', recipe: '' }, { day: 'Friday', recipe: '' }, { day: 'Saturday', recipe: '' }, { day: 'Sunday', recipe: '' }] },
                             },
                         }, { upsert: true });
                     }
