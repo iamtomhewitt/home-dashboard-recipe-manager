@@ -173,7 +173,7 @@ router.post('/createPlanner', (req, res) => {
     }
 
     if (!plannerId) {
-        response = badRequestResponse(`Planner could not be updated, missing data from JSON body. Expected: ${JSON.stringify(expectedJson)} Got: ${JSON.stringify(req.body)}`);
+        response = badRequestResponse(`Planner could not be created, missing data from JSON body. Expected: ${JSON.stringify(expectedJson)} Got: ${JSON.stringify(req.body)}`);
         res.status(badRequest).send(response);
         return;
     }
