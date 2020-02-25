@@ -1,5 +1,3 @@
-
-
 <h1 align="center">Home Dashboard Recipe Manager </h1>
 <p align="center">
 	A Node Express app for managing recipes and ingredients for my <a href="https://github.com/iamtomhewitt/home-dashboard">home dashboard</a>.
@@ -263,7 +261,12 @@ Deletes a recipe.
 ```
 
 ### `/planner (GET)`
-Returns the weekly meal plan. An API key is required. Specifying a day in the query parameter will return a specific day: `/planner?day=Monday&apiKey=<key>`
+Returns the weekly meal plan. An API key is required. Specifying a day in the query parameter will return a specific day.
+
+Query parameters:
+* `apiKey`
+* `plannerId`
+* (optional) `day`
 
 #### Responses
 * `200` success
@@ -294,7 +297,8 @@ Adds a recipe to a specific day of the planner. Specifying the same day will ove
 {
     "day": "<day>",
 	"recipe": "<recipe name>",
-	"apiKey": "<key>"
+	"apiKey": "<key>",
+	"plannerId": "<id>"
 }
 ```
 #### Responses
@@ -327,5 +331,47 @@ Adds a recipe to a specific day of the planner. Specifying the same day will ove
 {
     "status": 500,
     "message": "<recipe> could not be added <error message>"
+}
+```
+
+### `/planner/createPlanner (POST)`
+Creates a new planner.
+#### Request Body
+```json
+{
+	"apiKey": "<key>",
+	"plannerId": "<id>"
+}
+```
+#### Responses
+* `200` success
+```json
+{
+    "status": 200,
+    "message": "Planner created"
+}
+```
+
+* `400` if the JSON payload is incorrect
+```json
+{
+    "status": 400,
+    "message": "Planner could not be created, missing data from JSON body. Expected: <JSON> Got: <JSON>"
+}
+```
+
+* `401` if unauthorised
+```json
+{
+    "status": 401,
+    "message": "API key is incorrect"
+}
+```
+
+* `500` error if the recipe could not be saved
+```json
+{
+    "status": 500,
+    "message": "Planner could not be created: <error message>"
 }
 ```
