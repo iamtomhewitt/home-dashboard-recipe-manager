@@ -159,4 +159,8 @@ router.post('/add', (req, res) => {
     });
 });
 
+router.post('/createPlanner', (req, res) => {
+    res.status(success).send(successResponse('TODO'));
+});
+
 module.exports = router;
