@@ -72,13 +72,10 @@ router.get('/', (req, res) => {
         return;
     }
 
-    const query = {};
-    query[plannerId] = { $exists: true };
-
-    db.collection(collectionName).find(query).toArray().then((result) => {
+    db.collection(collectionName).find({ id: plannerId }).toArray().then((result) => {
         if (day) {
             let dayPlan;
-            result[0][plannerId].plan.forEach((element) => {
+            result[0].plan.forEach((element) => {
                 if (element.day === day) {
                     dayPlan = element;
                 }
@@ -94,7 +91,7 @@ router.get('/', (req, res) => {
             }
         } else {
             response = successResponse('Success');
-            response.planner = result[0][plannerId].plan;
+            response.planner = result[0].plan;
             res.status(success).send(response);
         }
     });
