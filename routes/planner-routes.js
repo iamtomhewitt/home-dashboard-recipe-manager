@@ -160,7 +160,48 @@ router.post('/add', (req, res) => {
 });
 
 router.post('/createPlanner', (req, res) => {
-    res.status(success).send(successResponse('TODO'));
+    const { apiKey } = req.body;
+    const { plannerId } = req.body;
+    const db = mongoUtil.getDb();
+    const expectedJson = {
+        apiKey: '<apiKey>',
+        plannerId: '<plannerId>',
+    };
+    let response;
+
+    const failedCheck = checkApiKey(apiKey);
+    if (failedCheck) {
+        res.status(failedCheck.code).send(failedCheck.response);
+        return;
+    }
+
+    if (!plannerId) {
+        response = badRequestResponse(`Planner could not be updated, missing data from JSON body. Expected: ${JSON.stringify(expectedJson)} Got: ${JSON.stringify(req.body)}`);
+        res.status(badRequest).send(response);
+        return;
+    }
+
+    db.collection(collectionName).find({ id: plannerId }).toArray().then((result) => {
+        if (result.length !== 0) {
+            response = errorResponse('Planner ID already exists');
+            res.status(serverError).send(response);
+            return;
+        }
+
+        db.collection(collectionName).insertOne({
+            id: plannerId,
+            plan: [{ day: 'Monday', recipe: '' }, { day: 'Tuesday', recipe: '' }, { day: 'Wednesday', recipe: '' }, { day: 'Thursday', recipe: '' }, { day: 'Friday', recipe: '' }, { day: 'Saturday', recipe: '' }, { day: 'Sunday', recipe: '' }],
+        }, (err) => {
+            if (err) {
+                console.log(err.message);
+                response = errorResponse(err.message);
+                res.status(serverError).send(response);
+                return;
+            }
+            response = successResponse('Planner created');
+            res.status(success).send(response);
+        });
+    });
 });
 
 module.exports = router;
