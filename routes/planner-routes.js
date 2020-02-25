@@ -4,7 +4,7 @@ require('dotenv').config();
 
 const router = express.Router();
 
-const collectionName = 'planner';
+const collectionName = 'planners';
 
 const success = 200;
 const created = 201;
@@ -61,6 +61,7 @@ function checkApiKey(apiKey) {
 router.get('/', (req, res) => {
     const { day } = req.query;
     const { apiKey } = req.query;
+    const { plannerId } = req.query;
     const db = mongoUtil.getDb();
 
     let response;
@@ -71,10 +72,13 @@ router.get('/', (req, res) => {
         return;
     }
 
-    db.collection(collectionName).find().toArray().then((result) => {
+    const query = {};
+    query[plannerId] = { $exists: true };
+
+    db.collection(collectionName).find(query).toArray().then((result) => {
         if (day) {
             let dayPlan;
-            result[0].planner.forEach((element) => {
+            result[0][plannerId].plan.forEach((element) => {
                 if (element.day === day) {
                     dayPlan = element;
                 }
@@ -90,7 +94,7 @@ router.get('/', (req, res) => {
             }
         } else {
             response = successResponse('Success');
-            response.planner = result[0].planner;
+            response.planner = result[0][plannerId].plan;
             res.status(success).send(response);
         }
     });
