@@ -103,12 +103,14 @@ router.get('/', (req, res) => {
 router.post('/add', (req, res) => {
     const { day } = req.body;
     const { apiKey } = req.body;
+    const { plannerId } = req.body;
     const recipeName = req.body.recipe;
     const db = mongoUtil.getDb();
     const validDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     const expectedJson = {
         day: '<day>',
         recipe: '<recipe>',
+        plannerId: '<plannerId>',
     };
 
     let response;
@@ -119,7 +121,7 @@ router.post('/add', (req, res) => {
         return;
     }
 
-    if (!recipeName || !day) {
+    if (!recipeName || !day || !plannerId) {
         response = badRequestResponse(`Planner could not be updated, missing data from JSON body. Expected: ${JSON.stringify(expectedJson)} Got: ${JSON.stringify(req.body)}`);
         res.status(badRequest).send(response);
         return;
@@ -131,11 +133,17 @@ router.post('/add', (req, res) => {
         return;
     }
 
-    db.collection(collectionName).find().toArray().then((result) => {
-        result[0].planner.forEach((element) => {
+    db.collection(collectionName).find({ id: plannerId }).toArray().then((result) => {
+        if (result[0] === undefined) {
+			response = errorResponse(`'${plannerId}' planner ID could not be found`);
+			res.status(serverError).send(response);
+			return;
+        }
+
+        result[0].plan.forEach((element) => {
             if (element.day === day) {
-                const query = { 'planner.day': day };
-                const values = { $set: { 'planner.$.recipe': recipeName } };
+                const query = { 'plan.day': day };
+                const values = { $set: { 'plan.$.recipe': recipeName } };
                 db.collection(collectionName).updateOne(query, values, (err) => {
                     if (err) {
                         response = errorResponse(err.message);
