@@ -73,6 +73,12 @@ router.get('/', (req, res) => {
     }
 
     db.collection(collectionName).find({ id: plannerId }).toArray().then((result) => {
+        if (result.length === 0) {
+            response = errorResponse(`Planner ID '${plannerId}' could not be found`);
+            res.status(serverError).send(response);
+            return;
+        }
+
         if (day) {
             let dayPlan;
             result[0].plan.forEach((element) => {

@@ -30,6 +30,22 @@ describe('/planner tests', () => {
             });
     });
 
+    it('/planner should give 500 when getting a planner that does not exist', (done) => {
+        request(server)
+            .get(`/planner?apiKey=${process.env.API_KEY}&plannerId=wrong`)
+            .expect(500)
+            .end((err, response) => {
+                if (err) {
+                    return done(err);
+                }
+
+                assert.equal(response.body.status, 500);
+                assert.equal(response.body.message, "Planner ID 'wrong' could not be found");
+
+                return done();
+            });
+    });
+
     it('/planner?day=Monday should give 200', (done) => {
         request(server)
             .get(`/planner?day=Monday&apiKey=${process.env.API_KEY}&plannerId=test-planner`)
