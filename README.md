@@ -1,10 +1,10 @@
 <h1 align="center">Home Dashboard Recipe Manager </h1>
 <p align="center">
-	A Node Express app for managing recipes and ingredients for my <a href="https://github.com/iamtomhewitt/home-dashboard">home dashboard</a>.
+    A Node Express app for managing recipes and ingredients for my <a href="https://github.com/iamtomhewitt/home-dashboard">home dashboard</a>.
 </p>
 <p align="center">
-	<img src="https://travis-ci.org/iamtomhewitt/home-dashboard-recipe-manager.svg"/>
-	<img src="https://heroku-badge.herokuapp.com/?app=home-dashboard-recipe-manager&style=round&svg=1"/>
+    <img src="https://travis-ci.org/iamtomhewitt/home-dashboard-recipe-manager.svg"/>
+    <img src="https://heroku-badge.herokuapp.com/?app=home-dashboard-recipe-manager&style=round&svg=1"/>
 </p>
 
 ## Pipeline
@@ -61,6 +61,12 @@ The root endpoint, returning information about the app.
             ]
         },
         {
+            "path": "/planner/createPlanner",
+            "methods": [
+                "POST"
+            ]
+        },
+        {
             "path": "/",
             "methods": [
                 "GET"
@@ -94,7 +100,9 @@ Returns all the stored recipe names we currently have. An API key must be specif
                 "amount": "1",
                 "weight": "teaspoon"
             },
-            "and so on..."
+            {
+                "name": "and so on"
+            }
         ]
     }
 }
@@ -113,8 +121,8 @@ Adds a new recipe.
             "amount": "<amount>",
             "weight": "<weight>"
         }
-	],
-	"apiKey": "<key>"
+    ],
+    "apiKey": "<key>"
 }
 ```
 #### Responses
@@ -150,13 +158,12 @@ Adds a new recipe.
 }
 ```
 
-
 ### `/recipes/edit (PUT)`
 Updates an existing recipe.
 #### Request Body
 ```json
 {
-	"originalName": "<recipe name>",
+    "originalName": "<recipe name>",
     "newName": "<recipe name>",
     "ingredients": [
         {
@@ -165,8 +172,8 @@ Updates an existing recipe.
             "amount": "<amount>",
             "weight": "<weight>"
         }
-	],
-	"apiKey": "<key>"
+    ],
+    "apiKey": "<key>"
 }
 ```
 #### Responses
@@ -215,8 +222,8 @@ Deletes a recipe.
 #### Request Body
 ```json
 {
-	"name": "<recipe name>",
-	"apiKey": "<key>"
+    "name": "<recipe name>",
+    "apiKey": "<key>"
 }
 ```
 #### Responses
@@ -266,13 +273,13 @@ Returns the weekly meal plan. An API key is required. Specifying a day in the qu
 Query parameters:
 * `apiKey`
 * `plannerId`
-* (optional) `day`
+* `day` (optional) 
 
 #### Responses
 * `200` success
 ```json
 {
-	"status": 200,
+    "status": 200,
     "planner": [
         {
             "day": "Monday",
@@ -296,9 +303,9 @@ Adds a recipe to a specific day of the planner. Specifying the same day will ove
 ```json
 {
     "day": "<day>",
-	"recipe": "<recipe name>",
-	"apiKey": "<key>",
-	"plannerId": "<id>"
+    "recipe": "<recipe name>",
+    "apiKey": "<key>",
+    "plannerId": "<id>"
 }
 ```
 #### Responses
@@ -339,8 +346,8 @@ Creates a new planner.
 #### Request Body
 ```json
 {
-	"apiKey": "<key>",
-	"plannerId": "<id>"
+    "apiKey": "<key>",
+    "plannerId": "<id>"
 }
 ```
 #### Responses
