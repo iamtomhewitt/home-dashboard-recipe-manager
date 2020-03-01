@@ -145,7 +145,7 @@ router.post('/add', (req, res) => {
 
         result[0].plan.forEach((element) => {
             if (element.day === day) {
-                const query = { 'plan.day': day };
+                const query = { id: plannerId, 'plan.day': day };
                 const values = { $set: { 'plan.$.recipe': recipeName } };
                 db.collection(collectionName).updateOne(query, values, (err) => {
                     if (err) {
