@@ -155,7 +155,9 @@ router.post('/add', (req, res) => {
 });
 
 router.put('/update', (req, res) => {
-    const { originalName, newName, ingredients, apiKey, steps } = req.body;
+    const {
+        originalName, newName, ingredients, apiKey, steps,
+    } = req.body;
     const db = mongoUtil.getDb();
     const expectedJson = {
         originalName: '<recipe name>',
@@ -214,9 +216,9 @@ router.put('/update', (req, res) => {
             // Recipe not found, create
             const newRecipe = {
                 name: originalName,
-				ingredients,
-				steps
-			};
+                ingredients,
+                steps,
+            };
             db.collection(collectionName).insertOne(newRecipe);
             response = successResponse(`'${originalName}' could not be updated as it does not exist, so it was created instead`);
             res.status(created).send(response);
