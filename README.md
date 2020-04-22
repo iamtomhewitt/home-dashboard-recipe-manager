@@ -7,6 +7,11 @@
     <img src="https://heroku-badge.herokuapp.com/?app=home-dashboard-recipe-manager&style=round&svg=1"/>
 </p>
 
+## Docker 🐳
+```bash
+> docker-compose up
+```
+
 ## Pipeline
 * `Travis` tests the repo using `npm test`, which runs `mocha 'tests/**/*.js' --exit`
 * Once the tests pass, `Heroku` deploys the app.
