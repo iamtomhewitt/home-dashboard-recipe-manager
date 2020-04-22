@@ -14,10 +14,10 @@
 
 ## Endpoints
 
-### `/ (GET)`
+## `/ (GET)`
 The root endpoint, returning information about the app.
 
-#### Responses
+### Responses
 * `200` success
 ```json
 {
@@ -76,9 +76,9 @@ The root endpoint, returning information about the app.
 }
 ```
 
-### `/recipes (GET)`
+## `/recipes (GET)`
 Returns all the stored recipe names we currently have. An API key must be specified. Specifying a name parameter returns a single recipe: `/recipes?name=Pasta Bake&apiKey=<key>`
-#### Responses
+### Responses
 * `200` success
 ```json
 {
@@ -103,14 +103,18 @@ Returns all the stored recipe names we currently have. An API key must be specif
             {
                 "name": "and so on"
             }
-        ]
+		],
+		"steps": [
+			"1. Do something",
+			"2. Do something else"
+		]
     }
 }
 ```
 
-### `/recipes/add (POST)`
+## `/recipes/add (POST)`
 Adds a new recipe.
-#### Request Body
+### Request Body
 ```json
 {
     "name": "<recipe name>",
@@ -122,10 +126,14 @@ Adds a new recipe.
             "weight": "<weight>"
         }
     ],
+	"steps": [
+		"1. Do something",
+		"2. Do something else"
+	],
     "apiKey": "<key>"
 }
 ```
-#### Responses
+### Responses
 * `200` success
 ```json
 {
@@ -158,9 +166,9 @@ Adds a new recipe.
 }
 ```
 
-### `/recipes/edit (PUT)`
+## `/recipes/update (PUT)`
 Updates an existing recipe.
-#### Request Body
+### Request Body
 ```json
 {
     "originalName": "<recipe name>",
@@ -173,10 +181,14 @@ Updates an existing recipe.
             "weight": "<weight>"
         }
     ],
+	"steps": [
+		"1. Do something",
+		"2. Do something else"
+	],
     "apiKey": "<key>"
 }
 ```
-#### Responses
+### Responses
 * `200` success
 ```json
 {
@@ -217,16 +229,16 @@ Updates an existing recipe.
 }
 ```
 
-### `/recipes/delete (DELETE)`
+## `/recipes/delete (DELETE)`
 Deletes a recipe.
-#### Request Body
+### Request Body
 ```json
 {
     "name": "<recipe name>",
     "apiKey": "<key>"
 }
 ```
-#### Responses
+### Responses
 * `200` success
 ```json
 {
@@ -267,7 +279,7 @@ Deletes a recipe.
 }
 ```
 
-### `/planner (GET)`
+## `/planner (GET)`
 Returns the weekly meal plan. An API key is required. Specifying a day in the query parameter will return a specific day.
 
 Query parameters:
@@ -275,7 +287,7 @@ Query parameters:
 * `plannerId`
 * `day` (optional) 
 
-#### Responses
+### Responses
 * `200` success
 ```json
 {
@@ -297,9 +309,9 @@ Query parameters:
 }
 ```
 
-### `/planner/add (POST)`
+## `/planner/add (POST)`
 Adds a recipe to a specific day of the planner. Specifying the same day will overwrite the existing entry.
-#### Request Body
+### Request Body
 ```json
 {
     "day": "<day>",
@@ -308,7 +320,7 @@ Adds a recipe to a specific day of the planner. Specifying the same day will ove
     "plannerId": "<id>"
 }
 ```
-#### Responses
+### Responses
 * `200` success
 ```json
 {
@@ -341,16 +353,16 @@ Adds a recipe to a specific day of the planner. Specifying the same day will ove
 }
 ```
 
-### `/planner/createPlanner (POST)`
+## `/planner/createPlanner (POST)`
 Creates a new planner.
-#### Request Body
+### Request Body
 ```json
 {
     "apiKey": "<key>",
     "plannerId": "<id>"
 }
 ```
-#### Responses
+### Responses
 * `200` success
 ```json
 {
