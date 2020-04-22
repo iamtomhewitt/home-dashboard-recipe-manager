@@ -96,8 +96,7 @@ router.get('/', (req, res) => {
 });
 
 router.post('/add', (req, res) => {
-    const { ingredients } = req.body;
-    const { apiKey } = req.body;
+    const { ingredients, apiKey, steps } = req.body;
     const recipeName = req.body.name;
     const db = mongoUtil.getDb();
     const expectedJson = {
@@ -110,6 +109,10 @@ router.post('/add', (req, res) => {
                 weight: '<weight>',
             },
         ],
+        steps: [
+            '1. Example',
+            '2. Example',
+        ],
     };
     let response;
     let missingParameter = false;
@@ -120,7 +123,7 @@ router.post('/add', (req, res) => {
         return;
     }
 
-    if (!recipeName || !ingredients) {
+    if (!recipeName || !ingredients || !steps) {
         response = badRequestResponse(`Recipe could not be added, missing data from JSON body. Expected: ${JSON.stringify(expectedJson)} Got: ${JSON.stringify(req.body)}`);
         res.status(badRequest).send(response);
         return;
@@ -152,10 +155,9 @@ router.post('/add', (req, res) => {
 });
 
 router.put('/update', (req, res) => {
-    const { originalName } = req.body;
-    const { newName } = req.body;
-    const { ingredients } = req.body;
-    const { apiKey } = req.body;
+    const {
+        originalName, newName, ingredients, apiKey, steps,
+    } = req.body;
     const db = mongoUtil.getDb();
     const expectedJson = {
         originalName: '<recipe name>',
@@ -168,6 +170,10 @@ router.put('/update', (req, res) => {
                 weight: '<weight>',
             },
         ],
+        steps: [
+            '1. Example',
+            '2. Example',
+        ],
     };
 
     let response;
@@ -179,7 +185,7 @@ router.put('/update', (req, res) => {
         return;
     }
 
-    if (!originalName || !ingredients) {
+    if (!originalName || !ingredients || !steps) {
         response = badRequestResponse(`Recipe could not be updated, missing data from JSON body. Expected: ${JSON.stringify(expectedJson)} Got: ${JSON.stringify(req.body)} ('newName' is an optional parameter)`);
         res.status(badRequest).send(response);
         return;
@@ -203,7 +209,7 @@ router.put('/update', (req, res) => {
         if (recipe !== null) {
             // Found recipe, update
             const recipeName = newName !== undefined ? newName : originalName;
-            db.collection(collectionName).updateOne({ name: originalName }, { $set: { name: recipeName, ingredients } });
+            db.collection(collectionName).updateOne({ name: originalName }, { $set: { name: recipeName, ingredients, steps } });
             response = successResponse(`'${recipeName}' successfully updated`);
             res.status(success).send(response);
         } else {
@@ -211,6 +217,7 @@ router.put('/update', (req, res) => {
             const newRecipe = {
                 name: originalName,
                 ingredients,
+                steps,
             };
             db.collection(collectionName).insertOne(newRecipe);
             response = successResponse(`'${originalName}' could not be updated as it does not exist, so it was created instead`);
