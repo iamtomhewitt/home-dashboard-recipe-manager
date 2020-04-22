@@ -6,7 +6,8 @@
   "scripts": {
     "pretest": "eslint --ignore-path .gitignore .",
     "lint": "npm run pretest -- --fix",
-    "test": "mocha 'tests/**/*.js' --exit"
+	"test": "mocha 'tests/**/*.js' --exit",
+	"start": "node app.js"
   },
   "repository": {
     "type": "git",
