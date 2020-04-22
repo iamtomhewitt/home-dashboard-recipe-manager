@@ -3,7 +3,7 @@
     A Node Express app for managing recipes and ingredients for my <a href="https://github.com/iamtomhewitt/home-dashboard">home dashboard</a>.
 </p>
 <p align="center">
-    <img src="https://travis-ci.org/iamtomhewitt/home-dashboard-recipe-manager.svg"/>
+    <img src="https://travis-ci.com/iamtomhewitt/home-dashboard-recipe-manager.svg"/>
     <img src="https://heroku-badge.herokuapp.com/?app=home-dashboard-recipe-manager&style=round&svg=1"/>
 </p>
 
