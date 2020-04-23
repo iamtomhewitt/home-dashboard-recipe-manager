@@ -147,7 +147,11 @@ router.post('/add', (req, res) => {
             response = errorResponse(`Cannot add recipe: '${recipeName}' already exists`);
             res.status(serverError).send(response);
         } else {
-            db.collection(collectionName).insertOne(req.body);
+            db.collection(collectionName).insertOne({
+                name: recipeName,
+                ingredients,
+                steps,
+            });
             response = successResponse(`Recipe '${recipeName}' added`);
             res.status(created).send(response);
         }
