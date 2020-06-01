@@ -96,11 +96,14 @@ router.get('/', (req, res) => {
 });
 
 router.post('/add', (req, res) => {
-    const { ingredients, apiKey, steps } = req.body;
+    const {
+        ingredients, apiKey, steps, serves,
+    } = req.body;
     const recipeName = req.body.name;
     const db = mongoUtil.getDb();
     const expectedJson = {
         name: '<recipe name>',
+        serves: '<optional>',
         ingredients: [
             {
                 name: '<name>',
@@ -149,6 +152,7 @@ router.post('/add', (req, res) => {
         } else {
             db.collection(collectionName).insertOne({
                 name: recipeName,
+                serves,
                 ingredients,
                 steps,
             });
@@ -166,6 +170,7 @@ router.put('/update', (req, res) => {
     const expectedJson = {
         originalName: '<recipe name>',
         newName: '<recipe name>',
+        serves: '<serves>',
         ingredients: [
             {
                 name: '<name>',
