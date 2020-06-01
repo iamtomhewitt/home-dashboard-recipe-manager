@@ -67,6 +67,7 @@ describe('/recipes/add tests', () => {
             .post('/recipes/add')
             .send({
                 name: 'New',
+                serves: 2,
                 ingredients: [
                     {
                         name: 'pepper',
@@ -103,6 +104,7 @@ describe('/recipes/add tests', () => {
             .post('/recipes/add')
             .send({
                 name: 'Missing',
+                serves: 1,
                 ingredients: [
                     {
                         name: 'pepper',
@@ -123,7 +125,7 @@ describe('/recipes/add tests', () => {
                     return done(err);
                 }
 
-                assert.equal(response.body.message, `Recipe could not be added, missing data from JSON body. Expected: {"name":"<recipe name>","ingredients":[{"name":"<name>","category":"<category>","amount":"<amount>","weight":"<weight>"}],"steps":["1. Example","2. Example"]} Got: {"name":"Missing","ingredients":[{"name":"pepper"},{"name":"chicken"}],"steps":["1. Do something","2. Do something else"],"apiKey":"${process.env.API_KEY}"}`);
+                assert.equal(response.body.message, `Recipe could not be added, missing data from JSON body. Expected: {"name":"<recipe name>","serves":"<optional>","ingredients":[{"name":"<name>","category":"<category>","amount":"<amount>","weight":"<weight>"}],"steps":["1. Example","2. Example"]} Got: {"name":"Missing","serves":1,"ingredients":[{"name":"pepper"},{"name":"chicken"}],"steps":["1. Do something","2. Do something else"],"apiKey":"${process.env.API_KEY}"}`);
                 return done();
             });
     });
@@ -133,6 +135,7 @@ describe('/recipes/add tests', () => {
             .post('/recipes/add')
             .send({
                 name: 'New',
+                serves: 2,
                 ingredients: [
                     {
                         name: 'pepper',
@@ -176,7 +179,7 @@ describe('/recipes/add tests', () => {
                     return done(err);
                 }
 
-                assert.equal(response.body.message, `Recipe could not be added, missing data from JSON body. Expected: {"name":"<recipe name>","ingredients":[{"name":"<name>","category":"<category>","amount":"<amount>","weight":"<weight>"}],"steps":["1. Example","2. Example"]} Got: {"apiKey":"${process.env.API_KEY}"}`);
+                assert.equal(response.body.message, `Recipe could not be added, missing data from JSON body. Expected: {"name":"<recipe name>","serves":"<optional>","ingredients":[{"name":"<name>","category":"<category>","amount":"<amount>","weight":"<weight>"}],"steps":["1. Example","2. Example"]} Got: {"apiKey":"${process.env.API_KEY}"}`);
                 return done();
             });
     });
@@ -330,7 +333,7 @@ describe('/recipes/update tests', () => {
                     return done(err);
                 }
 
-                assert.equal(response.body.message, `Recipe could not be updated, missing data from JSON body. Expected: {"originalName":"<recipe name>","newName":"<recipe name>","ingredients":[{"name":"<name>","category":"<category>","amount":"<amount>","weight":"<weight>"}],"steps":["1. Example","2. Example"]} Got: {"apiKey":"${process.env.API_KEY}"} ('newName' is an optional parameter)`);
+                assert.equal(response.body.message, `Recipe could not be updated, missing data from JSON body. Expected: {"originalName":"<recipe name>","newName":"<recipe name>","serves":"<serves>","ingredients":[{"name":"<name>","category":"<category>","amount":"<amount>","weight":"<weight>"}],"steps":["1. Example","2. Example"]} Got: {"apiKey":"${process.env.API_KEY}"} ('newName' is an optional parameter)`);
                 return done();
             });
     });
