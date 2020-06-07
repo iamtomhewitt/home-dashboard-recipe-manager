@@ -5,42 +5,42 @@ const {
 module.exports = {
   success(message) {
     return {
-      status: SUCCESS,
+      code: SUCCESS,
       message,
     };
   },
 
   created(message) {
     return {
-      status: CREATED,
+      code: CREATED,
       message,
     };
   },
 
   badRequest(message) {
     return {
-      status: BAD_REQUEST,
+      code: BAD_REQUEST,
       message,
     };
   },
 
   notFound(message) {
     return {
-      status: NOT_FOUND,
+      code: NOT_FOUND,
       message,
     };
   },
 
   error(message) {
     return {
-      status: SERVER_ERROR,
+      code: SERVER_ERROR,
       message,
     };
   },
 
   unauthorised(message) {
     return {
-      status: UNAUTHORISED,
+      code: UNAUTHORISED,
       message,
     };
   },

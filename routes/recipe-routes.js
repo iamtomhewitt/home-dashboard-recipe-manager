@@ -20,7 +20,7 @@ router.get('/', (req, res) => {
   const failedCheck = checkApiKey(apiKey);
 
   if (failedCheck) {
-    res.status(failedCheck.code).send(failedCheck.response);
+    res.status(failedCheck.code).send(failedCheck);
     return;
   }
 
@@ -68,7 +68,7 @@ router.post('/add', (req, res) => {
   let missingParameter = false;
 
   if (failedCheck) {
-    res.status(failedCheck.code).send(failedCheck.response);
+    res.status(failedCheck.code).send(failedCheck);
     return;
   }
 
@@ -132,7 +132,7 @@ router.put('/update', (req, res) => {
   let missingParameter = false;
 
   if (failedCheck) {
-    res.status(failedCheck.code).send(failedCheck.response);
+    res.status(failedCheck.code).send(failedCheck);
     return;
   }
 
@@ -181,7 +181,7 @@ router.delete('/delete', (req, res) => {
   const failedCheck = checkApiKey(apiKey);
 
   if (failedCheck) {
-    res.status(failedCheck.code).send(failedCheck.response);
+    res.status(failedCheck.code).send(failedCheck);
     return;
   }
 
