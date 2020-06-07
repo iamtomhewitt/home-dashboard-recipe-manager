@@ -7,7 +7,7 @@ const {
   SERVER_ERROR, SUCCESS, BAD_REQUEST, NOT_FOUND, CREATED,
 } = require('../responses/codes');
 
-const mongoUtil = require('../mongoUtil');
+const mongoUtil = require('../utils/mongoUtil');
 
 const router = express.Router();
 const collectionName = 'recipes';
