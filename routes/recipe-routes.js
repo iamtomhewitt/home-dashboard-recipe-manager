@@ -89,7 +89,7 @@ router.post('/add', (req, res) => {
   // Stop processing, exit from method
   if (missingParameter) return;
 
-  // TODO  make database finding part of mongo util
+  // TODO make database finding part of mongo util
   db.collection(collectionName).findOne({ name: recipeName }).then((recipe) => {
     if (recipe !== null) {
       res.status(SERVER_ERROR).send(error(`Cannot add recipe: '${recipeName}' already exists`));

@@ -7,7 +7,7 @@ const {
   constructRoute,
 } = require('./testData');
 
-describe('/planner tests', () => {
+describe('Planner tests', () => {
   let server;
 
   before((done) => {
