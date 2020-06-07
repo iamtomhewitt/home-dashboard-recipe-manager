@@ -10,12 +10,10 @@ const {
 const mongoUtil = require('../utils/mongoUtil');
 
 const router = express.Router();
-const collectionName = 'planners';
 require('dotenv').config();
 
 router.get('/', (req, res) => {
   const { day, apiKey, plannerId } = req.query;
-  const db = mongoUtil.getDb();
   const failedCheck = checkApiKey(apiKey);
 
   if (failedCheck) {
@@ -23,7 +21,7 @@ router.get('/', (req, res) => {
     return;
   }
 
-  db.collection(collectionName).find({ id: plannerId }).toArray().then((result) => {
+  mongoUtil.findPlanner(plannerId).then((result) => {
     if (result.length === 0) {
       res.status(SERVER_ERROR).send(error(`Planner ID '${plannerId}' could not be found`));
       return;
@@ -57,7 +55,6 @@ router.get('/', (req, res) => {
 router.post('/add', (req, res) => {
   const { day, apiKey, plannerId } = req.body;
   const recipeName = req.body.recipe;
-  const db = mongoUtil.getDb();
   const validDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
   const expectedJson = {
     day: '<day>',
@@ -81,7 +78,7 @@ router.post('/add', (req, res) => {
     return;
   }
 
-  db.collection(collectionName).find({ id: plannerId }).toArray().then((result) => {
+  mongoUtil.findPlanner(plannerId).then((result) => {
     if (result[0] === undefined) {
       res.status(SERVER_ERROR).send(error(`'${plannerId}' planner ID could not be found`));
       return;
@@ -91,12 +88,12 @@ router.post('/add', (req, res) => {
       if (element.day === day) {
         const query = { id: plannerId, 'plan.day': day };
         const values = { $set: { 'plan.$.recipe': recipeName } };
-        db.collection(collectionName).updateOne(query, values, (err) => {
-          if (err) {
-            res.status(SERVER_ERROR).send(error(err.message));
+
+        mongoUtil.updatePlanner(query, values).then((updateResult) => {
+          if (!updateResult.value) {
+            res.status(SERVER_ERROR).send(error(`Could not update ${recipeName}, and unknown error occured.`));
             return;
           }
-
           res.status(CREATED).send(created(`Recipe '${recipeName}' added`));
         });
       }
@@ -106,7 +103,6 @@ router.post('/add', (req, res) => {
 
 router.post('/createPlanner', (req, res) => {
   const { apiKey, plannerId } = req.body;
-  const db = mongoUtil.getDb();
   const expectedJson = {
     apiKey: '<apiKey>',
     plannerId: '<plannerId>',
@@ -123,26 +119,15 @@ router.post('/createPlanner', (req, res) => {
     return;
   }
 
-  db.collection(collectionName).find({ id: plannerId }).toArray().then((result) => {
+  mongoUtil.findPlanner(plannerId).then((result) => {
     if (result.length !== 0) {
       res.status(SERVER_ERROR).send(error('Planner ID already exists'));
       return;
     }
 
-    db.collection(collectionName).insertOne({
-      id: plannerId,
-      plan: [
-        { day: 'Monday', recipe: '' },
-        { day: 'Tuesday', recipe: '' },
-        { day: 'Wednesday', recipe: '' },
-        { day: 'Thursday', recipe: '' },
-        { day: 'Friday', recipe: '' },
-        { day: 'Saturday', recipe: '' },
-        { day: 'Sunday', recipe: '' },
-      ],
-    }, (err) => {
-      if (err) {
-        res.status(SERVER_ERROR).send(error(err.message));
+    mongoUtil.addNewPlanner(plannerId).then((data) => {
+      if (!data) {
+        res.status(SERVER_ERROR).send(error('Could not add a new planner'));
         return;
       }
       res.status(SUCCESS).send(success('Planner created'));
