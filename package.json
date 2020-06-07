@@ -1,24 +1,25 @@
 {
+  "author": "Tom Hewitt",
+  "description": "A Node Express app for managing recipes and ingredients for my home dashboard.",
+  "homepage": "https://github.com/iamtomhewitt/home-dashboard-recipe-manager#readme",
+  "license": "ISC",
+  "main": "app.js",
   "name": "home-dashboard-recipe-manager",
   "version": "1.3.0",
-  "description": "A Node Express app for managing recipes and ingredients for my home dashboard.",
-  "main": "app.js",
   "scripts": {
+    "lint": "eslint --ignore-path .gitignore .",
+    "lint-fix": "npm run lint -- --fix",
     "pretest": "eslint --ignore-path .gitignore .",
-    "lint": "npm run pretest -- --fix",
-	"test": "mocha 'tests/**/*.js' --exit",
-	"start": "node app.js"
+    "start": "node app.js",
+    "test": "mocha 'tests/**/*.js' --exit"
   },
   "repository": {
     "type": "git",
     "url": "git+https://iamtomhewitt@github.com/iamtomhewitt/home-dashboard-recipe-manager.git"
   },
-  "author": "Tom Hewitt",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/iamtomhewitt/home-dashboard-recipe-manager/issues"
   },
-  "homepage": "https://github.com/iamtomhewitt/home-dashboard-recipe-manager#readme",
   "dependencies": {
     "assert": "^2.0.0",
     "body-parser": "^1.19.0",
@@ -36,12 +37,17 @@
     "node": "12.14.1"
   },
   "devDependencies": {
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
+    "babel-eslint": "^10.1.0",
+    "cz-conventional-changelog": "^2.1.0",
     "eslint": "^6.8.0",
-    "eslint-config-airbnb": "^18.0.1",
-    "eslint-plugin-import": "^2.19.1",
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.17.0",
-    "eslint-plugin-react-hooks": "^1.7.0",
-    "minimist": ">=1.2.2"
+    "eslint-plugin-react": "^7.20.0",
+    "eslint-plugin-react-hooks": "^2.5.1",
+    "husky": "^1.1.2",
+    "validate-commit-msg": "^2.14.0"
   }
 }
