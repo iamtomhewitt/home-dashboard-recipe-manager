@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
   const failedCheck = checkApiKey(apiKey);
 
   if (failedCheck) {
-    res.status(failedCheck.code).send(failedCheck.response);
+    res.status(failedCheck.code).send(failedCheck);
     return;
   }
 
@@ -43,7 +43,7 @@ router.get('/', (req, res) => {
           planner: dayPlan,
         });
       } else {
-        res.status(UNAUTHORISED).send(error(`Could not get planner: '${day}' not a valid day`));
+        res.status(BAD_REQUEST).send(error(`Could not get planner: '${day}' not a valid day`));
       }
     } else {
       res.status(SUCCESS).send({
@@ -67,7 +67,7 @@ router.post('/add', (req, res) => {
   const failedCheck = checkApiKey(apiKey);
 
   if (failedCheck) {
-    res.status(failedCheck.code).send(failedCheck.response);
+    res.status(failedCheck.code).send(failedCheck);
     return;
   }
 
@@ -114,7 +114,7 @@ router.post('/createPlanner', (req, res) => {
   const failedCheck = checkApiKey(apiKey);
 
   if (failedCheck) {
-    res.status(failedCheck.code).send(failedCheck.response);
+    res.status(failedCheck.code).send(failedCheck);
     return;
   }
 
