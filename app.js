@@ -1,7 +1,7 @@
 const listEndpoints = require('express-list-endpoints');
 const express = require('express');
 const bodyParser = require('body-parser');
-const mongoUtil = require('./mongoUtil');
+const mongoUtil = require('./utils/mongoUtil');
 
 const app = express();
 const recipeRoutes = require('./routes/recipe-routes');
