@@ -1,33 +1,47 @@
-import {
+const {
   SUCCESS, CREATED, BAD_REQUEST, SERVER_ERROR, UNAUTHORISED, NOT_FOUND,
-} from './codes';
+} = require('./codes');
 
-export const success = (message) => ({
-  status: SUCCESS,
-  message,
-});
+module.exports = {
+  success(message) {
+    return {
+      status: SUCCESS,
+      message,
+    };
+  },
 
-export const created = (message) => ({
-  status: CREATED,
-  message,
-});
+  created(message) {
+    return {
+      status: CREATED,
+      message,
+    };
+  },
 
-export const badRequest = (message) => ({
-  status: BAD_REQUEST,
-  message,
-});
+  badRequest(message) {
+    return {
+      status: BAD_REQUEST,
+      message,
+    };
+  },
 
-export const notFound = (message) => ({
-  status: NOT_FOUND,
-  message,
-});
+  notFound(message) {
+    return {
+      status: NOT_FOUND,
+      message,
+    };
+  },
 
-export const error = (message) => ({
-  status: SERVER_ERROR,
-  message,
-});
+  error(message) {
+    return {
+      status: SERVER_ERROR,
+      message,
+    };
+  },
 
-export const unauthorised = (message) => ({
-  status: UNAUTHORISED,
-  message,
-});
+  unauthorised(message) {
+    return {
+      status: UNAUTHORISED,
+      message,
+    };
+  },
+};

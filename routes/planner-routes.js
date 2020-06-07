@@ -1,12 +1,12 @@
-import { checkApiKey } from '../utils/utils';
-import {
-  success, badRequest, error, created,
-} from '../responses/responses';
-import {
-  SERVER_ERROR, SUCCESS, UNAUTHORISED, BAD_REQUEST, CREATED,
-} from '../responses/codes';
-
 const express = require('express');
+const { checkApiKey } = require('../utils/utils');
+const {
+  success, badRequest, error, created,
+} = require('../responses/responses');
+const {
+  SERVER_ERROR, SUCCESS, UNAUTHORISED, BAD_REQUEST, CREATED,
+} = require('../responses/codes');
+
 const mongoUtil = require('../mongoUtil');
 
 const router = express.Router();

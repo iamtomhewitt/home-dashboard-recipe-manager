@@ -1,6 +1,8 @@
-export const SUCCESS = 200;
-export const CREATED = 201;
-export const BAD_REQUEST = 400;
-export const UNAUTHORISED = 401;
-export const NOT_FOUND = 404;
-export const SERVER_ERROR = 500;
+module.exports = {
+  SUCCESS: 200,
+  CREATED: 201,
+  BAD_REQUEST: 400,
+  UNAUTHORISED: 401,
+  NOT_FOUND: 404,
+  SERVER_ERROR: 500,
+};
