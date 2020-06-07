@@ -10,13 +10,11 @@ const {
 const mongoUtil = require('../utils/mongoUtil');
 
 const router = express.Router();
-const collectionName = 'recipes';
 require('dotenv').config();
 
 router.get('/', (req, res) => {
   const { apiKey } = req.query;
   const recipeName = req.query.name;
-  const db = mongoUtil.getDb();
   const failedCheck = checkApiKey(apiKey);
 
   if (failedCheck) {
@@ -25,14 +23,14 @@ router.get('/', (req, res) => {
   }
 
   if (recipeName) {
-    db.collection(collectionName).findOne({ name: recipeName }).then((recipe) => {
+    mongoUtil.findRecipe(recipeName).then((recipe) => {
       const code = recipe === null ? NOT_FOUND : SUCCESS;
       res.status(code).send({
         recipe: recipe === null ? badRequest(`Could not find '${recipeName}'`) : success('Success'),
       });
     });
   } else {
-    db.collection(collectionName).find().toArray().then((data) => {
+    mongoUtil.findRecipes().then((data) => {
       const recipes = data.sort((a, b) => a.name.localeCompare(b.name));
       res.status(SUCCESS).send({
         ...success('Success'),
@@ -47,7 +45,6 @@ router.post('/add', (req, res) => {
     ingredients, apiKey, steps, serves,
   } = req.body;
   const recipeName = req.body.name;
-  const db = mongoUtil.getDb();
   const failedCheck = checkApiKey(apiKey);
   const expectedJson = {
     name: '<recipe name>',
@@ -89,17 +86,16 @@ router.post('/add', (req, res) => {
   // Stop processing, exit from method
   if (missingParameter) return;
 
-  // TODO make database finding part of mongo util
-  db.collection(collectionName).findOne({ name: recipeName }).then((recipe) => {
-    if (recipe !== null) {
+  mongoUtil.findRecipe(recipeName).then((recipe) => {
+    if (recipe) {
       res.status(SERVER_ERROR).send(error(`Cannot add recipe: '${recipeName}' already exists`));
     } else {
-      db.collection(collectionName).insertOne({
-        name: recipeName,
+      mongoUtil.addRecipe(
+        recipeName,
         serves,
         ingredients,
         steps,
-      });
+      );
       res.status(CREATED).send(success(`Recipe '${recipeName}' added`));
     }
   });
@@ -107,10 +103,9 @@ router.post('/add', (req, res) => {
 
 router.put('/update', (req, res) => {
   const {
-    originalName, newName, ingredients, apiKey, steps,
+    originalName, newName, ingredients, apiKey, steps, serves,
   } = req.body;
   const failedCheck = checkApiKey(apiKey);
-  const db = mongoUtil.getDb();
   const expectedJson = {
     originalName: '<recipe name>',
     newName: '<recipe name>',
@@ -155,20 +150,15 @@ router.put('/update', (req, res) => {
   // Stop processing, exit from method
   if (missingParameter) return;
 
-  db.collection(collectionName).findOne({ name: originalName }).then((recipe) => {
+  mongoUtil.findRecipe(originalName).then((recipe) => {
     if (recipe !== null) {
       // Found recipe, update
       const recipeName = newName !== undefined ? newName : originalName;
-      db.collection(collectionName).updateOne({ name: originalName }, { $set: { name: recipeName, ingredients, steps } });
+      mongoUtil.updateRecipe(originalName, recipeName, ingredients, steps, serves);
       res.status(SUCCESS).send(success(`'${recipeName}' successfully updated`));
     } else {
       // Recipe not found, create
-      const newRecipe = {
-        name: originalName,
-        ingredients,
-        steps,
-      };
-      db.collection(collectionName).insertOne(newRecipe);
+      mongoUtil.addRecipe(originalName, serves, ingredients, steps);
       res.status(CREATED).send(created(`'${originalName}' could not be updated as it does not exist, so it was created instead`));
     }
   });
@@ -177,7 +167,6 @@ router.put('/update', (req, res) => {
 router.delete('/delete', (req, res) => {
   const { apiKey } = req.body;
   const recipeName = req.body.name;
-  const db = mongoUtil.getDb();
   const failedCheck = checkApiKey(apiKey);
 
   if (failedCheck) {
@@ -190,13 +179,12 @@ router.delete('/delete', (req, res) => {
     return;
   }
 
-  db.collection(collectionName).findOne({ name: recipeName }).then((recipe) => {
+  mongoUtil.findRecipe(recipeName).then((recipe) => {
     if (recipe === null) {
       res.status(NOT_FOUND).send(notFound(`Cannot delete recipe: '${recipeName}' not found`));
     } else {
-      db.collection(collectionName).deleteOne({ name: recipeName }).then(() => {
-        res.status(SUCCESS).send(success(`'${recipeName}' successfully deleted`));
-      });
+      mongoUtil.deleteRecipe(recipeName);
+      res.status(SUCCESS).send(success(`'${recipeName}' successfully deleted`));
     }
   });
 });
