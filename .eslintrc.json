@@ -1,14 +1,25 @@
 {
-    "extends": "airbnb",
-    "rules": {
-        "indent": ["error", 2],
-		"react/jsx-filename-extension": "off",
-		"max-len": ["error", { "code": 200}],
-		"react/no-unescaped-entities": "off",
-		"jsx-a11y/label-has-associated-control": "off",
-		"no-console": "error"
-    },
     "env": {
-        "mocha": true
+        "commonjs": true,
+        "es6": true,
+        "node": true,
+        "mocha": true,
+        "amd": true
+    },
+    "extends": [
+        "airbnb-base"
+    ],
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "parserOptions": {
+        "ecmaVersion": 2018
+    },
+    "rules": {
+        "max-len": ["error", { "code": 200}],
+        "no-console": "error",
+        "indent": ["error", 2],
+        "global-require": "off"
     }
 }
