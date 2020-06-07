@@ -11,3 +11,5 @@ export const checkApiKey = (apiKey) => {
 
   return null;
 };
+
+export default checkApiKey;

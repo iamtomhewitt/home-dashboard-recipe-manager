@@ -1,5 +1,5 @@
 import {
-  SUCCESS, CREATED, BAD_REQUEST, SERVER_ERROR, UNAUTHORISED,
+  SUCCESS, CREATED, BAD_REQUEST, SERVER_ERROR, UNAUTHORISED, NOT_FOUND,
 } from './codes';
 
 export const success = (message) => ({
@@ -14,6 +14,11 @@ export const created = (message) => ({
 
 export const badRequest = (message) => ({
   status: BAD_REQUEST,
+  message,
+});
+
+export const notFound = (message) => ({
+  status: NOT_FOUND,
   message,
 });
 
