@@ -1,10 +1,19 @@
 const request = require('supertest');
 const assert = require('assert');
-const { constructRecipeRoute } = require('./testData');
+
 const {
   SUCCESS, BAD_REQUEST, UNAUTHORISED,
 } = require('../../responses/codes');
+
 require('dotenv').config();
+
+function constructRecipeRoute(apiKey) {
+  let url = '/recipes';
+  if (apiKey) {
+    url += `?apiKey=${apiKey}`;
+  }
+  return url;
+}
 
 describe('Recipe tests', () => {
   let server;
