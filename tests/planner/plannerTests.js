@@ -1,11 +1,22 @@
 const request = require('supertest');
 const assert = require('assert');
+
 const {
   SUCCESS, BAD_REQUEST, UNAUTHORISED, SERVER_ERROR,
 } = require('../../responses/codes');
+
 const {
   constructRoute,
-} = require('./testData');
+} = require('./requestData');
+
+const {
+  PLANNER_WRONG_ID, PLANNER_API_KEY_INCORRECT, PLANNER_NO_API_KEY, PLANNER_GET_INVALID_DAY, PLANNER_ENTRY,
+} = require('./responseData');
+
+const day = 'Monday';
+const dayIncorrect = 'invalid';
+const plannerId = 'test-planner';
+const plannerIdIncorrect = 'invalid';
 
 describe('Planner tests', () => {
   let server;
@@ -23,7 +34,7 @@ describe('Planner tests', () => {
 
   it('should fetch a planner', (done) => {
     request(server)
-      .get(constructRoute(null, process.env.API_KEY, 'test-planner'))
+      .get(constructRoute(null, process.env.API_KEY, plannerId))
       .expect(SUCCESS)
       .end((err, response) => {
         if (err) {
@@ -38,15 +49,14 @@ describe('Planner tests', () => {
 
   it('should return an error when fetching a non-existant planner', (done) => {
     request(server)
-      .get(constructRoute(null, process.env.API_KEY, 'wrong'))
+      .get(constructRoute(null, process.env.API_KEY, plannerIdIncorrect))
       .expect(SERVER_ERROR)
       .end((err, response) => {
         if (err) {
           return done(err);
         }
 
-        assert.equal(response.body.code, 500);
-        assert.equal(response.body.message, "Planner ID 'wrong' could not be found");
+        assert.deepEqual(response.body, PLANNER_WRONG_ID);
 
         return done();
       });
@@ -54,57 +64,56 @@ describe('Planner tests', () => {
 
   it('should return a recipe for a given day', (done) => {
     request(server)
-      .get(constructRoute('Monday', process.env.API_KEY, 'test-planner'))
+      .get(constructRoute(day, process.env.API_KEY, plannerId))
       .expect(SUCCESS)
       .end((err, response) => {
         if (err) {
           return done(err);
         }
 
-        assert.equal(response.body.planner.day, 'Monday');
-        assert.equal(response.body.message, 'Success');
+        assert.deepEqual(response.body, PLANNER_ENTRY);
         return done();
       });
   });
 
   it('should give unauthorised if api key is incorrect', (done) => {
     request(server)
-      .get(constructRoute('Monday', 'incorrect', 'test-planner'))
+      .get(constructRoute(day, 'incorrect', plannerId))
       .expect(UNAUTHORISED)
       .end((err, response) => {
         if (err) {
           return done(err);
         }
 
-        assert.equal(response.body.message, 'API key is incorrect');
+        assert.deepEqual(response.body, PLANNER_API_KEY_INCORRECT);
         return done();
       });
   });
 
   it('should give bad request if api key is not specified', (done) => {
     request(server)
-      .get(constructRoute('Monday', null, 'test-planner'))
+      .get(constructRoute(day, null, plannerId))
       .expect(BAD_REQUEST)
       .end((err, response) => {
         if (err) {
           return done(err);
         }
 
-        assert.equal(response.body.message, 'No API key specified');
+        assert.deepEqual(response.body, PLANNER_NO_API_KEY);
         return done();
       });
   });
 
   it('should give bad request if day is invalid', (done) => {
     request(server)
-      .get(constructRoute('invalid', process.env.API_KEY, 'test-planner'))
+      .get(constructRoute(dayIncorrect, process.env.API_KEY, plannerId))
       .expect(BAD_REQUEST)
       .end((err, response) => {
         if (err) {
           return done(err);
         }
 
-        assert.equal(response.body.message, 'Could not get planner: \'invalid\' not a valid day');
+        assert.deepEqual(response.body, PLANNER_GET_INVALID_DAY);
         return done();
       });
   });
