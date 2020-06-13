@@ -2,17 +2,22 @@ const request = require('supertest');
 const assert = require('assert');
 
 const ROUTE = '/recipes/update';
-const { BODY_UPDATE_RECIPE } = require('./testData');
+const { BODY_UPDATE_RECIPE } = require('../testData');
+
 const {
   BAD_REQUEST, UNAUTHORISED, CREATED, SUCCESS,
-} = require('../../responses/codes');
+} = require('../../../responses/codes');
+
+const {
+  RECIPE_CREATED, RECIPE_UPDATED, RECIPE_NO_API_KEY, RECIPE_API_KEY_INCORRECT, RECIPE_BAD_REQUEST,
+} = require('./responseData');
 require('dotenv').config();
 
 describe('Update recipe tests', () => {
   let server;
 
   before(() => {
-    server = require('../../app').listen(3002);
+    server = require('../../../app').listen(3002);
   });
 
   after(() => {
@@ -29,7 +34,7 @@ describe('Update recipe tests', () => {
           return done(err);
         }
 
-        assert.equal(response.body.message, "'test' could not be updated as it does not exist, so it was created instead");
+        assert.deepEqual(response.body, RECIPE_CREATED);
         return done();
       });
   });
@@ -44,7 +49,7 @@ describe('Update recipe tests', () => {
           return done(err);
         }
 
-        assert.equal(response.body.message, "'testNew' successfully updated");
+        assert.deepEqual(response.body, RECIPE_UPDATED);
         return done();
       });
   });
@@ -59,7 +64,7 @@ describe('Update recipe tests', () => {
           return done(err);
         }
 
-        assert.equal(response.body.message, 'No API key specified');
+        assert.deepEqual(response.body, RECIPE_NO_API_KEY);
         return done();
       });
   });
@@ -74,7 +79,7 @@ describe('Update recipe tests', () => {
           return done(err);
         }
 
-        assert.equal(response.body.message, 'API key is incorrect');
+        assert.deepEqual(response.body, RECIPE_API_KEY_INCORRECT);
         return done();
       });
   });
@@ -93,7 +98,7 @@ describe('Update recipe tests', () => {
 
         // eslint-disable-next-line max-len
         const expectedMessage = `Recipe could not be updated, missing data from JSON body. Expected: {"originalName":"<recipe name>","newName":"<recipe name>","serves":"<serves>","ingredients":[{"name":"<name>","category":"<category>","amount":"<amount>","weight":"<weight>"}],"steps":["1. Example","2. Example"]} Got: {"apiKey":"${process.env.API_KEY}"} ('newName' is an optional parameter)`;
-        assert.equal(response.body.message, expectedMessage);
+        assert.deepEqual(response.body, RECIPE_BAD_REQUEST(expectedMessage));
         return done();
       });
   });
