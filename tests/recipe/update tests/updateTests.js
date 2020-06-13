@@ -2,7 +2,6 @@ const request = require('supertest');
 const assert = require('assert');
 
 const ROUTE = '/recipes/update';
-const { BODY_UPDATE_RECIPE } = require('../testData');
 
 const {
   BAD_REQUEST, UNAUTHORISED, CREATED, SUCCESS,
@@ -11,6 +10,7 @@ const {
 const {
   RECIPE_CREATED, RECIPE_UPDATED, RECIPE_NO_API_KEY, RECIPE_API_KEY_INCORRECT, RECIPE_BAD_REQUEST,
 } = require('./responseData');
+const { UPDATE_RECIPE_BODY } = require('./requestData');
 require('dotenv').config();
 
 describe('Update recipe tests', () => {
@@ -27,7 +27,7 @@ describe('Update recipe tests', () => {
   it('should create a recipe if trying to update a recipe that does not exist', (done) => {
     request(server)
       .put(ROUTE)
-      .send(BODY_UPDATE_RECIPE(process.env.API_KEY))
+      .send(UPDATE_RECIPE_BODY(process.env.API_KEY))
       .expect(CREATED)
       .end((err, response) => {
         if (err) {
@@ -42,7 +42,7 @@ describe('Update recipe tests', () => {
   it('should update an existing recipe', (done) => {
     request(server)
       .put(ROUTE)
-      .send(BODY_UPDATE_RECIPE(process.env.API_KEY))
+      .send(UPDATE_RECIPE_BODY(process.env.API_KEY))
       .expect(SUCCESS)
       .end((err, response) => {
         if (err) {
@@ -72,7 +72,7 @@ describe('Update recipe tests', () => {
   it('should give unauthorised if api key is incorrect', (done) => {
     request(server)
       .put(ROUTE)
-      .send(BODY_UPDATE_RECIPE('incorrect'))
+      .send(UPDATE_RECIPE_BODY('incorrect'))
       .expect(UNAUTHORISED)
       .end((err, response) => {
         if (err) {
