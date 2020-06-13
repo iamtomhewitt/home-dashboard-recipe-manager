@@ -1,12 +1,12 @@
 const request = require('supertest');
 const assert = require('assert');
-const { BODY_ADD_RECIPE, BODY_ADD_RECIPE_MISSING_INGREDIENTS } = require('../testData');
 const {
   BAD_REQUEST, UNAUTHORISED, CREATED, SERVER_ERROR,
 } = require('../../../responses/codes');
 const {
   RECIPE_CREATED, RECIPE_BAD_REQUEST, RECIPE_EXISTS, RECIPE_API_KEY_INCORRECT, RECIPE_NO_API_KEY,
 } = require('./responseData');
+const { ADD_RECIPE_BODY, ADD_RECIPE_MISSING_INGREDIENTS_BODY } = require('./requestData');
 
 const ROUTE = '/recipes/add';
 require('dotenv').config();
@@ -25,7 +25,7 @@ describe('Add recipe tests', () => {
   it('should give created when called with json payload', (done) => {
     request(server)
       .post(ROUTE)
-      .send(BODY_ADD_RECIPE(process.env.API_KEY))
+      .send(ADD_RECIPE_BODY(process.env.API_KEY))
       .expect(CREATED)
       .end((err, response) => {
         if (err) {
@@ -40,7 +40,7 @@ describe('Add recipe tests', () => {
   it('should give bad request when missing parameters in ingredients', (done) => {
     request(server)
       .post(ROUTE)
-      .send(BODY_ADD_RECIPE_MISSING_INGREDIENTS(process.env.API_KEY))
+      .send(ADD_RECIPE_MISSING_INGREDIENTS_BODY(process.env.API_KEY))
       .expect(BAD_REQUEST)
       .end((err, response) => {
         if (err) {
@@ -57,7 +57,7 @@ describe('Add recipe tests', () => {
   it('should give error when adding an existing recipe', (done) => {
     request(server)
       .post(ROUTE)
-      .send(BODY_ADD_RECIPE(process.env.API_KEY))
+      .send(ADD_RECIPE_BODY(process.env.API_KEY))
       .expect(SERVER_ERROR)
       .end((err, response) => {
         if (err) {
