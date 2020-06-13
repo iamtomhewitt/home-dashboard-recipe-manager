@@ -1,13 +1,5 @@
 module.exports = {
-  constructRecipeRoute(apiKey) {
-    let url = '/recipes';
-    if (apiKey) {
-      url += `?apiKey=${apiKey}`;
-    }
-    return url;
-  },
-
-  BODY_ADD_RECIPE(apiKey) {
+  ADD_RECIPE_BODY(apiKey) {
     return {
       name: 'New',
       serves: 2,
@@ -33,7 +25,8 @@ module.exports = {
     };
   },
 
-  BODY_ADD_RECIPE_MISSING_INGREDIENTS(apiKey) {
+
+  ADD_RECIPE_MISSING_INGREDIENTS_BODY(apiKey) {
     return {
       name: 'Missing',
       serves: 1,
@@ -43,26 +36,6 @@ module.exports = {
         },
         {
           name: 'chicken',
-        },
-      ],
-      steps: [
-        '1. Do something',
-        '2. Do something else',
-      ],
-      apiKey,
-    };
-  },
-
-  BODY_UPDATE_RECIPE(apiKey) {
-    return {
-      originalName: 'test',
-      newName: 'testNew',
-      ingredients: [
-        {
-          name: '1',
-          category: '2',
-          amount: '3',
-          weight: '4',
         },
       ],
       steps: [
