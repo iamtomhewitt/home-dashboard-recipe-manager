@@ -1,15 +1,20 @@
-const { badRequest, unauthorised } = require('../responses/responses');
+const { BAD_REQUEST, UNAUTHORISED } = require('../responses/codes');
 
 module.exports = {
   checkApiKey(apiKey) {
     if (!apiKey) {
-      return badRequest('No API key specified');
+      return {
+        code: BAD_REQUEST,
+        message: 'No API key specified',
+      };
     }
 
     if (apiKey !== process.env.API_KEY) {
-      return unauthorised('API key is incorrect');
+      return {
+        code: UNAUTHORISED,
+        message: 'API key is incorrect',
+      };
     }
-
     return null;
   },
 };

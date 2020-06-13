@@ -1,13 +1,19 @@
 const request = require('supertest');
 const assert = require('assert');
+
+const ROUTE = '/planner/add';
+
 const {
   CREATED, BAD_REQUEST, UNAUTHORISED,
 } = require('../../responses/codes');
 
-const ROUTE = '/planner/add';
 const {
   BODY, BODY_EMPTY, BODY_API_KEY_INCORRECT, BODY_INCORRECT_DAY, BODY_NO_API_KEY,
-} = require('./testData');
+} = require('./requestTestData');
+
+const {
+  PLANNER_ENTRY_CREATED, PLANNER_BAD_REQUEST, PLANNER_NO_API_KEY, PLANNER_API_KEY_INCORRECT, PLANNER_ADD_INVALID_DAY,
+} = require('./responseTestData');
 
 describe('Add to planner tests', () => {
   let server;
@@ -30,7 +36,7 @@ describe('Add to planner tests', () => {
           return done(err);
         }
 
-        assert.equal(response.body.message, "Recipe 'Some recipe' added");
+        assert.deepEqual(response.body, PLANNER_ENTRY_CREATED);
         return done();
       });
   });
@@ -46,7 +52,7 @@ describe('Add to planner tests', () => {
         }
 
         const expected = `Planner could not be updated, missing data from JSON body. Expected: {"day":"<day>","recipe":"<recipe>","plannerId":"<plannerId>"} Got: {"apiKey":"${process.env.API_KEY}"}`;
-        assert.equal(response.body.message, expected);
+        assert.deepEqual(response.body, PLANNER_BAD_REQUEST(expected));
         return done();
       });
   });
@@ -61,7 +67,7 @@ describe('Add to planner tests', () => {
           return done(err);
         }
 
-        assert.equal(response.body.message, 'No API key specified');
+        assert.deepEqual(response.body, PLANNER_NO_API_KEY);
         return done();
       });
   });
@@ -76,7 +82,7 @@ describe('Add to planner tests', () => {
           return done(err);
         }
 
-        assert.equal(response.body.message, 'API key is incorrect');
+        assert.deepEqual(response.body, PLANNER_API_KEY_INCORRECT);
         return done();
       });
   });
@@ -91,7 +97,7 @@ describe('Add to planner tests', () => {
           return done(err);
         }
 
-        assert.equal(response.body.message, "Planner could not be updated: 'MadeupDay' not a valid day");
+        assert.deepEqual(response.body, PLANNER_ADD_INVALID_DAY);
         return done();
       });
   });
