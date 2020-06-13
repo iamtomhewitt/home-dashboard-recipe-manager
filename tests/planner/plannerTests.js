@@ -7,11 +7,11 @@ const {
 
 const {
   constructRoute,
-} = require('./requestTestData');
+} = require('./requestData');
 
 const {
   PLANNER_WRONG_ID, PLANNER_API_KEY_INCORRECT, PLANNER_NO_API_KEY, PLANNER_GET_INVALID_DAY, PLANNER_ENTRY,
-} = require('./responseTestData');
+} = require('./responseData');
 
 const day = 'Monday';
 const dayIncorrect = 'invalid';

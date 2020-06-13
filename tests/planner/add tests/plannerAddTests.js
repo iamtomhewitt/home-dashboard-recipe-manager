@@ -5,21 +5,21 @@ const ROUTE = '/planner/add';
 
 const {
   CREATED, BAD_REQUEST, UNAUTHORISED,
-} = require('../../responses/codes');
+} = require('../../../responses/codes');
 
 const {
   BODY, BODY_EMPTY, BODY_API_KEY_INCORRECT, BODY_INCORRECT_DAY, BODY_NO_API_KEY,
-} = require('./requestTestData');
+} = require('./requestData');
 
 const {
   PLANNER_ENTRY_CREATED, PLANNER_BAD_REQUEST, PLANNER_NO_API_KEY, PLANNER_API_KEY_INCORRECT, PLANNER_ADD_INVALID_DAY,
-} = require('./responseTestData');
+} = require('./responseData');
 
 describe('Add to planner tests', () => {
   let server;
 
   before(() => {
-    server = require('../../app').listen(3002);
+    server = require('../../../app').listen(3002);
   });
 
   after(() => {
