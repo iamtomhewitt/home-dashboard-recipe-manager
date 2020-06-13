@@ -25,9 +25,8 @@ router.get('/', (req, res) => {
   if (recipeName) {
     mongoUtil.findRecipe(recipeName).then((recipe) => {
       const code = recipe === null ? NOT_FOUND : SUCCESS;
-      res.status(code).send({
-        recipe: recipe === null ? badRequest(`Could not find '${recipeName}'`) : success('Success'),
-      });
+      const response = recipe === null ? badRequest(`Could not find '${recipeName}'`) : recipe;
+      res.status(code).send(response);
     });
   } else {
     mongoUtil.findRecipes().then((data) => {
