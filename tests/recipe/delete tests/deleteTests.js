@@ -2,16 +2,23 @@ const request = require('supertest');
 const assert = require('assert');
 
 const ROUTE = '/recipes/delete';
+const INVALID_NAME = 'invalid';
+const NAME = 'New';
+
 const {
   BAD_REQUEST, UNAUTHORISED, SUCCESS, NOT_FOUND,
-} = require('../../responses/codes');
+} = require('../../../responses/codes');
+
+const {
+  RECIPE_API_KEY_INCORRECT, RECIPE_NO_API_KEY, RECIPE_NOT_FOUND, RECIPE_DELETED,
+} = require('./responseData');
 require('dotenv').config();
 
 describe('Delete recipe tests', () => {
   let server;
 
   before(() => {
-    server = require('../../app').listen(3002);
+    server = require('../../../app').listen(3002);
   });
 
   after(() => {
@@ -28,7 +35,7 @@ describe('Delete recipe tests', () => {
           return done(err);
         }
 
-        assert.equal(response.body.message, 'No API key specified');
+        assert.deepEqual(response.body, RECIPE_NO_API_KEY);
         return done();
       });
   });
@@ -37,7 +44,7 @@ describe('Delete recipe tests', () => {
     request(server)
       .delete(ROUTE)
       .send({
-        name: 'invalid',
+        name: INVALID_NAME,
         apiKey: 'incorrect',
       })
       .expect(UNAUTHORISED)
@@ -46,7 +53,7 @@ describe('Delete recipe tests', () => {
           return done(err);
         }
 
-        assert.equal(response.body.message, 'API key is incorrect');
+        assert.deepEqual(response.body, RECIPE_API_KEY_INCORRECT);
         return done();
       });
   });
@@ -55,7 +62,7 @@ describe('Delete recipe tests', () => {
     request(server)
       .delete(ROUTE)
       .send({
-        name: 'invalid',
+        name: INVALID_NAME,
         apiKey: process.env.API_KEY,
       })
       .expect(NOT_FOUND)
@@ -64,7 +71,7 @@ describe('Delete recipe tests', () => {
           return done(err);
         }
 
-        assert.equal(response.body.message, "Cannot delete recipe: 'invalid' not found");
+        assert.deepEqual(response.body, RECIPE_NOT_FOUND);
         return done();
       });
   });
@@ -73,7 +80,7 @@ describe('Delete recipe tests', () => {
     request(server)
       .delete(ROUTE)
       .send({
-        name: 'New',
+        name: NAME,
         apiKey: process.env.API_KEY,
       })
       .expect(SUCCESS)
@@ -82,7 +89,7 @@ describe('Delete recipe tests', () => {
           return done(err);
         }
 
-        assert.equal(response.body.message, "'New' successfully deleted");
+        assert.deepEqual(response.body, RECIPE_DELETED);
         return done();
       });
   });
