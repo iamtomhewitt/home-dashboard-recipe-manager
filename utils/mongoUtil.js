@@ -12,7 +12,7 @@ module.exports = {
     mongo.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
       if (err) {
         return callback(err);
-	  }
+      }
       db = client.db();
       // Create the collections if they do not exist
       db.listCollections({ name: PLANNER }).next((error, collection) => {
