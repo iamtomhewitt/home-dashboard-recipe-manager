@@ -1,6 +1,6 @@
 const mongo = require('mongodb').MongoClient;
 
-const url = process.env.MONGODB_URI || 'mongodb://mongo:27017/recipe_manager';
+const url = process.env.MONGODB_URI;
 const RECIPES = 'recipes';
 const PLANNER = 'planners';
 
