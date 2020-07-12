@@ -10,7 +10,7 @@
 		"lint": "eslint --ignore-path .gitignore .",
 		"lint-fix": "npm run lint -- --fix",
 		"pretest": "eslint --ignore-path .gitignore .",
-		"release": "standard-version",
+		"release": "github-releaser",
 		"start": "node app.js",
 		"test": "mocha 'tests/**/*.js' --exit"
 	},
@@ -29,6 +29,7 @@
 		"express": "^4.17.1",
 		"express-list-endpoints": "^4.0.1",
 		"fs": "0.0.1-security",
+		"github-releaser": "^1.1.2",
 		"minimist": ">=1.2.2",
 		"mocha": "^7.1.1",
 		"mongodb": "^3.4.1",
@@ -52,7 +53,6 @@
 		"eslint-plugin-react": "^7.20.0",
 		"eslint-plugin-react-hooks": "^2.5.1",
 		"husky": "^1.1.2",
-		"standard-version": "^8.0.0",
 		"validate-commit-msg": "^2.14.0"
 	},
 	"husky": {
