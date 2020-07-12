@@ -1,3 +1,4 @@
+require('dotenv').config()
 const listEndpoints = require('express-list-endpoints');
 const express = require('express');
 const bodyParser = require('body-parser');
