@@ -1,6 +1,6 @@
 const mongo = require('mongodb').MongoClient;
 
-const url = process.env.MONGODB_URI || 'mongodb://mongo:27017/recipe_manager';
+const url = process.env.MONGODB_URI;
 const RECIPES = 'recipes';
 const PLANNER = 'planners';
 
@@ -12,7 +12,7 @@ module.exports = {
     mongo.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
       if (err) {
         return callback(err);
-      }
+	  }
       db = client.db();
       // Create the collections if they do not exist
       db.listCollections({ name: PLANNER }).next((error, collection) => {
