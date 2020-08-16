@@ -135,13 +135,25 @@ router.post('/createPlanner', (req, res) => {
   });
 });
 
-router.get('/shoppingList', (req, res) => {
+router.get('/shoppingList', async (req, res) => {
   const { apiKey, plannerId } = req.query;
   const failedCheck = checkApiKey(apiKey);
 
   if (failedCheck) {
     res.status(failedCheck.code).send(failedCheck);
   }
+
+  const planner = await mongoUtil.findPlanner(plannerId);
+  planner[0].plan.forEach(async (day) => {
+    const recipe = await mongoUtil.findRecipe(day.recipe);
+    if (recipe) {
+      const { ingredients } = recipe;
+      ingredients.forEach((i) => {
+        console.log(i.name, i.amount);
+        console.log('--');
+      });
+    }
+  });
 });
 
 module.exports = router;
