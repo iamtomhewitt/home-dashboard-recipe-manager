@@ -7,6 +7,7 @@ const mongoUtil = require('./utils/mongoUtil');
 const app = express();
 const recipeRoutes = require('./routes/recipe-routes');
 const plannerRoutes = require('./routes/planner-routes');
+const shoppingListRoutes = require('./routes/shopping-list-routes');
 const { version } = require('./package.json');
 
 mongoUtil.connectToServer((err) => {
@@ -16,6 +17,7 @@ mongoUtil.connectToServer((err) => {
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use('/recipes', recipeRoutes);
   app.use('/planner', plannerRoutes);
+  app.use('/shoppingList', shoppingListRoutes);
   app.get('/', (req, res) => {
     res.status(200).send({ status: '🍽📝 SERVER OK', version, endpoints: listEndpoints(app) });
   });
