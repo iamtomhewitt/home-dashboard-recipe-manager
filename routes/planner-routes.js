@@ -165,7 +165,7 @@ router.get('/shoppingList', async (req, res) => {
           currentTotal.push({
             name: i.name,
             weight: i.weight,
-            amount: i.amount,
+            amount: parseFloat(i.amount),
           });
         }
       });
