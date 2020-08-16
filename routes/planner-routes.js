@@ -171,7 +171,12 @@ router.get('/shoppingList', async (req, res) => {
       });
     }
   }
-  res.status(SUCCESS).json(currentTotal);
+
+  const shoppingList = [];
+  for (const item of currentTotal) {
+    shoppingList.push(`${item.amount} ${item.weight} of ${item.name}`.replace(' grams', 'g'));
+  }
+  res.status(SUCCESS).json(shoppingList);
 });
 
 module.exports = router;
