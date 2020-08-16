@@ -399,3 +399,35 @@ Creates a new planner.
     "message": "Planner could not be created: <error message>"
 }
 ```
+
+## `/shoppingList (GET)`
+Gets a list of collected ingredients for a planner.
+
+Query parameters:
+* `apiKey`
+* `plannerId`
+
+### Responses
+* `200` success
+```json
+[
+    "1 quantity of Tortilla Wrap",
+    "20g of Cheese",
+]
+```
+
+* `400` if the planner id is incorrect
+```json
+{
+    "status": 400,
+    "message": "Could not get planner with id: <id>"
+}
+```
+
+* `401` if unauthorised
+```json
+{
+    "status": 401,
+    "message": "API key is incorrect"
+}
+```
