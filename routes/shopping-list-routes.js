@@ -19,15 +19,16 @@ router.get('/', async (req, res) => {
   }
 
   const currentItems = [];
-
+  const shoppingList = [];
   const planner = await mongoUtil.findPlanner(plannerId);
 
   for (const day of planner[0].plan) {
     const recipe = await mongoUtil.findRecipe(day.recipe);
+
     if (recipe) {
       const { ingredients } = recipe;
+
       ingredients.forEach((i) => {
-        // Find if ingredient with same name and same weight type (e.g. grams) already exists
         const exists = currentItems.find((o) => (o.name === i.name && o.weight === i.weight));
 
         if (exists) {
@@ -47,7 +48,6 @@ router.get('/', async (req, res) => {
 
   currentItems.sort((a, b) => ((a.category > b.category) ? 1 : ((b.category > a.category) ? -1 : 0)));
 
-  const shoppingList = [];
   for (const item of currentItems) {
     shoppingList.push(`${item.amount} ${item.weight} of ${item.name}`.replace(' grams', 'g'));
   }
