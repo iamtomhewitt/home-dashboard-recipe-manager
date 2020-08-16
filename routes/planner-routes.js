@@ -142,6 +142,9 @@ router.get('/shoppingList', async (req, res) => {
   if (failedCheck) {
     res.status(failedCheck.code).send(failedCheck);
   }
+  if (!plannerId) {
+    res.status(BAD_REQUEST).send(error(`Could not get planner with id: ${plannerId}`));
+  }
 
   const currentTotal = [];
 
@@ -168,7 +171,7 @@ router.get('/shoppingList', async (req, res) => {
       });
     }
   }
-  res.json(currentTotal);
+  res.status(SUCCESS).json(currentTotal);
 });
 
 module.exports = router;
