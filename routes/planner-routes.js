@@ -143,16 +143,52 @@ router.get('/shoppingList', async (req, res) => {
     res.status(failedCheck.code).send(failedCheck);
   }
 
-  const planner = await mongoUtil.findPlanner(plannerId);
-  planner[0].plan.forEach(async (day) => {
-    const recipe = await mongoUtil.findRecipe(day.recipe);
-    if (recipe) {
-      const { ingredients } = recipe;
-      ingredients.forEach((i) => {
-        console.log(i.name, i.amount);
-        console.log('--');
+  const currentTotal = [];
+
+  const planner = await mongoUtil.findPlanner('test-planner');
+  console.log('>>>>>');
+
+  for (const a of planner[0].plan) {
+    console.log(a.day)
+  }
+
+
+//https://stackoverflow.com/questions/37576685/using-async-await-with-a-foreach-loop
+  const process = new Promise((resolve, reject) => {
+    planner[0].plan.forEach(async (day, index) => {
+      console.log(index);
+
+      const recipe = await mongoUtil.findRecipe(day.recipe);
+      const doIngredients = new Promise((resolve1, reject1) => {
+        if (recipe) {
+          const { ingredients } = recipe;
+          ingredients.forEach((i) => {
+            // Find if ingredient with same name and same weight type (e.g. grams) already exists
+            const exists = currentTotal.find((o) => (o.name === i.name && o.weight === i.weight));
+
+            if (exists) {
+              console.log('ex ' + exists.name)
+              const newAmount = parseFloat(i.amount) + parseFloat(exists.amount);
+              exists.amount = newAmount;
+            } else {
+              currentTotal.push({
+                name: i.name,
+                weight: i.weight,
+                amount: i.amount,
+              });
+            }
+          });
+        }
       });
-    }
+
+      if (index === planner[0].plan.length - 1) {
+        resolve(currentTotal);
+      }
+    });
+  });
+
+  process.then((data) => {
+    console.log('DONE', data);
   });
 });
 
