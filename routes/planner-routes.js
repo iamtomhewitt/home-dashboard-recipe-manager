@@ -135,4 +135,13 @@ router.post('/createPlanner', (req, res) => {
   });
 });
 
+router.get('/shoppingList', (req, res) => {
+  const { apiKey, plannerId } = req.query;
+  const failedCheck = checkApiKey(apiKey);
+
+  if (failedCheck) {
+    res.status(failedCheck.code).send(failedCheck);
+  }
+});
+
 module.exports = router;
