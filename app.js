@@ -6,7 +6,7 @@ const mongoUtil = require('./utils/mongoUtil');
 
 const app = express();
 const recipeRoutes = require('./routes/recipe-routes');
-const plannerRoutes = require('./routes/planner-routes');
+const plannerRoutes = require('./routes/planner');
 const shoppingListRoutes = require('./routes/shopping-list-routes');
 const { version } = require('./package.json');
 
