@@ -20,9 +20,10 @@ router.get('/', async (req, res) => {
 
   const currentItems = [];
   const shoppingList = [];
-  const planner = await mongoUtil.findPlanner(plannerId);
+  const result = await mongoUtil.findPlanner(plannerId);
+  const planner = result[0];
 
-  for (const day of planner[0].plan) {
+  for (const day of planner.plan) {
     const recipe = await mongoUtil.findRecipe(day.recipe);
 
     if (recipe) {
