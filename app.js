@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const mongoUtil = require('./utils/mongoUtil');
 
 const app = express();
-const recipeRoutes = require('./routes/recipe-routes');
+const recipeRoutes = require('./routes/recipe');
 const plannerRoutes = require('./routes/planner');
 const shoppingListRoutes = require('./routes/shopping-list-routes');
 const { version } = require('./package.json');

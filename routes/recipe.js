@@ -13,25 +13,24 @@ const router = express.Router();
 require('dotenv').config();
 
 router.get('/', (req, res) => {
-  const { apiKey } = req.query;
-  const recipeName = req.query.name;
+  const { apiKey, name } = req.query;
   const failedCheck = checkApiKey(apiKey);
 
   if (failedCheck) {
-    res.status(failedCheck.code).send(failedCheck);
+    res.status(failedCheck.code).json(failedCheck);
     return;
   }
 
-  if (recipeName) {
-    mongoUtil.findRecipe(recipeName).then((recipe) => {
+  if (name) {
+    mongoUtil.findRecipe(name).then((recipe) => {
       const code = recipe === null ? NOT_FOUND : SUCCESS;
-      const response = recipe === null ? badRequest(`Could not find '${recipeName}'`) : recipe;
-      res.status(code).send(response);
+      const response = recipe === null ? badRequest(`Could not find '${name}'`) : recipe;
+      res.status(code).json(response);
     });
   } else {
     mongoUtil.findRecipes().then((data) => {
       const recipes = data.sort((a, b) => a.name.localeCompare(b.name));
-      res.status(SUCCESS).send({
+      res.status(SUCCESS).json({
         ...success('Success'),
         recipes,
       });
@@ -41,9 +40,8 @@ router.get('/', (req, res) => {
 
 router.post('/add', (req, res) => {
   const {
-    ingredients, apiKey, steps, serves,
+    ingredients, apiKey, steps, serves, name,
   } = req.body;
-  const recipeName = req.body.name;
   const failedCheck = checkApiKey(apiKey);
   const expectedJson = {
     name: '<recipe name>',
@@ -64,12 +62,12 @@ router.post('/add', (req, res) => {
   let missingParameter = false;
 
   if (failedCheck) {
-    res.status(failedCheck.code).send(failedCheck);
+    res.status(failedCheck.code).json(failedCheck);
     return;
   }
 
-  if (!recipeName || !ingredients || !steps) {
-    res.status(BAD_REQUEST).send(badRequest(`Recipe could not be added, missing data from JSON body. Expected: ${JSON.stringify(expectedJson)} Got: ${JSON.stringify(req.body)}`));
+  if (!name || !ingredients || !steps) {
+    res.status(BAD_REQUEST).json(badRequest(`Recipe could not be added, missing data from JSON body. Expected: ${JSON.stringify(expectedJson)} Got: ${JSON.stringify(req.body)}`));
     return;
   }
 
@@ -78,24 +76,24 @@ router.post('/add', (req, res) => {
 
     if (!('name' in ingredient) || !('category' in ingredient) || !('amount' in ingredient) || !('weight' in ingredient)) {
       missingParameter = true;
-      res.status(BAD_REQUEST).send(badRequest(`Recipe could not be added, missing data from JSON body. Expected: ${JSON.stringify(expectedJson)} Got: ${JSON.stringify(req.body)}`));
+      res.status(BAD_REQUEST).json(badRequest(`Recipe could not be added, missing data from JSON body. Expected: ${JSON.stringify(expectedJson)} Got: ${JSON.stringify(req.body)}`));
     }
   });
 
   // Stop processing, exit from method
   if (missingParameter) return;
 
-  mongoUtil.findRecipe(recipeName).then((recipe) => {
+  mongoUtil.findRecipe(name).then((recipe) => {
     if (recipe) {
-      res.status(SERVER_ERROR).send(error(`Cannot add recipe: '${recipeName}' already exists`));
+      res.status(SERVER_ERROR).json(error(`Cannot add recipe: '${name}' already exists`));
     } else {
       mongoUtil.addRecipe(
-        recipeName,
+        name,
         serves,
         ingredients,
         steps,
       );
-      res.status(CREATED).send(success(`Recipe '${recipeName}' added`));
+      res.status(CREATED).json(success(`Recipe '${name}' added`));
     }
   });
 });
@@ -126,13 +124,13 @@ router.put('/update', (req, res) => {
   let missingParameter = false;
 
   if (failedCheck) {
-    res.status(failedCheck.code).send(failedCheck);
+    res.status(failedCheck.code).json(failedCheck);
     return;
   }
 
   if (!originalName || !ingredients || !steps) {
     const message = `Recipe could not be updated, missing data from JSON body. Expected: ${JSON.stringify(expectedJson)} Got: ${JSON.stringify(req.body)} ('newName' is an optional parameter)`;
-    res.status(BAD_REQUEST).send(badRequest(message));
+    res.status(BAD_REQUEST).json(badRequest(message));
     return;
   }
 
@@ -142,7 +140,7 @@ router.put('/update', (req, res) => {
 
     if (!('name' in ingredient) || !('category' in ingredient) || !('amount' in ingredient) || !('weight' in ingredient)) {
       missingParameter = true;
-      res.status(BAD_REQUEST).send(badRequest(`Recipe could not be updated, missing data from JSON body. Expected: ${JSON.stringify(expectedJson)} Got: ${JSON.stringify(req.body)}`));
+      res.status(BAD_REQUEST).json(badRequest(`Recipe could not be updated, missing data from JSON body. Expected: ${JSON.stringify(expectedJson)} Got: ${JSON.stringify(req.body)}`));
     }
   });
 
@@ -150,40 +148,39 @@ router.put('/update', (req, res) => {
   if (missingParameter) return;
 
   mongoUtil.findRecipe(originalName).then((recipe) => {
-    if (recipe !== null) {
+    if (recipe) {
       // Found recipe, update
       const recipeName = newName !== undefined ? newName : originalName;
       mongoUtil.updateRecipe(originalName, recipeName, ingredients, steps, serves);
-      res.status(SUCCESS).send(success(`'${recipeName}' successfully updated`));
+      res.status(SUCCESS).json(success(`'${recipeName}' successfully updated`));
     } else {
       // Recipe not found, create
       mongoUtil.addRecipe(originalName, serves, ingredients, steps);
-      res.status(CREATED).send(created(`'${originalName}' could not be updated as it does not exist, so it was created instead`));
+      res.status(CREATED).json(created(`'${originalName}' could not be updated as it does not exist, so it was created instead`));
     }
   });
 });
 
 router.delete('/delete', (req, res) => {
-  const { apiKey } = req.body;
-  const recipeName = req.body.name;
+  const { apiKey, name } = req.body;
   const failedCheck = checkApiKey(apiKey);
 
   if (failedCheck) {
-    res.status(failedCheck.code).send(failedCheck);
+    res.status(failedCheck.code).json(failedCheck);
     return;
   }
 
-  if (!recipeName) {
-    res.status(BAD_REQUEST).send(badRequest('Recipe could not be deleted: Missing \'name\' parameter from JSON body'));
+  if (!name) {
+    res.status(BAD_REQUEST).json(badRequest('Recipe could not be deleted: Missing \'name\' parameter from JSON body'));
     return;
   }
 
-  mongoUtil.findRecipe(recipeName).then((recipe) => {
-    if (recipe === null) {
-      res.status(NOT_FOUND).send(notFound(`Cannot delete recipe: '${recipeName}' not found`));
+  mongoUtil.findRecipe(name).then((recipe) => {
+    if (!recipe) {
+      res.status(NOT_FOUND).json(notFound(`Cannot delete recipe: '${name}' not found`));
     } else {
-      mongoUtil.deleteRecipe(recipeName);
-      res.status(SUCCESS).send(success(`'${recipeName}' successfully deleted`));
+      mongoUtil.deleteRecipe(name);
+      res.status(SUCCESS).json(success(`'${name}' successfully deleted`));
     }
   });
 });
