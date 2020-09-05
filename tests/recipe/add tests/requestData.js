@@ -25,7 +25,6 @@ module.exports = {
     };
   },
 
-
   ADD_RECIPE_MISSING_INGREDIENTS_BODY(apiKey) {
     return {
       name: 'Missing',
