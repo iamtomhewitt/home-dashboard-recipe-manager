@@ -9,7 +9,6 @@ let db;
 module.exports = {
 
   connectToServer(callback) {
-    console.log(`url: ${url}`);
     mongo.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
       if (err) {
         return callback(err);
