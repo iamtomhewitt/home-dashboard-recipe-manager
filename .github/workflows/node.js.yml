@@ -36,5 +36,5 @@ jobs:
     - name: Test
       run: npm test
       env:
-        MONDODB_URI: mongodb://mongo:27017/recipe_manager
+        MONGODB_URI: mongodb://mongo:27017/recipe_manager
         API_KEY: 1234
