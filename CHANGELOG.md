@@ -1,3 +1,12 @@
+## 1.4.2 (05/09/2020) 
+
+
+### Issues in this release:
+
+* [#25](https://github.com/iamtomhewitt/home-dashboard-recipe-manager/issues/25) - Use github actions
+
+
+
 ## 1.4.1 (17/08/2020) 
 
 
