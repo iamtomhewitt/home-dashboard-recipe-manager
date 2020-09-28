@@ -1,9 +1,13 @@
 package com.iamtomhewitt.homedashboard.recipemanager.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import org.springframework.data.annotation.Id;
 
-import java.util.List;
-
+@Data
+@Builder
+@AllArgsConstructor
 public class Ingredient {
 
 	@Id
