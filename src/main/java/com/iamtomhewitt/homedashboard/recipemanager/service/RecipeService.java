@@ -1,4 +1,4 @@
-package com.iamtomhewitt.homedashboard.recipemanager;
+package com.iamtomhewitt.homedashboard.recipemanager.service;
 
 import com.iamtomhewitt.homedashboard.recipemanager.exception.RecipeExistsException;
 import com.iamtomhewitt.homedashboard.recipemanager.exception.RecipeNotFoundException;

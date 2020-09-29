@@ -1,6 +1,6 @@
 package com.iamtomhewitt.homedashboard.recipemanager.controller;
 
-import com.iamtomhewitt.homedashboard.recipemanager.RecipeService;
+import com.iamtomhewitt.homedashboard.recipemanager.service.RecipeService;
 import com.iamtomhewitt.homedashboard.recipemanager.exception.RecipeExistsException;
 import com.iamtomhewitt.homedashboard.recipemanager.exception.RecipeNotFoundException;
 import com.iamtomhewitt.homedashboard.recipemanager.model.Recipe;
