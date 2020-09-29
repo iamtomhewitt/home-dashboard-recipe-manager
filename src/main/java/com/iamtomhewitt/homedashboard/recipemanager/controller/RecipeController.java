@@ -1,13 +1,11 @@
 package com.iamtomhewitt.homedashboard.recipemanager.controller;
 
-import com.iamtomhewitt.homedashboard.recipemanager.RecipeNotFoundException;
 import com.iamtomhewitt.homedashboard.recipemanager.RecipeService;
+import com.iamtomhewitt.homedashboard.recipemanager.exception.RecipeExistsException;
+import com.iamtomhewitt.homedashboard.recipemanager.exception.RecipeNotFoundException;
 import com.iamtomhewitt.homedashboard.recipemanager.model.Recipe;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,5 +24,10 @@ public class RecipeController {
 	@GetMapping
 	public List<Recipe> getRecipes() {
 		return this.service.getRecipes();
+	}
+
+	@PostMapping
+	public void saveRecipe(@RequestBody Recipe recipe) throws RecipeExistsException {
+		this.service.saveRecipe(recipe);
 	}
 }

@@ -1,4 +1,4 @@
-package com.iamtomhewitt.homedashboard.recipemanager;
+package com.iamtomhewitt.homedashboard.recipemanager.exception;
 
 public class RecipeNotFoundException extends Exception {
 
