@@ -35,4 +35,9 @@ public class RecipeController {
 	public void updateRecipe(@RequestBody Recipe recipe) {
 		this.service.updateRecipe(recipe);
 	}
+
+	@DeleteMapping
+	public void deleteRecipe(@RequestParam String name) {
+		this.service.deleteRecipe(name);
+	}
 }

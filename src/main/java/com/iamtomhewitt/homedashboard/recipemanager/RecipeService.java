@@ -35,4 +35,8 @@ public class RecipeService {
 	public void updateRecipe(Recipe recipe) {
 		this.repository.save(recipe);
 	}
+
+	public void deleteRecipe(String name) {
+		this.repository.deleteByName(name);
+	}
 }
