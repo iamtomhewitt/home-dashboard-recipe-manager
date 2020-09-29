@@ -14,7 +14,6 @@ import java.util.List;
 @AllArgsConstructor
 public class Recipe {
 	@Id
-	private String id;
 	private String name;
 	private List<String> steps;
 	private List<Ingredient> ingredients;

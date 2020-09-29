@@ -31,4 +31,8 @@ public class RecipeService {
 
 		this.repository.save(recipe);
 	}
+
+	public void updateRecipe(Recipe recipe) {
+		this.repository.save(recipe);
+	}
 }

@@ -30,4 +30,9 @@ public class RecipeController {
 	public void saveRecipe(@RequestBody Recipe recipe) throws RecipeExistsException {
 		this.service.saveRecipe(recipe);
 	}
+
+	@PutMapping
+	public void updateRecipe(@RequestBody Recipe recipe) {
+		this.service.updateRecipe(recipe);
+	}
 }
