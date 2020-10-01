@@ -2,5 +2,4 @@
 .idea
 .mvnw
 .mvnw.cmd
-!target/site/jacoco/index.html
 target
