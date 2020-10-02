@@ -13,7 +13,6 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 public class Planner {
-	@Id
 	private String id;
 	private List<Plan> plan;
 
