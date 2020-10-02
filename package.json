@@ -5,7 +5,7 @@
     "name": "home-dashboard-recipe-manager",
     "version": "1.4.1",
     "scripts": {
-        "release": "github-releaser",
+        "release": "github-releaser"
     },
     "repository": {
         "type": "git",
