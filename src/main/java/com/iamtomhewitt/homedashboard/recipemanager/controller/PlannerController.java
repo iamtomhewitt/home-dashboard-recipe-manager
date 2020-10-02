@@ -9,6 +9,8 @@ import com.iamtomhewitt.homedashboard.recipemanager.service.PlannerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/planner")
 public class PlannerController {
@@ -19,6 +21,11 @@ public class PlannerController {
 	@GetMapping
 	public Planner getPlanner(@RequestParam String id) throws PlannerNotFoundException {
 		return this.service.getPlanner(id);
+	}
+
+	@GetMapping("/all")
+	public List<Planner> getPlanners() {
+		return this.service.getPlanners();
 	}
 
 	@PostMapping
