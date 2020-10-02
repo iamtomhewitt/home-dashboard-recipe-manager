@@ -13,7 +13,6 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 public class Recipe {
-	@Id
 	private String name;
 	private List<String> steps;
 	private List<Ingredient> ingredients;
