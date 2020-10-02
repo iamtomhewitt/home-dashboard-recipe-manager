@@ -113,6 +113,18 @@ public class ShoppingListServiceTests {
 	}
 
 	@Test
+	public void shouldReturnAShoppingListWhenOneRecipeIsEmpty() throws Exception {
+		when(recipeRepository.findByName("recipe1")).thenReturn(Optional.empty());
+		when(recipeRepository.findByName("recipe2")).thenReturn(Optional.of(mockRecipe2));
+		when(plannerRepository.findById(anyString())).thenReturn(Optional.of(mockPlanner));
+
+		List<String> shoppingList = shoppingListService.getShoppingList(plannerId);
+
+		assertThat(shoppingList.isEmpty(), is(false));
+		assertThat(shoppingList.size(), is(2));
+	}
+
+	@Test
 	public void shouldThrowExceptionWhenTryingToGetShoppingListForNonExistentPlanner() throws Exception {
 		expectedException.expect(PlannerNotFoundException.class);
 		expectedException.expectMessage("Could not find planner with id 'id'");
