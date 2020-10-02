@@ -8,11 +8,6 @@
     <a href="https://codecov.io/gh/iamtomhewitt/home-dashboard-recipe-manager"><img src="https://codecov.io/gh/iamtomhewitt/home-dashboard-recipe-manager/branch/master/graph/badge.svg"/></a>
 </p>
 
-## Docker 🐳
-```bash
-> docker-compose up
-```
-
 ## Documentation
 Swagger:
 `http://localhost:8080/swagger-ui.html`
