@@ -1,3 +1,12 @@
+## 1.5.0 (03/10/2020) 
+
+
+### Issues in this release:
+
+* [#28](https://github.com/iamtomhewitt/home-dashboard-recipe-manager/issues/28) - Convert to Java Spring project
+
+
+
 ## 1.4.2 (05/09/2020) 
 
 
