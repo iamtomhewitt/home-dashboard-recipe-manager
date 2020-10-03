@@ -1,6 +1,6 @@
 <h1 align="center">Home Dashboard Recipe Manager </h1>
 <p align="center">
-    A Node Express app for managing recipes and ingredients for my <a href="https://github.com/iamtomhewitt/home-dashboard">home dashboard</a>.
+    An app for managing recipes and ingredients for my <a href="https://github.com/iamtomhewitt/home-dashboard">home dashboard</a>.
 </p>
 <p align="center">
     <img src="https://img.shields.io/github/workflow/status/iamtomhewitt/home-dashboard-recipe-manager/Tests"/>
