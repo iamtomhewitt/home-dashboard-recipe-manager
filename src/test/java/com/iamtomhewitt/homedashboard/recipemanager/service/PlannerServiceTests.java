@@ -46,7 +46,7 @@ public class PlannerServiceTests {
 	@Before
 	public void eachTest() {
 		mockPlanner = Planner.builder()
-			.id("12345")
+			.plannerId("12345")
 			.plan(singletonList(Plan.builder()
 				.recipe("recipe1")
 				.day("Monday")
@@ -56,12 +56,12 @@ public class PlannerServiceTests {
 
 	@Test
 	public void shouldReturnAPlanner() throws Exception {
-		when(plannerRepository.findById(anyString())).thenReturn(Optional.of(mockPlanner));
+		when(plannerRepository.findByPlannerId(anyString())).thenReturn(Optional.of(mockPlanner));
 
 		Planner planner = service.getPlanner(plannerId);
 
 		assertNotNull(planner);
-		verify(plannerRepository, times(1)).findById("12345");
+		verify(plannerRepository, times(1)).findByPlannerId("12345");
 	}
 
 	@Test
@@ -70,7 +70,7 @@ public class PlannerServiceTests {
 
 		service.getPlanner(plannerId);
 
-		verify(plannerRepository, times(1)).findById("12345");
+		verify(plannerRepository, times(1)).findByPlannerId("12345");
 	}
 
 	@Test
@@ -100,7 +100,7 @@ public class PlannerServiceTests {
 
 	@Test
 	public void shouldUpdatePlanner() throws PlannerNotFoundException, InvalidDayException {
-		when(plannerRepository.findById(anyString())).thenReturn(Optional.of(mockPlanner));
+		when(plannerRepository.findByPlannerId(anyString())).thenReturn(Optional.of(mockPlanner));
 
 		Plan plan = Plan.builder().day("Monday").recipe("recipe1").build();
 
@@ -111,7 +111,7 @@ public class PlannerServiceTests {
 	@Test
 	public void shouldThrowExceptionWhenUpdatingPlannerWithWrongDayFormat() throws PlannerNotFoundException, InvalidDayException {
 		expectedException.expectMessage("Supplied day 'Wrong' is not valid");
-		when(plannerRepository.findById(anyString())).thenReturn(Optional.of(mockPlanner));
+		when(plannerRepository.findByPlannerId(anyString())).thenReturn(Optional.of(mockPlanner));
 
 		Plan plan = Plan.builder().day("Wrong").recipe("recipe1").build();
 		service.updatePlanner(plan, plannerId);

@@ -18,7 +18,7 @@ public class PlannerService {
 	private PlannerRepository repository;
 
 	public Planner getPlanner(String id) throws PlannerNotFoundException {
-		return repository.findById(id).orElseThrow(() -> new PlannerNotFoundException(id));
+		return repository.findByPlannerId(id).orElseThrow(() -> new PlannerNotFoundException(id));
 	}
 
 	public List<Planner> getPlanners() {
@@ -26,8 +26,8 @@ public class PlannerService {
 	}
 
 	public void savePlanner(Planner planner) throws PlannerExistsException {
-		if (getPlanners().stream().anyMatch(p -> p.getId().equals(planner.getId()))) {
-			throw new PlannerExistsException(planner.getId());
+		if (getPlanners().stream().anyMatch(p -> p.getPlannerId().equals(planner.getPlannerId()))) {
+			throw new PlannerExistsException(planner.getPlannerId());
 		}
 
 		this.repository.save(planner);

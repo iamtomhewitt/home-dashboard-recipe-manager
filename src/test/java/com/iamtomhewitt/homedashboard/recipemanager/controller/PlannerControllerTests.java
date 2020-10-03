@@ -51,7 +51,7 @@ public class PlannerControllerTests {
 	@Before
 	public void eachTest() {
 		mockPlanner = Planner.builder()
-			.id("id")
+			.plannerId("id")
 			.plan(Collections.singletonList(
 				Plan.builder()
 					.day("Monday")
@@ -71,7 +71,7 @@ public class PlannerControllerTests {
 		Planner planner = objectMapper.readValue(result.getResponse().getContentAsString(), Planner.class);
 
 		verify(service, times(1)).getPlanner("id");
-		assertThat(planner.getId(), is("id"));
+		assertThat(planner.getPlannerId(), is("id"));
 		assertThat(planner.getPlan().isEmpty(), is(false));
 	}
 

@@ -84,7 +84,7 @@ public class ShoppingListServiceTests {
 			.build();
 
 		mockPlanner = Planner.builder()
-			.id("id")
+			.plannerId("id")
 			.plan(asList(
 				Plan.builder()
 					.day("Monday")
@@ -101,7 +101,7 @@ public class ShoppingListServiceTests {
 	public void shouldReturnAShoppingList() throws Exception {
 		when(recipeRepository.findByName("recipe1")).thenReturn(Optional.of(mockRecipe1));
 		when(recipeRepository.findByName("recipe2")).thenReturn(Optional.of(mockRecipe2));
-		when(plannerRepository.findById(anyString())).thenReturn(Optional.of(mockPlanner));
+		when(plannerRepository.findByPlannerId(anyString())).thenReturn(Optional.of(mockPlanner));
 
 		List<String> shoppingList = shoppingListService.getShoppingList(plannerId);
 
@@ -116,7 +116,7 @@ public class ShoppingListServiceTests {
 	public void shouldReturnAShoppingListWhenOneRecipeIsEmpty() throws Exception {
 		when(recipeRepository.findByName("recipe1")).thenReturn(Optional.empty());
 		when(recipeRepository.findByName("recipe2")).thenReturn(Optional.of(mockRecipe2));
-		when(plannerRepository.findById(anyString())).thenReturn(Optional.of(mockPlanner));
+		when(plannerRepository.findByPlannerId(anyString())).thenReturn(Optional.of(mockPlanner));
 
 		List<String> shoppingList = shoppingListService.getShoppingList(plannerId);
 

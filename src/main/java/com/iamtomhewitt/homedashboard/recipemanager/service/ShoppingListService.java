@@ -25,7 +25,7 @@ public class ShoppingListService {
 	private RecipeRepository recipeRepository;
 
 	public List<String> getShoppingList(String id) throws PlannerNotFoundException {
-		Planner planner = plannerRepository.findById(id).orElseThrow(() -> new PlannerNotFoundException(id));
+		Planner planner = plannerRepository.findByPlannerId(id).orElseThrow(() -> new PlannerNotFoundException(id));
 
 		List<Ingredient> currentItems = new ArrayList<>();
 		List<String> shoppingList = new ArrayList<>();
