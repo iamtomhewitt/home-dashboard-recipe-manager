@@ -1,1 +1,1 @@
-web: node app.js
+web: java $JAVA_OPTS -Dspring.data.mongodb.uri=$MONGODB_URI -Dserver.port=$PORT -jar target/*.jar
