@@ -4,7 +4,7 @@
 </p>
 <p align="center">
     <img src="https://img.shields.io/github/workflow/status/iamtomhewitt/home-dashboard-recipe-manager/Tests"/>
-    <img src="https://heroku-badge.herokuapp.com/?app=home-dashboard-recipe-manager&style=round&svg=1"/>
+    <img src="https://img.shields.io/github/deployments/iamtomhewitt/home-dashboard-recipe-manager/home-dashboard-recipe-manager?label=heruko"/>
     <a href="https://codecov.io/gh/iamtomhewitt/home-dashboard-recipe-manager"><img src="https://codecov.io/gh/iamtomhewitt/home-dashboard-recipe-manager/branch/master/graph/badge.svg"/></a>
 </p>
 
