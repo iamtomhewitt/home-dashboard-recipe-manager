@@ -65,6 +65,26 @@ public class PlannerServiceTests {
 	}
 
 	@Test
+	public void shouldReturnAPlanForDay() throws Exception {
+		when(plannerRepository.findByPlannerId(anyString())).thenReturn(Optional.of(mockPlanner));
+
+		Plan plan = service.getPlanForDay(plannerId, "Monday");
+
+		assertNotNull(plan);
+		verify(plannerRepository, times(1)).findByPlannerId("12345");
+	}
+
+	@Test
+	public void shouldThrowInvalidDayExceptionForInvalidDay() throws Exception {
+		expectedException.expectMessage("Supplied day 'Invalid' is not valid");
+		when(plannerRepository.findByPlannerId(anyString())).thenReturn(Optional.of(mockPlanner));
+
+		service.getPlanForDay(plannerId, "Invalid");
+
+		verify(plannerRepository, times(1)).findByPlannerId("12345");
+	}
+
+	@Test
 	public void shouldThrowExceptionFindingNonExistentPlanner() throws PlannerNotFoundException {
 		expectedException.expectMessage("Could not find planner with id '12345'");
 
