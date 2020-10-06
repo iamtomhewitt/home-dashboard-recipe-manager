@@ -1,7 +1,6 @@
 package com.iamtomhewitt.homedashboard.recipemanager.service;
 
 import com.iamtomhewitt.homedashboard.recipemanager.exception.InvalidDayException;
-import com.iamtomhewitt.homedashboard.recipemanager.exception.PlanException;
 import com.iamtomhewitt.homedashboard.recipemanager.exception.PlannerExistsException;
 import com.iamtomhewitt.homedashboard.recipemanager.exception.PlannerNotFoundException;
 import com.iamtomhewitt.homedashboard.recipemanager.model.Plan;
@@ -23,12 +22,12 @@ public class PlannerService {
 		return repository.findByPlannerId(id).orElseThrow(() -> new PlannerNotFoundException(id));
 	}
 
-	public Plan getPlanForDay(String id, String day) throws PlannerNotFoundException, PlanException {
+	public Plan getPlanForDay(String id, String day) throws PlannerNotFoundException, InvalidDayException {
 		Planner planner = getPlanner(id);
 		return planner.getPlan().stream()
 			.filter(p -> p.getDay().equals(day))
 			.findFirst()
-			.orElseThrow(() -> new PlanException(String.format("Could not get plan for day '%s' with id '%s'", day, id)));
+			.orElseThrow(() -> new InvalidDayException(day));
 	}
 
 	public List<Planner> getPlanners() {

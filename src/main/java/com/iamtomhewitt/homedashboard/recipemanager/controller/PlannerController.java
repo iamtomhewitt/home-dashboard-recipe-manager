@@ -1,7 +1,6 @@
 package com.iamtomhewitt.homedashboard.recipemanager.controller;
 
 import com.iamtomhewitt.homedashboard.recipemanager.exception.InvalidDayException;
-import com.iamtomhewitt.homedashboard.recipemanager.exception.PlanException;
 import com.iamtomhewitt.homedashboard.recipemanager.exception.PlannerExistsException;
 import com.iamtomhewitt.homedashboard.recipemanager.exception.PlannerNotFoundException;
 import com.iamtomhewitt.homedashboard.recipemanager.model.Plan;
@@ -25,7 +24,7 @@ public class PlannerController {
 	}
 
 	@GetMapping("/day")
-	public Plan getPlannerForDay(@RequestParam String id, @RequestParam String day) throws PlannerNotFoundException, PlanException {
+	public Plan getPlannerForDay(@RequestParam String id, @RequestParam String day) throws PlannerNotFoundException, InvalidDayException {
 		return this.service.getPlanForDay(id, day);
 	}
 
