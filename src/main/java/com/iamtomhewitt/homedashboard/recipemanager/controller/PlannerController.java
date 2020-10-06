@@ -24,7 +24,7 @@ public class PlannerController {
 		return this.service.getPlanner(id);
 	}
 
-	@GetMapping
+	@GetMapping("/day")
 	public Plan getPlannerForDay(@RequestParam String id, @RequestParam String day) throws PlannerNotFoundException, PlanException {
 		return this.service.getPlanForDay(id, day);
 	}
