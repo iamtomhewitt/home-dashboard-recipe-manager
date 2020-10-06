@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static java.util.Comparator.comparing;
+
 @Service
 public class RecipeService {
 
@@ -20,7 +22,9 @@ public class RecipeService {
 	}
 
 	public List<Recipe> getRecipes() {
-		return repository.findAll();
+		List<Recipe> recipes = repository.findAll();
+		recipes.sort(comparing(Recipe::getName));
+		return recipes;
 	}
 
 	public void saveRecipe(Recipe recipe) throws RecipeExistsException {
