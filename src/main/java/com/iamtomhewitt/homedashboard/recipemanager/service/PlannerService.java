@@ -1,6 +1,7 @@
 package com.iamtomhewitt.homedashboard.recipemanager.service;
 
 import com.iamtomhewitt.homedashboard.recipemanager.exception.InvalidDayException;
+import com.iamtomhewitt.homedashboard.recipemanager.exception.PlanException;
 import com.iamtomhewitt.homedashboard.recipemanager.exception.PlannerExistsException;
 import com.iamtomhewitt.homedashboard.recipemanager.exception.PlannerNotFoundException;
 import com.iamtomhewitt.homedashboard.recipemanager.model.Plan;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PlannerService {
@@ -19,6 +21,14 @@ public class PlannerService {
 
 	public Planner getPlanner(String id) throws PlannerNotFoundException {
 		return repository.findByPlannerId(id).orElseThrow(() -> new PlannerNotFoundException(id));
+	}
+
+	public Plan getPlanForDay(String id, String day) throws PlannerNotFoundException, PlanException {
+		Planner planner = getPlanner(id);
+		return planner.getPlan().stream()
+			.filter(p -> p.getDay().equals(day))
+			.findFirst()
+			.orElseThrow(() -> new PlanException(String.format("Could not get plan for day '%s' with id '%s'", day, id)));
 	}
 
 	public List<Planner> getPlanners() {
