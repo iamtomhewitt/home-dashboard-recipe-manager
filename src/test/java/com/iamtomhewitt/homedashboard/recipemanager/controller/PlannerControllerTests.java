@@ -1,6 +1,7 @@
 package com.iamtomhewitt.homedashboard.recipemanager.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.iamtomhewitt.homedashboard.recipemanager.exception.InvalidDayException;
 import com.iamtomhewitt.homedashboard.recipemanager.exception.PlannerExistsException;
 import com.iamtomhewitt.homedashboard.recipemanager.exception.PlannerNotFoundException;
 import com.iamtomhewitt.homedashboard.recipemanager.model.Plan;
@@ -20,8 +21,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import java.util.Collections;
-
+import static java.util.Arrays.asList;
+import static java.util.Collections.singletonList;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -52,7 +53,7 @@ public class PlannerControllerTests {
 	public void eachTest() {
 		mockPlanner = Planner.builder()
 			.plannerId("id")
-			.plan(Collections.singletonList(
+			.plan(singletonList(
 				Plan.builder()
 					.day("Monday")
 					.recipe("recipe")
@@ -73,6 +74,49 @@ public class PlannerControllerTests {
 		verify(service, times(1)).getPlanner("id");
 		assertThat(planner.getPlannerId(), is("id"));
 		assertThat(planner.getPlan().isEmpty(), is(false));
+	}
+
+	@Test
+	public void shouldGetPlanners() throws Exception {
+		when(service.getPlanners()).thenReturn(asList(mockPlanner, mockPlanner));
+
+		MvcResult result = mockMvc.perform(get("/planner/all"))
+			.andExpect(status().isOk())
+			.andReturn();
+
+		Planner[] planners = objectMapper.readValue(result.getResponse().getContentAsString(), Planner[].class);
+
+		verify(service, times(1)).getPlanners();
+		assertThat(planners.length, is(2));
+	}
+
+	@Test
+	public void shouldGetPlanForDay() throws Exception {
+		when(service.getPlanForDay(anyString(), anyString())).thenReturn(mockPlanner.getPlan().get(0));
+
+		MvcResult result = mockMvc.perform(get("/planner/day?id=id&day=Monday"))
+			.andExpect(status().isOk())
+			.andReturn();
+
+		Plan planner = objectMapper.readValue(result.getResponse().getContentAsString(), Plan.class);
+
+		verify(service, times(1)).getPlanForDay("id", "Monday");
+		assertThat(planner.getDay(), is("Monday"));
+		assertThat(planner.getRecipe().isEmpty(), is(false));
+	}
+
+	@Test
+	public void shouldThrowExceptionForInvalidDay() throws Exception {
+		when(service.getPlanForDay("id", "Wrong")).thenThrow(new InvalidDayException("Wrong"));
+
+		try {
+			mockMvc.perform(get("/planner/day?id=id&day=Wrong")).andReturn();
+		} catch (Exception e) {
+			assertThat(e.getCause().getClass(), is(InvalidDayException.class));
+			assertThat(e.getCause().getMessage(), is("Supplied day 'Wrong' is not valid"));
+		}
+
+		verify(service, times(1)).getPlanForDay("id", "Wrong");
 	}
 
 	@Test
