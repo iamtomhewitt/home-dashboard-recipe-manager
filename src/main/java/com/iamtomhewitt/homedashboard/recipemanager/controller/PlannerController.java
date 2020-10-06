@@ -23,6 +23,11 @@ public class PlannerController {
 		return this.service.getPlanner(id);
 	}
 
+	@GetMapping("/day")
+	public Plan getPlannerForDay(@RequestParam String id, @RequestParam String day) throws PlannerNotFoundException, InvalidDayException {
+		return this.service.getPlanForDay(id, day);
+	}
+
 	@GetMapping("/all")
 	public List<Planner> getPlanners() {
 		return this.service.getPlanners();

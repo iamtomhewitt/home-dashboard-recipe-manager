@@ -21,6 +21,14 @@ public class PlannerService {
 		return repository.findByPlannerId(id).orElseThrow(() -> new PlannerNotFoundException(id));
 	}
 
+	public Plan getPlanForDay(String id, String day) throws PlannerNotFoundException, InvalidDayException {
+		Planner planner = getPlanner(id);
+		return planner.getPlan().stream()
+			.filter(p -> p.getDay().equals(day))
+			.findFirst()
+			.orElseThrow(() -> new InvalidDayException(day));
+	}
+
 	public List<Planner> getPlanners() {
 		return repository.findAll();
 	}
