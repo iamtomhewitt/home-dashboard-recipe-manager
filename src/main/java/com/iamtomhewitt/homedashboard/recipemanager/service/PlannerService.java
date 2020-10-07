@@ -48,6 +48,7 @@ public class PlannerService {
 			.findFirst()
 			.orElseThrow(() -> new InvalidDayException(plan.getDay()))
 			.setRecipe(plan.getRecipe());
+		this.repository.deleteByPlannerId(id);
 		this.repository.save(planner);
 	}
 }
