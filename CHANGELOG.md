@@ -1,3 +1,14 @@
+## 1.6.0 (07/10/2020) 
+
+
+### Issues in this release:
+
+* [#33](https://github.com/iamtomhewitt/home-dashboard-recipe-manager/issues/33) - Updating a planner entry creates a brand new planner
+* [#32](https://github.com/iamtomhewitt/home-dashboard-recipe-manager/issues/32) - Get planner entry for specific day
+* [#31](https://github.com/iamtomhewitt/home-dashboard-recipe-manager/issues/31) - Sort recipes in alphabetical order
+
+
+
 ## 1.5.0 (03/10/2020) 
 
 
