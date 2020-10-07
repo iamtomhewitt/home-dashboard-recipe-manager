@@ -121,12 +121,12 @@ public class PlannerServiceTests {
 	@Test
 	public void shouldUpdatePlanner() throws PlannerNotFoundException, InvalidDayException {
 		when(plannerRepository.findByPlannerId(anyString())).thenReturn(Optional.of(mockPlanner));
-
 		Plan plan = Plan.builder().day("Monday").recipe("recipe1").build();
 
 		service.updatePlanner(plan, plannerId);
 
 		verify(plannerRepository, times(1)).save(mockPlanner);
+		verify(plannerRepository, times(1)).deleteByPlannerId(plannerId);
 	}
 	@Test
 	public void shouldThrowExceptionWhenUpdatingPlannerWithWrongDayFormat() throws PlannerNotFoundException, InvalidDayException {
