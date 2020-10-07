@@ -71,6 +71,13 @@ public class ShoppingListServiceTests {
 			.weight("grams")
 			.build();
 
+		Ingredient ingredient4 = Ingredient.builder()
+			.amount(2)
+			.category("Vegetable")
+			.name("Leeks")
+			.weight("quantity")
+			.build();
+
 		mockRecipe1 = Recipe.builder()
 			.name("recipe1")
 			.ingredients(asList(ingredient1, ingredient2))
@@ -79,7 +86,7 @@ public class ShoppingListServiceTests {
 
 		mockRecipe2 = Recipe.builder()
 			.name("recipe2")
-			.ingredients(asList(ingredient1, ingredient3))
+			.ingredients(asList(ingredient1, ingredient3, ingredient4))
 			.steps(asList("Step 1", "Step 2"))
 			.build();
 
@@ -106,10 +113,11 @@ public class ShoppingListServiceTests {
 		List<String> shoppingList = shoppingListService.getShoppingList(plannerId);
 
 		assertThat(shoppingList.isEmpty(), is(false));
-		assertThat(shoppingList.size(), is(3));
+		assertThat(shoppingList.size(), is(4));
 		assertTrue(shoppingList.contains("40g of Tomato"));
 		assertTrue(shoppingList.contains("200g of Chips"));
-		assertTrue(shoppingList.contains("5 quantity of Tomato"));
+		assertTrue(shoppingList.contains("5 Tomato(s)"));
+		assertTrue(shoppingList.contains("2 Leek(s)"));
 	}
 
 	@Test
@@ -121,7 +129,7 @@ public class ShoppingListServiceTests {
 		List<String> shoppingList = shoppingListService.getShoppingList(plannerId);
 
 		assertThat(shoppingList.isEmpty(), is(false));
-		assertThat(shoppingList.size(), is(2));
+		assertThat(shoppingList.size(), is(3));
 	}
 
 	@Test

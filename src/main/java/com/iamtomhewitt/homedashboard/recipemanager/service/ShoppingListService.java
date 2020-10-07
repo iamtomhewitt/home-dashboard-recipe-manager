@@ -53,7 +53,13 @@ public class ShoppingListService {
 
 		currentItems.sort(comparing(Ingredient::getCategory));
 		currentItems.forEach(item -> {
-			shoppingList.add(String.format("%s %s of %s", Math.round(item.getAmount()), item.getWeight(), item.getName()).replace(" grams", "g"));
+			String formattedItem = String.format("%s %s of %s", Math.round(item.getAmount()), item.getWeight(), item.getName())
+				.replace(" grams", "g")
+				.replace(" quantity of", "");
+			if (item.getWeight().equals("quantity")) {
+				formattedItem = formattedItem.endsWith("s") ? formattedItem.substring(0, formattedItem.length() - 1) + "(s)" : formattedItem + "(s)";
+			}
+			shoppingList.add(formattedItem);
 		});
 
 		return shoppingList;
