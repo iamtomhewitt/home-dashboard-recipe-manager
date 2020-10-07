@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.iamtomhewitt.home-dashboard-recipe-manager</groupId>
 	<artifactId>home-dashboard-recipe-manager</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.6.0</version>
 	<name>Home Dashboard Recipe Manager</name>
 	<description>An app for managing recipes and ingredients for my home dashboard.</description>
 
