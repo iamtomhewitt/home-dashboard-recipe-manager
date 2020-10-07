@@ -1,3 +1,12 @@
+## 1.6.1 (07/10/2020) 
+
+
+### Issues in this release:
+
+* [#38](https://github.com/iamtomhewitt/home-dashboard-recipe-manager/issues/38) - Shopping list formatting
+
+
+
 ## 1.6.0 (07/10/2020) 
 
 
