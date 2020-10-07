@@ -109,7 +109,7 @@ public class ShoppingListServiceTests {
 		assertThat(shoppingList.size(), is(3));
 		assertTrue(shoppingList.contains("40g of Tomato"));
 		assertTrue(shoppingList.contains("200g of Chips"));
-		assertTrue(shoppingList.contains("5 quantity of Tomato"));
+		assertTrue(shoppingList.contains("5 Tomato(s)"));
 	}
 
 	@Test
