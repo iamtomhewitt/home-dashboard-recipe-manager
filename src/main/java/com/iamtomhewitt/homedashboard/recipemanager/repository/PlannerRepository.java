@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface PlannerRepository extends MongoRepository<Planner, String> {
 	Optional<Planner> findByPlannerId(String plannerId);
-	void deleteByPlannerId(String plannedId);
+	void deleteByPlannerId(String plannerId);
 }

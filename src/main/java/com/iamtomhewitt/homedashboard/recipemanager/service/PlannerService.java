@@ -41,14 +41,14 @@ public class PlannerService {
 		this.repository.save(planner);
 	}
 
-	public void updatePlanner(Plan plan, String id) throws PlannerNotFoundException, InvalidDayException {
-		Planner planner = getPlanner(id);
+	public void updatePlanner(Plan plan, String plannerId) throws PlannerNotFoundException, InvalidDayException {
+		Planner planner = getPlanner(plannerId);
 		planner.getPlan().stream()
 			.filter(p -> p.getDay().equals(plan.getDay()))
 			.findFirst()
 			.orElseThrow(() -> new InvalidDayException(plan.getDay()))
 			.setRecipe(plan.getRecipe());
-		this.repository.deleteByPlannerId(id);
+		this.repository.deleteByPlannerId(plannerId);
 		this.repository.save(planner);
 	}
 }
