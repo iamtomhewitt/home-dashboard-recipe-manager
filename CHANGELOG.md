@@ -1,3 +1,13 @@
+## 1.6.2 (13/12/2020) 
+
+
+### Issues in this release:
+
+* [#41](https://github.com/iamtomhewitt/home-dashboard-recipe-manager/issues/41) - Updating a planner entry duplicates the entire mongo document
+* [#40](https://github.com/iamtomhewitt/home-dashboard-recipe-manager/issues/40) - Default to grams if there is no weight for shopping list
+
+
+
 ## 1.6.1 (07/10/2020) 
 
 
