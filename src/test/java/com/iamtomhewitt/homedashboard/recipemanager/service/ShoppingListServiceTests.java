@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.singletonList;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
@@ -45,6 +46,7 @@ public class ShoppingListServiceTests {
 
 	private Recipe mockRecipe1;
 	private Recipe mockRecipe2;
+	private Recipe mockRecipe3;
 	private Planner mockPlanner;
 	private String plannerId = "id";
 
@@ -78,6 +80,13 @@ public class ShoppingListServiceTests {
 			.weight("quantity")
 			.build();
 
+		Ingredient ingredient5 = Ingredient.builder()
+			.amount(2)
+			.category("Vegetable")
+			.name("Leeks")
+			.weight("")
+			.build();
+
 		mockRecipe1 = Recipe.builder()
 			.name("recipe1")
 			.ingredients(asList(ingredient1, ingredient2))
@@ -87,6 +96,12 @@ public class ShoppingListServiceTests {
 		mockRecipe2 = Recipe.builder()
 			.name("recipe2")
 			.ingredients(asList(ingredient1, ingredient3, ingredient4))
+			.steps(asList("Step 1", "Step 2"))
+			.build();
+
+		mockRecipe3 = Recipe.builder()
+			.name("recipe3")
+			.ingredients(asList(ingredient1, ingredient5))
 			.steps(asList("Step 1", "Step 2"))
 			.build();
 
@@ -141,5 +156,26 @@ public class ShoppingListServiceTests {
 		shoppingListService.getShoppingList(plannerId);
 
 		verify(shoppingListService, times(1)).getShoppingList(anyString());
+	}
+
+	@Test
+	public void shouldCreateAShoppingListCorrectlyWhenAnItemHasNoWeight() throws PlannerNotFoundException {
+		mockPlanner = Planner.builder()
+			.plannerId("id")
+			.plan(singletonList(
+				Plan.builder()
+					.day("Tuesday")
+					.recipe(mockRecipe3.getName())
+					.build()))
+			.build();
+		when(recipeRepository.findByName("recipe3")).thenReturn(Optional.of(mockRecipe3));
+		when(plannerRepository.findByPlannerId(anyString())).thenReturn(Optional.of(mockPlanner));
+
+		List<String> shoppingList = shoppingListService.getShoppingList(plannerId);
+
+		assertThat(shoppingList.isEmpty(), is(false));
+		assertThat(shoppingList.size(), is(2));
+		assertTrue(shoppingList.contains("20g of Tomato"));
+		assertTrue(shoppingList.contains("2g of Leeks"));
 	}
 }
