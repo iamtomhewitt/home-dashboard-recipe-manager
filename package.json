@@ -16,7 +16,7 @@
         "url": "https://github.com/iamtomhewitt/home-dashboard-recipe-manager/issues"
     },
     "dependencies": {
-        "github-releaser": "1.5.0"
+        "github-releaser": "1.5.1"
     },
     "devDependencies": {
         "@commitlint/cli": "^11.0.0",
