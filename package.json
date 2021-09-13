@@ -5,7 +5,7 @@
     "name": "home-dashboard-recipe-manager",
     "version": "1.6.2",
     "scripts": {
-		"lint": "eslint --ignore-path .gitignore .",
+        "lint": "eslint --ignore-path .gitignore .",
         "lint-fix": "npm run lint -- --fix",
         "release": "github-releaser",
         "start": "node src/app.js"
