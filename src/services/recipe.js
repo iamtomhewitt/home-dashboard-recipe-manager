@@ -48,5 +48,21 @@ module.exports = {
     } catch (e) {
       throw new Error(`Could not update recipe: ${e}`)
     }
+  },
+
+  async deleteRecipe(name) {
+    try {
+      const { recipes } = await this.getData();
+      const newRecipes = recipes.filter(r => r.name !== name)
+      const updateUrl = `${process.env.FIREBASE}recipes.json`;
+
+      await fetch(updateUrl, {
+        method: 'put',
+        body: JSON.stringify(newRecipes)
+      })
+
+    } catch (e) {
+      throw new Error(`Could not update recipe: ${e}`)
+    }
   }
 }

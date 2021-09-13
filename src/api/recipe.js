@@ -30,4 +30,15 @@ route.put('/', async (req, res) => {
   }
 });
 
+route.delete('/', async (req, res) => {
+  try {
+    const { name } = req.query;
+    await service.deleteRecipe(name);
+    return res.status(200).json({ message: `${name} deleted!` });
+  }
+  catch (e) {
+    return res.status(500).json({ message: e.message })
+  }
+});
+
 module.exports = route;
