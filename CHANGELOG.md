@@ -1,3 +1,12 @@
+## 1.6.3 (13/09/2021) 
+
+
+### Issues in this release:
+
+* [#50](https://github.com/iamtomhewitt/home-dashboard-recipe-manager/issues/50) - Convert to Node project and use Firebase
+
+
+
 ## 1.6.2 (13/12/2020) 
 
 
