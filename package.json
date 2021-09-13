@@ -3,7 +3,7 @@
     "description": "An app for managing recipes and ingredients for my home dashboard.",
     "homepage": "https://github.com/iamtomhewitt/home-dashboard-recipe-manager#readme",
     "name": "home-dashboard-recipe-manager",
-    "version": "1.6.2",
+    "version": "1.6.3",
     "scripts": {
         "lint": "eslint --ignore-path .gitignore .",
         "lint-fix": "npm run lint -- --fix",
