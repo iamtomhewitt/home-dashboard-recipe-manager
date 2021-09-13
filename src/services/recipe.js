@@ -11,7 +11,7 @@ module.exports = {
 
   async saveRecipe(ingredients, name, steps) {
     try {
-      const updateUrl = `${process.env.FIREBASE}/recipes.json`;
+      const updateUrl = `${process.env.FIREBASE}recipes.json`;
       const { recipes } = await this.getData();
       recipes.push({
         name,
@@ -25,6 +25,28 @@ module.exports = {
       })
     } catch (e) {
       throw new Error(`Could not save recipe: ${e}`)
+    }
+  },
+
+  async updateRecipe(ingredients, name, steps) {
+    try {
+      const { recipes } = await this.getData();
+      const index = recipes.findIndex(r => r.name === name);
+      const updateUrl = `${process.env.FIREBASE}recipes/${index}.json`;
+
+      recipes[index] = {
+        name,
+        ingredients,
+        steps
+      }
+
+      await fetch(updateUrl, {
+        method: 'put',
+        body: JSON.stringify(recipes[index])
+      })
+
+    } catch (e) {
+      throw new Error(`Could not update recipe: ${e}`)
     }
   }
 }

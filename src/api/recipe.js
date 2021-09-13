@@ -19,4 +19,15 @@ route.post('/', async (req, res) => {
   }
 });
 
+route.put('/', async (req, res) => {
+  try {
+    const { ingredients, name, steps } = req.body;
+    await service.updateRecipe(ingredients, name, steps);
+    return res.status(200).json({ message: `${name} updated!` });
+  }
+  catch (e) {
+    return res.status(500).json({ message: e.message })
+  }
+});
+
 module.exports = route;
