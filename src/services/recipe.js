@@ -9,6 +9,12 @@ module.exports = {
     return json;
   },
 
+  async findRecipe(name) {
+    const { recipes } = await this.getData();
+    const recipe = recipes.filter(r => r.name === name)[0];
+    return recipe;
+  },
+
   async saveRecipe(ingredients, name, steps) {
     try {
       const updateUrl = `${process.env.FIREBASE}recipes.json`;
