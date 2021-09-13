@@ -5,7 +5,10 @@
     "name": "home-dashboard-recipe-manager",
     "version": "1.6.2",
     "scripts": {
-        "release": "github-releaser"
+        "lint": "eslint --ignore-path .gitignore .",
+        "lint-fix": "npm run lint -- --fix",
+        "release": "github-releaser",
+        "start": "node src/app.js"
     },
     "repository": {
         "type": "git",
@@ -16,12 +19,26 @@
         "url": "https://github.com/iamtomhewitt/home-dashboard-recipe-manager/issues"
     },
     "dependencies": {
-        "github-releaser": "1.5.0"
+        "body-parser": "^1.19.0",
+        "cors": "^2.8.5",
+        "dotenv": "^10.0.0",
+        "express": "^4.17.1",
+        "express-list-endpoints": "^6.0.0",
+        "github-releaser": "1.5.1",
+        "node-fetch": "^2.6.1"
     },
     "devDependencies": {
-        "@commitlint/cli": "^11.0.0",
-        "@commitlint/config-conventional": "^11.0.0",
+        "eslint": "^6.8.0",
+        "@commitlint/cli": "^8.3.5",
+        "@commitlint/config-conventional": "^8.3.4",
         "cz-conventional-changelog": "^2.1.0",
+        "eslint-config-airbnb": "^18.1.0",
+        "eslint-config-airbnb-base": "^14.1.0",
+        "eslint-config-node": "^4.1.0",
+        "eslint-plugin-import": "^2.20.2",
+        "eslint-plugin-jsx-a11y": "^6.2.3",
+        "eslint-plugin-react": "^7.20.3",
+        "eslint-plugin-react-hooks": "^2.5.1",
         "husky": "^1.1.2",
         "validate-commit-msg": "^2.14.0"
     },
