@@ -13,9 +13,8 @@ route.post('/', async (req, res) => {
     const { ingredients, name, steps } = req.body;
     await service.saveRecipe(ingredients, name, steps);
     return res.status(200).json({ message: `${name} saved!` });
-  }
-  catch (e) {
-    return res.status(500).json({ message: e.message })
+  } catch (e) {
+    return res.status(500).json({ message: e.message });
   }
 });
 
@@ -24,9 +23,8 @@ route.put('/', async (req, res) => {
     const { ingredients, name, steps } = req.body;
     await service.updateRecipe(ingredients, name, steps);
     return res.status(200).json({ message: `${name} updated!` });
-  }
-  catch (e) {
-    return res.status(500).json({ message: e.message })
+  } catch (e) {
+    return res.status(500).json({ message: e.message });
   }
 });
 
@@ -35,9 +33,8 @@ route.delete('/', async (req, res) => {
     const { name } = req.query;
     await service.deleteRecipe(name);
     return res.status(200).json({ message: `${name} deleted!` });
-  }
-  catch (e) {
-    return res.status(500).json({ message: e.message })
+  } catch (e) {
+    return res.status(500).json({ message: e.message });
   }
 });
 
