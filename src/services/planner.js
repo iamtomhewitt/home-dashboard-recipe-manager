@@ -15,21 +15,20 @@ module.exports = {
     if (!planner) {
       throw new Error(`Could not find planner with id '${id}'`)
     }
-    const plannerIndex = planners.indexOf(planner);
-    return { planner, plannerIndex };
+    return planner;
   },
 
   async updatePlanner(id, body) {
     try {
       const { day, recipe } = body;
-      const { planner, plannerIndex } = await this.getPlanner(id);
-      const dayToUpdate = planner.plan.find(p => p.day === day)
-      const dayToUpdateIndex = planner.plan.indexOf(dayToUpdate);
+      const { planners } = await this.getData();
+      const plannerIndex = planners.findIndex(p => p.plannerId === id)
+      const dayToUpdateIndex = planners[plannerIndex].plan.findIndex(p => p.day === day);
       const updateUrl = `${process.env.FIREBASE}planners/${plannerIndex}/plan/${dayToUpdateIndex}/recipe.json`;
 
       await fetch(updateUrl, {
         method: 'put',
-        body: `"${recipe}"`
+        body: JSON.stringify(recipe)
       })
     }
     catch (e) {

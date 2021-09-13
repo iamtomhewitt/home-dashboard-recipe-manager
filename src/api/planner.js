@@ -11,7 +11,7 @@ route.get('/all', async (req, res) => {
 route.get('/day', async (req, res) => {
   try {
     const { id, day } = req.query;
-    const { planner: plan } = await service.getPlanner(id);
+    const { plan } = await service.getPlanner(id);
     const planForDay = plan.find(p => p.day === day);
     return res.status(200).json({ ...planForDay });
   }
@@ -35,8 +35,8 @@ route.put('/', async (req, res) => {
 
 route.get('/:id', async (req, res) => {
   try {
-    const { planner } = await service.getPlanner(req.params.id);
-    return res.status(200).json({ planner });
+    const planner = await service.getPlanner(req.params.id);
+    return res.status(200).json(planner);
   }
   catch (e) {
     return res.status(500).json({ message: e.message })
