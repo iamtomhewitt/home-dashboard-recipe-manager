@@ -1,17 +1,17 @@
 const express = require('express');
-const firebase = require('../services/firebase');
+const service = require('../services/planner');
 
 const route = express.Router();
 
 route.get('/all', async (req, res) => {
-  const { planners } = await firebase.getData();
+  const { planners } = await service.getData();
   return res.status(200).json({ planners });
 });
 
 route.get('/day', async (req, res) => {
   try {
     const { id, day } = req.query;
-    const { planner: plan } = await firebase.getPlanner(id);
+    const { planner: plan } = await service.getPlanner(id);
     const planForDay = plan.find(p => p.day === day);
     return res.status(200).json({ ...planForDay });
   }
@@ -25,7 +25,7 @@ route.put('/', async (req, res) => {
     const { body, query } = req;
     const { id } = query;
 
-    await firebase.updatePlanner(id, body)
+    await service.updatePlanner(id, body)
     return res.status(200).json({});
   }
   catch (e) {
@@ -35,7 +35,7 @@ route.put('/', async (req, res) => {
 
 route.get('/:id', async (req, res) => {
   try {
-    const { planner } = await firebase.getPlanner(req.params.id);
+    const { planner } = await service.getPlanner(req.params.id);
     return res.status(200).json({ planner });
   }
   catch (e) {
