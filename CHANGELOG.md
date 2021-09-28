@@ -1,3 +1,12 @@
+## 1.6.4 (28/09/2021) 
+
+
+### Issues in this release:
+
+* [#53](https://github.com/iamtomhewitt/home-dashboard-recipe-manager/issues/53) - Updating a recipes name causes a -1 index in Firebase
+
+
+
 ## 1.6.3 (13/09/2021) 
 
 
