@@ -34,10 +34,10 @@ module.exports = {
     }
   },
 
-  async updateRecipe(ingredients, name, steps) {
+  async updateRecipe(ingredients, name, steps, originalName) {
     try {
       const { recipes } = await this.getData();
-      const index = recipes.findIndex((r) => r.name === name);
+      const index = recipes.findIndex((r) => r.name === originalName);
       const updateUrl = `${process.env.FIREBASE}recipes/${index}.json`;
 
       recipes[index] = {
