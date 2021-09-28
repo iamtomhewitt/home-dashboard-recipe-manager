@@ -20,8 +20,10 @@ route.post('/', async (req, res) => {
 
 route.put('/', async (req, res) => {
   try {
-    const { ingredients, name, steps } = req.body;
-    await service.updateRecipe(ingredients, name, steps);
+    const {
+      ingredients, name, steps, originalName,
+    } = req.body;
+    await service.updateRecipe(ingredients, name, steps, originalName);
     return res.status(200).json({ message: `${name} updated!` });
   } catch (e) {
     return res.status(500).json({ message: e.message });
