@@ -24,7 +24,7 @@ class App extends React.Component {
   }
 
   getRecipes = async () => {
-    const r = await fetch('/api/health');
+    const r = await fetch('/health');
     console.log(r)
     const j = await r.json();
     console.log(j)
