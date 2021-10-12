@@ -8,6 +8,8 @@ async function startServer() {
   const app = express();
   await loaders(app);
 
+  app.use(express.static(path.join(__dirname, 'packages/frontend/build')))
+
   const port = process.env.PORT || 3001;
 
   app.listen(port, (err) => {
