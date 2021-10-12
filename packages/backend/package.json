@@ -1,7 +1,7 @@
 {
 	"author": "Tom Hewitt",
 	"homepage": "https://github.com/iamtomhewitt/home-dashboard-recipe-manager#readme",
-	"name": "home-dashboard-recipe-manager",
+	"name": "home-dashboard-recipe-manager-backend",
 	"version": "1.6.4",
 	"scripts": {
 		"lint": "eslint --ignore-path ../../.gitignore .",

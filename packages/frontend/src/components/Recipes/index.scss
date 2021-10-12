@@ -1,0 +1,77 @@
+@import "../../colours.scss";
+
+.recipes {
+  h2 {
+    color: $text-colour;
+    font-size: 36px;
+    font-weight: 300;
+    letter-spacing: 5px;
+    text-align: center;
+    margin: 20px 0;
+  }
+
+  &-row {
+    color: $day-text-colour;
+    margin: 10px 0;
+    text-align: center;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &-name {
+    margin: 0 10px;
+    width: 30%;
+
+    @media screen and (max-width: 1024px) {
+      width: 60%;
+    }
+  }
+
+  &-buttons {
+    display: flex;
+
+    button {
+      background-color: $add-button-colour;
+      border: 0;
+      color: white;
+      font-size: 16px;
+      font-weight: 200;
+      height: 40px;
+      letter-spacing: 1px;
+      margin-right: 5px;
+      width: 75px;
+    }
+  }
+
+  &-page-buttons {
+    text-align: center;
+  }
+
+  &-add-button {
+    background-color: $submit-button-colour;
+    border: 0;
+    color: white;
+    font-size: 16px;
+    font-weight: 200;
+    height: 40px;
+    letter-spacing: 1px;
+    margin: 20px 5px;
+    text-align: center;
+    width: 200px;
+  }
+
+  &-refresh-button {
+    background-color: $add-button-colour;
+    border: 0;
+    color: white;
+    font-size: 16px;
+    font-weight: 200;
+    height: 40px;
+    letter-spacing: 1px;
+    margin: 20px 5px;
+    text-align: center;
+    width: 200px;
+  }
+}
