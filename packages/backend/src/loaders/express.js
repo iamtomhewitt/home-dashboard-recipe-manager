@@ -13,7 +13,7 @@ module.exports = async (app) => {
   app.use('/recipes', recipeRoute);
   app.use('/shoppingList', shoppingListRoute);
 
-  app.get('/', (req, res) => {
+  app.get('/health', (req, res) => {
     res.json({ status: 'UP', version, endpoints: listEndpoints(app) });
   });
 };
