@@ -9,7 +9,10 @@
 		"lint": "lerna run lint",
 		"lint-fix": "lerna run lint-fix",
 		"release": "github-releaser && lerna version",
-		"heroku-postbuild": "cd packages/frontend && npm install && npm run build"
+		"heroku-postbuild": "cd packages/frontend && npm install && npm run build",
+		"frontend": "cd packages/frontend && npm start",
+		"backend": "cd packages/backend && npm start",
+		"start": "concurrently --kill-others-on-fail \"npm run backend\" \"npm run frontend\""
 	},
 	"repository": {
 		"type": "git",
@@ -17,6 +20,7 @@
 		"apiUrl": "https://api.github.com/repos/iamtomhewitt/home-dashboard-recipe-manager"
 	},
 	"dependencies": {
+		"concurrently": "^6.3.0",
 		"lerna": "^4.0.0"
 	},
 	"devDependencies": {
