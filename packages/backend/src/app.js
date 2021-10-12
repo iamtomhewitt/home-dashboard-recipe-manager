@@ -8,11 +8,11 @@ require('dotenv').config();
 async function startServer() {
   const app = express();
   await loaders(app);
-
-  app.use(express.static(path.join(__dirname, '/packages/frontend/build')))
+  console.log(path.join(__dirname + '/../../../packages/frontend/build/index.html'))
+  app.use(express.static(path.join(__dirname + '/../../../packages/frontend/build')))
   // Anything that doesn't match the above, send back the index.html file
   app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname + '/packages/frontend/build/index.html'))
+    res.sendFile(path.join(__dirname + '/../../../packages/frontend/build/index.html'))
   })
   const port = process.env.PORT || 3001;
 
