@@ -12,7 +12,8 @@
 		"heroku-postbuild": "cd packages/frontend && npm install && npm run build && cd ../backend && npm install",
 		"frontend": "cd packages/frontend && npm start",
 		"backend": "cd packages/backend && npm start",
-		"start": "npm run backend"
+		"start": "npm run backend",
+		"test": "lerna run test"
 	},
 	"repository": {
 		"type": "git",
