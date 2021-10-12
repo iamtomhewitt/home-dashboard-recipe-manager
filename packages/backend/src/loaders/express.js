@@ -9,7 +9,9 @@ const shoppingListRoute = require('../api/shopping-list');
 const { version } = require('../../package.json');
 
 module.exports = async (app) => {
-  const buildFolder = path.join(__dirname + '/../../../packages/frontend/build')
+  const buildFolder = path.join(__dirname + '/../../../frontend/build')
+  console.log(buildFolder)
+  console.log(path.join(buildFolder, '/index.html'))
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use('api/planner', plannerRoute);
