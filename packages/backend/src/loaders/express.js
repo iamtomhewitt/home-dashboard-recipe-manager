@@ -14,12 +14,12 @@ module.exports = async (app) => {
   console.log(path.join(buildFolder, '/index.html'))
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
-  app.use('api/planner', plannerRoute);
-  app.use('api/recipes', recipeRoute);
-  app.use('api/shoppingList', shoppingListRoute);
+  app.use('/planner', plannerRoute);
+  app.use('/recipes', recipeRoute);
+  app.use('/shoppingList', shoppingListRoute);
   app.use(express.static(buildFolder))
 
-  app.get('api/health', (req, res) => {
+  app.get('/health', (req, res) => {
     res.json({ status: 'UP', version, endpoints: listEndpoints(app) });
   });
   
