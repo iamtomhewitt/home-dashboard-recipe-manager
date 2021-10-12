@@ -8,7 +8,8 @@
 		"bootstrap": "lerna bootstrap",
 		"lint": "lerna run lint",
 		"lint-fix": "lerna run lint-fix",
-		"release": "github-releaser && lerna version"
+		"release": "github-releaser && lerna version",
+		"heroku-postbuild": "cd packages/frontend && npm install && npm run build"
 	},
 	"repository": {
 		"type": "git",
