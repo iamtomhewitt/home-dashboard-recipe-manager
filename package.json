@@ -8,7 +8,7 @@
 		"bootstrap": "lerna bootstrap",
 		"lint": "lerna run lint",
 		"lint-fix": "lerna run lint-fix",
-		"release": "lerna version"
+		"release": "github-releaser && lerna version"
 	},
 	"repository": {
 		"type": "git",
