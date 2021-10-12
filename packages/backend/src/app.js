@@ -10,7 +10,10 @@ async function startServer() {
   await loaders(app);
 
   app.use(express.static(path.join(__dirname, 'packages/frontend/build')))
-
+  // Anything that doesn't match the above, send back the index.html file
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname + '/client/build/index.html'))
+  })
   const port = process.env.PORT || 3001;
 
   app.listen(port, (err) => {
