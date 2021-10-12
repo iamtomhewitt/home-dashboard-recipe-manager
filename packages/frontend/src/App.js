@@ -24,13 +24,13 @@ class App extends React.Component {
   }
 
   getRecipes = async () => {
-    const recipes = await http.get('/recipes');
-    this.setState({ recipes });
-
     const r = await fetch('/api/health');
     console.log(r)
     const j = await r.json();
     console.log(j)
+
+    const recipes = await http.get('/recipes');
+    this.setState({ recipes });
   }
 
   getPlanner = async (plannerId) => {
