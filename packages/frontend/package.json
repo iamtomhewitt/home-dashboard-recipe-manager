@@ -5,8 +5,8 @@
 	"author": "Tom Hewitt",
 	"proxy": "http://localhost:3001",
 	"scripts": {
-		"lint": "eslint --ignore-path ../../.gitignore ./src && npm run lint-sass",
-		"lint-fix": "eslint --ignore-path .gitignore ./src --fix",
+		"lint": "eslint --ignore-path ../../.gitignore ./src",
+		"lint-fix": "npm run lint -- --fix",
 		"lint-sass": "sass-lint '**/src/*.scss' --verbose --no-exit",
 		"start": "react-scripts start",
 		"start-heroku": "serve -s build",

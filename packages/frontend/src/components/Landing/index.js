@@ -9,7 +9,7 @@ class Landing extends React.Component {
     super();
     this.state = {
       isLoading: false,
-      input: 'a914912016714dafb44e8e5456997161', // TODO remove
+      input: '',
     };
   }
 

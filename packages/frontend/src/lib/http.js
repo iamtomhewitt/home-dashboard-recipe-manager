@@ -1,7 +1,7 @@
 import config from '../config';
 
 const request = async (url, body, method) => {
-  console.log('making a', method, 'request to', `${config.baseUrl}${url}`)
+  console.log('Making a', method, 'request to', `${config.baseUrl}${url}`);
   const response = await fetch(`${config.baseUrl}${url}`, {
     method,
     body: body ? JSON.stringify(body) : null,

@@ -21,6 +21,7 @@ describe('<Landing/>', () => {
 
   it('should get planner', () => {
     const { getByTestId } = render(<Landing {...props} />);
+    fireEvent.change(getByTestId('landing-input'), { target: { id: 'input', value: 'new value' } });
     fireEvent.click(getByTestId('landing-button'));
     expect(props.getPlanner).toHaveBeenCalled();
   });
