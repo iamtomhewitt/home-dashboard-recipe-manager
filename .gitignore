@@ -1,6 +1,1 @@
-.env
-.idea
-.mvnw
-.mvnw.cmd
-target
 node_modules
