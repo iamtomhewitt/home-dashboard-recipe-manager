@@ -1,0 +1,48 @@
+@import "../../colours";
+
+.ingredient {
+  margin: 0 50px 20px;
+
+  input {
+    border: 1px solid $input-border-colour;
+    border-radius: 4px;
+    display: block;
+    font-size: 16px;
+    height: 40px;
+    margin-bottom: 5px;
+    padding-left: 10px;
+    width: 100%;
+  }
+
+  input:nth-child(even) {
+    margin-left: 5px;
+  }
+
+  input:nth-child(odd) {
+    margin-right: 5px;
+  }
+
+  &-row {
+    display: flex;
+  }
+
+  &-select:nth-child(even) {
+    width: 100%;
+    margin-left: 5px;
+  }
+
+  &-select:nth-child(odd) {
+    width: 100%;
+    margin-right: 5px;
+  }
+
+  &-close-button {
+    svg {
+      // To change the main colour of the svg
+      filter: invert(40%) sepia(21%) saturate(1937%) hue-rotate(316deg) brightness(109%) contrast(92%);
+      height: 35px;
+      position: relative;
+      left: 50%;
+    }
+  }
+}

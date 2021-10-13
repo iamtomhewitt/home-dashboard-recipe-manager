@@ -1,0 +1,76 @@
+{
+	"env": {
+		"browser": true,
+		"es6": true,
+		"jest": true
+	},
+	"extends": [
+		"plugin:react/recommended",
+		"airbnb",
+		"eslint:recommended"
+	],
+	"globals": {
+		"Atomics": "readonly",
+		"SharedArrayBuffer": "readonly"
+	},
+	"parserOptions": {
+		"ecmaFeatures": {
+			"jsx": true
+		},
+		"ecmaVersion": 2018,
+		"sourceType": "module"
+	},
+	"plugins": [
+		"react"
+	],
+	"rules": {
+		"indent": [
+			"error",
+			2,
+			{
+				"SwitchCase": 1
+			}
+		],
+		"jsx-a11y/click-events-have-key-events": "off",
+		"jsx-a11y/control-has-associated-label": "off",
+		"jsx-a11y/label-has-associated-control": "off",
+		"jsx-a11y/no-static-element-interactions": "off",
+		"linebreak-style": "off",
+		"no-sequences": "off",
+		"no-unused-expressions": "off",
+		"object-curly-newline": "off",
+		"prefer-destructuring": "off",
+		"react/forbid-prop-types": "off",
+		"react/jsx-filename-extension": "off",
+		"react/jsx-indent-props": [
+			"error",
+			2
+		],
+		"react/jsx-one-expression-per-line": "off",
+		"react/jsx-props-no-spreading": "off",
+		"react/no-array-index-key": "off",
+		"react/no-unescaped-entities": "off",
+		"react/require-default-props": "off",
+		"global-require": "off",
+		"max-len": "off",
+		"react/destructuring-assignment": "off",
+		"react/jsx-indent": [
+			"error",
+			2
+		],
+		"react/jsx-wrap-multilines": [
+			1,
+			{
+				"logical": "ignore"
+			}
+		],
+		"jsx-quotes": [
+			2,
+			"prefer-single"
+		],
+		"operator-linebreak": "off",
+		"react/jsx-curly-newline": "off",
+		"react/button-has-type": "off"
+	},
+	"parser": "babel-eslint"
+}

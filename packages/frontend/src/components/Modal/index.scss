@@ -1,0 +1,122 @@
+@import "../../colours";
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: block;
+
+  h1 {
+    font-weight: 300;
+    letter-spacing: 2px;
+    text-align: center;
+  }
+
+  &-main {
+    background: $white;
+    left: 50%;
+    max-height: 90%;
+    overflow-y: auto;
+    position: fixed;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+
+    @media screen and (max-width: 1024px) {
+      max-height: 90%;
+      width: 90%;
+      overflow: auto;
+    }
+  }
+
+  &-close-button {
+    svg {
+      // To change the main colour of the svg
+      filter: invert(40%) sepia(21%) saturate(1937%) hue-rotate(316deg) brightness(109%) contrast(92%);
+      height: 50px;
+      position: absolute;
+      right: 0px;
+      top: 0px;
+      width: 50px;
+    }
+  }
+
+  &-view-recipe {
+    ul {
+      color: $text-colour;
+      margin: 0 60px 20px;
+
+      @media screen and (max-width: 1024px) {
+        margin: 0 10px 20px 0;
+        overflow-y: scroll;
+        width: 80%;
+      }
+    }
+
+    li {
+      margin-bottom: 5px;
+    }
+
+    &-info {
+      display: flex;
+      justify-content: center;
+
+      @media screen and (max-width: 1024px) {
+        display: inherit;
+      }
+
+      &-left {
+        width: 40%;
+      }
+
+      &-right {
+        width: 60%;
+      }
+    }
+  }
+
+  &-delete-recipe {
+    &-buttons {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+
+    &-button-yes {
+      button {
+        background-color: $remove-button-colour;
+        border: 0;
+        color: $white;
+        font-size: 16px;
+        font-weight: 200;
+        height: 40px;
+        letter-spacing: 1px;
+        margin: 0 10px;
+        width: 100px;
+      }
+    }
+
+    &-button-no {
+      button {
+        background-color: $submit-button-colour;
+        border: 0;
+        color: $white;
+        font-size: 16px;
+        font-weight: 200;
+        height: 40px;
+        letter-spacing: 1px;
+        margin: 0 10px;
+        width: 100px;
+      }
+    }
+
+    &-message {
+      color: $submit-button-colour;
+      margin: 20px 0;
+      text-align: center;
+    }
+  }
+}

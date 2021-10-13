@@ -66,7 +66,7 @@ module.exports = {
         body: JSON.stringify(newRecipes),
       });
     } catch (e) {
-      throw new Error(`Could not update recipe: ${e}`);
+      throw new Error(`Could not delete recipe: ${e}`);
     }
   },
 };

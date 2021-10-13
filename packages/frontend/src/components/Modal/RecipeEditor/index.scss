@@ -1,0 +1,93 @@
+@import "../../../colours";
+
+.modal-recipe-editor {
+  h3 {
+    font-weight: 300;
+    letter-spacing: 2px;
+    text-align: center;
+  }
+
+  &-name {
+    display: flex;
+    justify-content: center;
+
+    input {
+      border: 1px solid $input-border-colour;
+      display: inline-block;
+      font-size: 18px;
+      height: 30px;
+      margin: 0 50px;
+      text-align: center;
+      width: 100%;
+    }
+  }
+
+  &-ingredients {
+    text-align: center;
+
+    button {
+      background-color: $add-button-colour;
+      border: 0;
+      color: $white;
+      font-size: 11px;
+      font-weight: 200;
+      height: 30px;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+      width: 150px;
+    }
+  }
+
+  &-steps {
+    text-align: center;
+
+    button {
+      background-color: $add-button-colour;
+      border: 0;
+      color: $white;
+      font-size: 12px;
+      font-weight: 200;
+      height: 30px;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+      width: 150px;
+    }
+  }
+
+  &-step {
+    margin-bottom: 20px;
+
+    div {
+      display: flex;
+      justify-content: center;
+      margin: 0 50px;
+    }
+
+    textarea {
+      border: 1px solid $input-border-colour;
+      font-family: 'Open Sans', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+      width: 100%;
+    }
+  }
+
+  &-message {
+    color: $submit-button-colour;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  &-submit-button {
+    text-align: center;
+    button {
+      background-color: $submit-button-colour;
+      border: 0;
+      color: $white;
+      font-size: 16px;
+      font-weight: 200;
+      height: 40px;
+      letter-spacing: 1px;
+      margin: 20px 0;
+      width: 300px;
+    }
+  }
+}

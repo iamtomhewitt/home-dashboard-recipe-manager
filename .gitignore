@@ -1,6 +1,5 @@
-.env
-.idea
-.mvnw
-.mvnw.cmd
-target
 node_modules
+coverage
+coverage.txt
+build
+.env

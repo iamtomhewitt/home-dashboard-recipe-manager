@@ -1,0 +1,15 @@
+@import './colours';
+
+.app {
+
+  &-loading {
+    margin: 10px;
+    text-align: center;
+  }
+
+  &-error {
+    color: $error-colour;
+    margin: 10px;
+    text-align: center;
+  }
+}
