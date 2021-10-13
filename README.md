@@ -2,3 +2,8 @@
 <p align="center">
     An app for managing recipes and ingredients for my <a href="https://github.com/iamtomhewitt/home-dashboard">home dashboard</a>.
 </p>
+
+## Installation
+```sh
+npm i && npm run bootstrap
+```

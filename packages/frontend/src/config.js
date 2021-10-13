@@ -1,5 +1,7 @@
 const config = {
-  baseUrl: 'https://home-dashboard-recipe-manager.herokuapp.com',
+  baseUrl: process.env.NODE_ENV === 'development' ?
+    'http://localhost:3001' :
+    'https://home-dashboard-recipe-manager.herokuapp.com',
 };
 
 export default config;

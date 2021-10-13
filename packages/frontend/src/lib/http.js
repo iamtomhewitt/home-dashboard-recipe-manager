@@ -1,8 +1,9 @@
 import config from '../config';
 
 const request = async (url, body, method) => {
-  console.log('Making a', method, 'request to', `${config.baseUrl}${url}`);
-  const response = await fetch(`${config.baseUrl}${url}`, {
+  const finalUrl = `${config.baseUrl}${url}`;
+  console.log('Making a', method, 'request to', finalUrl);
+  const response = await fetch(finalUrl, {
     method,
     body: body ? JSON.stringify(body) : null,
     headers: {
@@ -11,15 +12,15 @@ const request = async (url, body, method) => {
     },
   });
 
+  const json = await response.json();
+
   if (!response.ok) {
-    const json = await response.json();
     return {
       status: response.status,
       error: json.message,
     };
   }
 
-  const json = await response.json();
   return json;
 };
 

@@ -1,8 +1,9 @@
 /* eslint-disable no-console */
 const express = require('express');
+const path = require('path');
 const loaders = require('./loaders');
 
-require('dotenv').config();
+require('dotenv').config({ path: path.join(__dirname, '/../../../.env') });
 
 async function startServer() {
   const app = express();
