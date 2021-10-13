@@ -1,0 +1,125 @@
+{
+	"planners": [
+		{
+			"plannerId": "12345",
+			"plan": [
+				{
+					"day": "Monday",
+					"recipe": "Food Monday"
+				},
+				{
+					"day": "Tuesday",
+					"recipe": "Food Tuesday"
+				},
+				{
+					"day": "Wednesday",
+					"recipe": "Food Wednesday"
+				},
+				{
+					"day": "Thursday",
+					"recipe": "Food Thursday"
+				},
+				{
+					"day": "Friday",
+					"recipe": "Food Friday"
+				},
+				{
+					"day": "Saturday",
+					"recipe": "Food Saturday"
+				},
+				{
+					"day": "Sunday",
+					"recipe": "Food Sunday"
+				}
+			]
+		}
+	],
+	"recipes": [
+		{
+			"name": "MOCK Bacon And Leek Risotto",
+			"steps": [
+				"Heat oven to 200C/180C fan/ gas 6. Tip the oil into an ovenproof casserole dish. Add bacon and fry for 2 mins. Add the leeks and cook until soft, but not coloured, for about 4-5 mins. Tip in rice and cook for 1 min more. Pour over stock. Cover and place in the oven for 20 mins, stirring halfway.",
+				"When rice is just tender and all liquid is absorbed, remove from oven and stir in peas. Place back in oven for 2 mins more. Remove and stir in cheese. Add zest and season."
+			],
+			"ingredients": [
+				{
+					"name": "Bacon",
+					"category": "Meat",
+					"amount": 6,
+					"weight": "quantity"
+				},
+				{
+					"name": "Leeks",
+					"category": "Fruit / Vegetables",
+					"amount": 2,
+					"weight": "quantity"
+				},
+				{
+					"name": "Risotto Rice",
+					"category": "Rice / Pasta / Condiments",
+					"amount": 250,
+					"weight": "grams"
+				},
+				{
+					"name": "Vegetable Stock",
+					"category": "Rice / Pasta / Condiments",
+					"amount": 700,
+					"weight": "mls"
+				},
+				{
+					"name": "Peas",
+					"category": "Freezer",
+					"amount": 175,
+					"weight": "grams"
+				},
+				{
+					"name": "Soft Cheese",
+					"category": "Dairy",
+					"amount": 3,
+					"weight": "tablespoon"
+				}
+			]
+		},
+		{
+			"name": "MOCK Bacon, Onion & Potato Bake",
+			"steps": [
+				"Preheat oven to 200°",
+				"Spread a layer of sliced onion on the bottom of an ovenproof dish. Arrange a layer of sliced potato and bacon on top of of the onions, alternating a couple of slices of potato with a piece of bacon. Next, add another layer of onions. Repeat until you have used up all the bacon and potatoes, at least three layers.",
+				"Pour the stock over the top, then season with a little salt and pepper. Cover with foil and seal the foil tightly around the dish.",
+				"Cook in the oven for an hour, then remove the foil and check that the potato is cooked. If it's not, re-cover and return it to the oven for a bit longer. When it's cooked, sprinkle the cheese over the top, then return to the oven for another 10-15 minutes, or until the cheese has melted and is golden brown."
+			],
+			"ingredients": [
+				{
+					"name": "Grated Cheddar",
+					"category": "Dairy",
+					"amount": 40,
+					"weight": "grams"
+				},
+				{
+					"name": "Chicken Stock",
+					"category": "Rice / Pasta / Condiments",
+					"amount": 200,
+					"weight": "mls"
+				},
+				{
+					"name": "Bacon",
+					"category": "Meat",
+					"amount": 16,
+					"weight": "quantity"
+				},
+				{
+					"name": "Potato",
+					"category": "Fruit / Vegetables",
+					"amount": 1000,
+					"weight": "grams"
+				},
+				{
+					"name": "Onion",
+					"category": "Fruit / Vegetables",
+					"amount": 2,
+					"weight": "quantity"
+				}
+			]
+		}
+	]
+}

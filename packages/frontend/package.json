@@ -11,7 +11,8 @@
 		"start": "react-scripts start",
 		"start-heroku": "serve -s build",
 		"build": "react-scripts build",
-		"test": "jest --coverage --coverageReporters='text-summary'"
+		"test": "jest --coverage --coverageReporters='text' --detectOpenHandles",
+		"coverage": "npm test >> coverage.txt"
 	},
 	"engines": {
 		"node": "12.14.1"

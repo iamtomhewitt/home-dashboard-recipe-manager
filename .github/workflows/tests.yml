@@ -1,8 +1,8 @@
 name: NodeJS CI
 
-on:
-  push:
-    branches: [ master ]
+on: [push]
+  # push:
+    # branches: [ master ]
 
 jobs:
   build:
@@ -30,15 +30,16 @@ jobs:
     - if: ${{ matrix.node-version == '10.x' }}
       name: Get coverage
       run: |
-        SUMMARY="$(npm test | tail -2 | head -1)"
-        TOKENS=($SUMMARY)
-        echo "COVERAGE=$(echo ${TOKENS[2]})" >> $GITHUB_ENV
-        REF=${{ github.ref }}
-        echo "github.ref: $REF"
-        IFS='/' read -ra PATHS <<< "$REF"
-        BRANCH_NAME="${PATHS[1]}_${PATHS[2]}"
-        echo $BRANCH_NAME
-        echo "BRANCH=$(echo ${BRANCH_NAME})" >> $GITHUB_ENV
+        # SUMMARY="$(npm test | tail -2 | head -1)"
+        # TOKENS=($SUMMARY)
+        # echo "COVERAGE=$(echo ${TOKENS[2]})" >> $GITHUB_ENV
+        # REF=${{ github.ref }}
+        # echo "github.ref: $REF"
+        # IFS='/' read -ra PATHS <<< "$REF"
+        # BRANCH_NAME="${PATHS[1]}_${PATHS[2]}"
+        # echo $BRANCH_NAME
+        # echo "BRANCH=$(echo ${BRANCH_NAME})" >> $GITHUB_ENV
+        echo "COVERAGE=$(node coverage.js)" >> $GITHUB_ENV
     - if: ${{ matrix.node-version == '10.x' }}
       name: Create badge
       uses: schneegans/dynamic-badges-action@v1.0.0
@@ -46,7 +47,7 @@ jobs:
         auth: ${{ secrets.GIST_SECRET }}
         gistID: 456c5a405c03c5e355b429f2d271bd31
         filename: home-dashboard-recipe-manager__${{ env.BRANCH }}.json
-        label: Test Coverage
+        label: coverage
         message: ${{ env.COVERAGE }}
         color: green
         namedLogo: jest

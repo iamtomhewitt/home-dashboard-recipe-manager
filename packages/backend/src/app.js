@@ -5,8 +5,9 @@ const loaders = require('./loaders');
 
 require('dotenv').config({ path: path.join(__dirname, '/../../../.env') });
 
+let app;
 async function startServer() {
-  const app = express();
+  app = express();
   await loaders(app);
   const port = process.env.PORT || 3001;
 
@@ -17,6 +18,10 @@ async function startServer() {
     }
     console.log(`Server ready on port: ${port}`);
   });
+
+  return app;
 }
 
 startServer();
+
+module.exports = app;
