@@ -50,7 +50,7 @@ describe('planner', () => {
   it('should get planner for a day', async () => {
     const response = await request(mockServer).get('/api/planner/day?id=12345&day=Monday');
     expect(response.body.day).toEqual('Monday');
-    expect(response.body.recipe).toEqual('Food Monday');
+    expect(response.body.recipe).toEqual('MOCK Bacon And Leek Risotto');
     expect(response.statusCode).toBe(200);
   });
 
