@@ -1,3 +1,9 @@
+## 2.0.0 (13/10/2021) 
+
+
+There are no issues in this release.
+
+
 ## 1.7.0 (13/10/2021) 
 
 
