@@ -1,0 +1,19 @@
+@import "../../colours.scss";
+
+.navigation {
+  align-items: center;
+  background-color: $add-button-colour;
+  color: $white;
+  display: flex;
+  height: 30px;
+  text-align: center;
+  width: 100%;
+
+  div {
+    color: inherit;
+    flex: 1;
+    font-weight: 300;
+    letter-spacing: 2px;
+    text-decoration: none;
+  }
+}

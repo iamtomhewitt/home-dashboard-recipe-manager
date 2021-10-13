@@ -1,0 +1,50 @@
+name: NodeJS CI
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node-version: [10.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }} on ${{ matrix.os }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - run: npm ci
+    - run: npm run bootstrap
+    - run: npm run lint
+    - run: npm run coverage
+
+    # Only run the coverage once
+    - if: ${{ matrix.node-version == '10.x' }}
+      name: Get coverage
+      run: |
+        REF=${{ github.ref }}
+        echo "github.ref: $REF"
+        IFS='/' read -ra PATHS <<< "$REF"
+        BRANCH_NAME="${PATHS[1]}_${PATHS[2]}"
+        echo $BRANCH_NAME
+        echo "BRANCH=$(echo ${BRANCH_NAME})" >> $GITHUB_ENV
+        echo "COVERAGE=$(node coverage.js)" >> $GITHUB_ENV
+    - if: ${{ matrix.node-version == '10.x' }}
+      name: Create badge
+      uses: schneegans/dynamic-badges-action@v1.0.0
+      with:
+        auth: ${{ secrets.GIST_SECRET }}
+        gistID: 456c5a405c03c5e355b429f2d271bd31
+        filename: home-dashboard-recipe-manager__${{ env.BRANCH }}.json
+        label: coverage
+        message: ${{ env.COVERAGE }}
+        color: green
+        namedLogo: jest
