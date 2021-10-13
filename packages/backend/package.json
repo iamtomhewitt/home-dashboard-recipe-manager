@@ -4,11 +4,11 @@
 	"name": "home-dashboard-recipe-manager-backend",
 	"version": "1.6.4",
 	"scripts": {
+		"coverage": "npm test >> coverage.txt",
 		"lint": "eslint --ignore-path ../../.gitignore .",
 		"lint-fix": "npm run lint -- --fix",
 		"start": "node src/app.js",
-		"test": "jest --coverage --coverageReporters='text' --detectOpenHandles",
-		"coverage": "npm test >> coverage.txt"
+		"test": "jest --coverage --coverageReporters='text' --detectOpenHandles"
 	},
 	"dependencies": {
 		"body-parser": "^1.19.0",

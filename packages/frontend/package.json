@@ -5,14 +5,14 @@
 	"author": "Tom Hewitt",
 	"proxy": "http://localhost:3001",
 	"scripts": {
+		"build": "react-scripts build",
+		"coverage": "npm test >> coverage.txt",
 		"lint": "eslint --ignore-path ../../.gitignore ./src",
 		"lint-fix": "npm run lint -- --fix",
 		"lint-sass": "sass-lint '**/src/*.scss' --verbose --no-exit",
 		"start": "react-scripts start",
 		"start-heroku": "serve -s build",
-		"build": "react-scripts build",
-		"test": "jest --coverage --coverageReporters='text' --detectOpenHandles",
-		"coverage": "npm test >> coverage.txt"
+		"test": "jest --coverage --coverageReporters='text' --detectOpenHandles"
 	},
 	"engines": {
 		"node": "12.14.1"
