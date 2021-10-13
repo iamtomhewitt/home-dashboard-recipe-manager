@@ -1,7 +1,7 @@
 import config from '../config';
 
-const request = async (url, body, method) => {
-  const finalUrl = `${config.baseUrl}${url}`;
+const request = async (path, body, method) => {
+  const finalUrl = `${config.baseUrl}/api${path}`;
   console.log('Making a', method, 'request to', finalUrl);
   const response = await fetch(finalUrl, {
     method,
