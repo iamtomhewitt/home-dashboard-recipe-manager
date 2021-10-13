@@ -11,7 +11,7 @@
 		"start": "react-scripts start",
 		"start-heroku": "serve -s build",
 		"build": "react-scripts build",
-		"test": "jest --coverage"
+		"test": "jest --coverage --coverageReporters='text-summary'"
 	},
 	"engines": {
 		"node": "12.14.1"
