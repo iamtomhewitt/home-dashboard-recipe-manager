@@ -24,7 +24,7 @@ jobs:
     - run: npm ci
     - run: npm run bootstrap
     - run: npm run lint
-    - run: npm test
+    - run: npm run coverage
 
     # Only run the coverage once
     - if: ${{ matrix.node-version == '10.x' }}
