@@ -35,7 +35,6 @@ const Planner = ({ planner, recipes, plannerId }) => {
 
   return (
     <div className='planner' data-test-id='planner'>
-      <h2>Planner</h2>
       {plan.map(({ day, recipe }) => {
         const value = state[day] || recipe;
 

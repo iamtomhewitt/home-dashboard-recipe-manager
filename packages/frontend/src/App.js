@@ -47,7 +47,7 @@ class App extends React.Component {
 
     return (
       <div className='app' data-test-id='app'>
-        <Navigation planner={planner} changeTab={this.changeTab} />
+        <Navigation planner={planner} changeTab={this.changeTab} tab={tab} />
 
         {!planner && <Landing getPlanner={this.getPlanner} />}
 
