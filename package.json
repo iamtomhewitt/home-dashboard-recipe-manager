@@ -3,7 +3,7 @@
     "description": "An app for managing recipes and ingredients for my home dashboard.",
     "homepage": "https://github.com/iamtomhewitt/home-dashboard-recipe-manager#readme",
     "name": "home-dashboard-recipe-manager",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "scripts": {
         "backend": "cd packages/backend && npm start",
         "bootstrap": "lerna bootstrap",
@@ -14,7 +14,7 @@
         "lint": "lerna run lint",
         "lint-fix": "lerna run lint-fix",
         "lint-sass": "lerna run lint-sass",
-        "release": "github-releaser && lerna version",
+        "release": "github-releaser && lerna version --tag-version-prefix=''",
         "start": "npm run backend",
         "test": "lerna run test"
     },
