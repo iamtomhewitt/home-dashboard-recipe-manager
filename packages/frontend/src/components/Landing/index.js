@@ -29,7 +29,7 @@ class Landing extends React.Component {
         <div className='landing-version'>v{version}</div>
 
         <div className='landing-login'>
-          <div className='landing-login-input'>
+          <div>
             <span>Planner ID</span>
             <input value={input} id='input' onChange={this.onInputChange} data-test-id='landing-input' />
           </div>
