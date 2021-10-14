@@ -13,6 +13,7 @@
         "heroku-postbuild": "cd packages/frontend && npm install && npm run build && cd ../backend && npm install",
         "lint": "lerna run lint",
         "lint-fix": "lerna run lint-fix",
+        "lint-sass": "lerna run lint-sass",
         "release": "github-releaser && lerna version",
         "start": "npm run backend",
         "test": "lerna run test"

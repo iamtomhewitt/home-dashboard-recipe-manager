@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 
 import './index.scss';
 
-const Navigation = ({ planner, changeTab }) => {
+const Navigation = ({ planner, changeTab, tab }) => {
   if (!planner) return null;
+
+  const className = (highlight) => `navigation-${highlight ? '' : 'un'}highlighted`;
 
   return (
     <div className='navigation' data-test-id='navigation'>
-      <div onClick={() => changeTab('planner')} data-test-id='navigation-tab'>Planner</div>
-      <div onClick={() => changeTab('recipes')} data-test-id='navigation-tab'>Recipes</div>
+      <div className={className(tab === 'planner')} onClick={() => changeTab('planner')} data-test-id='navigation-tab'>Planner</div>
+      <div className={className(tab === 'recipes')} onClick={() => changeTab('recipes')} data-test-id='navigation-tab'>Recipes</div>
     </div>
   );
 };
@@ -17,6 +19,7 @@ const Navigation = ({ planner, changeTab }) => {
 Navigation.propTypes = {
   planner: PropTypes.object,
   changeTab: PropTypes.func,
+  tab: PropTypes.string,
 };
 
 export default Navigation;

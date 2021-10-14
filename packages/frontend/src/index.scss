@@ -3,13 +3,9 @@
 body {
   background-color: $background-colour;
   color: $text-colour;
-  font-family: 'Open Sans', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  font-family: 'Product Sans';
   font-size: 16px;
+  font-weight: lighter;
   margin: 0;
   padding: 0;
-}
-
-input,
-button {
-  font-family: 'Open Sans', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
 }

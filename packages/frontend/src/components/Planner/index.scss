@@ -1,49 +1,47 @@
 @import "../../colours";
 
 .planner {
-  h2 {
-    color: $text-colour;
-    font-size: 36px;
-    font-weight: 300;
-    letter-spacing: 5px;
-    text-align: center;
-    margin: 20px 0 ;
-  }
-
   &-row {
-    align-items: baseline;
-    display: flex;
-    margin: 10px 0;
-    text-align: center;
-    width: 100%;
+    background-color: $white;
+    border-radius: 20px;
+    margin: 10px auto;
+    min-width: 60%;
+    padding: 20px 10px;
+    width: fit-content;
   }
 
   &-day {
-    align-items: center;
-    color: $day-text-colour;
-    display: flex;
-    height: 75px;
-    justify-content: center;
-    letter-spacing: 1px;
-    margin-left: 5px;
-    width: 100px;
+    color: $label-colour;
+    letter-spacing: 2px;
+    margin-bottom: 5px;
+    width: 100%;
   }
-
+  
   &-recipe {
-    flex: 1;
-    margin: 0 5px;
+    margin-bottom: 5px;
+    
+    &-info {
+      color: $label-colour;
+      margin-bottom: 5px;
+      
+      span {
+        font-size: small;
+        letter-spacing: 1px;
+        margin-right: 10px;
+      }
+    }
   }
 
   &-save-button {
-    background-color: $add-button-colour;
+    background: $primary-colour;
     border: 0;
-    color: white;
-    font-size: 16px;
-    font-weight: 200;
-    height: 40px;
-    letter-spacing: 1px;
-    margin-right: 5px;
-    width: 75px;
+    color: $button-text-colour;
+    display: block;
+    height: 30px;
+    letter-spacing: 2px;
+    margin: 0 auto;
+    text-transform: uppercase;
+    width: 100%;
   }
 
   &-loading {

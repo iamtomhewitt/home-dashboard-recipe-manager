@@ -1,65 +1,55 @@
-@import '../../colours';
+@import "../../colours";
 
 .landing {
   h1 {
-    color: $text-colour;
-    font-size: 40px;
-    font-weight: 300;
+    background-color: $primary-colour;
+    color: $white;
+    font-weight: lighter;
     letter-spacing: 5px;
-    margin-bottom: 5px;
+    margin: 0;
+    margin-bottom: 10px;
+    padding: 10px 0;
     text-align: center;
+    text-transform: uppercase;
   }
 
   &-loading {
-    margin: 10px;
-    text-align: center;
-  }
-
-  &-error {
-    color: $error-colour;
-    margin: 10px;
+    margin: 10px auto;
     text-align: center;
   }
 
   &-version {
-    color: $text-colour;
-    font-weight: 300;
+    color: $label-colour;
+    margin: 10px 0;
     text-align: center;
   }
 
   &-login {
-    margin-top: 20px;
-    text-align: center;
+    background-color: $white;
+    border-radius: 20px;
+    margin: auto;
+    min-width: 60%;
+    padding: 20px 10px;
+    width: fit-content;
 
     button {
-      background-color: $add-button-colour;
+      background: $primary-colour;
       border: 0;
-      color: $white;
-      font-size: 16px;
-      font-weight: 200;
-      height: 40px;
-      letter-spacing: 1px;
-      margin-right: 5px;
-      width: 150px;
+      color: $button-text-colour;
+      display: block;
+      height: 30px;
+      letter-spacing: 2px;
+      margin: 0 auto;
+      text-transform: uppercase;
+      width: 100%;
     }
 
-    &-input {
-      margin-bottom: 20px;
-
-      span {
-        color: $text-colour;
-        display: inline-block;
-        text-align: left;
-        width: 250px;
-      }
-
-      input {
-        border: 1px solid $input-border-colour;
-        display: inline-block;
-        height: 25px;
-        margin: 5px 0;
-        width: 250px;
-      }
+    input {
+      border: 1px solid $input-border-colour;
+      box-sizing: border-box;
+      height: 25px;
+      margin: 5px 0;
+      width: 100%;
     }
   }
 }
