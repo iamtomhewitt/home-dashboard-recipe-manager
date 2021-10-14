@@ -4,11 +4,13 @@ import PropTypes from 'prop-types';
 
 import LoadingIcon from '../LoadingIcon';
 import http from '../../lib/http';
+
 import './index.scss';
 
 const Planner = ({ planner, recipes, plannerId }) => {
   const { plan } = planner;
   const [isLoading, setIsLoading] = useState(false);
+  const [lastSavedDay, setLastSavedDay] = useState('');
   const [message, setMessage] = useState();
   const [state, setState] = useState({});
   const recipeOptions = recipes.map((r) => ({ value: r.name, label: r.name }));
@@ -16,6 +18,7 @@ const Planner = ({ planner, recipes, plannerId }) => {
   const onSave = async (day, recipe) => {
     setIsLoading(true);
     setMessage('');
+    setLastSavedDay(day);
 
     const body = { day, recipe };
     await http.put(`/planner?id=${plannerId}`, body);
@@ -37,6 +40,7 @@ const Planner = ({ planner, recipes, plannerId }) => {
     <div className='planner' data-test-id='planner'>
       {plan.map(({ day, recipe }) => {
         const value = state[day] || recipe;
+        const recipeForSelected = recipes.filter((x) => x.name === value)[0];
 
         return (
           <div className='planner-row' key={day}>
@@ -52,24 +56,31 @@ const Planner = ({ planner, recipes, plannerId }) => {
                 value={{ label: value, value }}
               />
             </div>
+            {recipeForSelected &&
+              <div className='planner-recipe-info'>
+                <span>{recipeForSelected.ingredients.length} ingredient(s)</span>
+                <span>{recipeForSelected.steps.length} step(s)</span>
+              </div>
+            }
+
             <button className='planner-save-button' onClick={() => onSave(day, value)} data-test-id='planner-save-button'>
               Save
             </button>
+
+            {isLoading && lastSavedDay === day &&
+              <div className='planner-loading'>
+                <LoadingIcon />
+              </div>
+            }
+
+            {message && lastSavedDay === day &&
+              <div className='planner-message'>
+                {message}
+              </div>
+            }
           </div>
         );
       })}
-
-      {isLoading &&
-        <div className='planner-loading'>
-          <LoadingIcon />
-        </div>
-      }
-
-      {message &&
-        <div className='planner-message'>
-          {message}
-        </div>
-      }
     </div>
   );
 };
