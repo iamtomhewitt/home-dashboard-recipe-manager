@@ -39,7 +39,6 @@ const Recipes = ({ recipes, refreshRecipes }) => {
 
   return (
     <div className='recipes' data-test-id='recipes'>
-      <h2>Recipes</h2>
       {recipes.map((recipe) => (
         <div className='recipes-row' key={recipe.name}>
           <div className='recipes-name'>{recipe.name}</div>
