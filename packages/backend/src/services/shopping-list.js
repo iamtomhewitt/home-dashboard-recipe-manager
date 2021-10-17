@@ -25,7 +25,7 @@ module.exports = {
             const existingIngredient = currentItems.filter((x) => x.name === ingredient.name && x.weight === ingredient.weight)[0];
 
             if (existingIngredient) {
-              const newAmount = ingredient.amount + existingIngredient.amount;
+              const newAmount = parseInt(ingredient.amount) + parseInt(existingIngredient.amount);
               existingIngredient.amount = newAmount;
             } else {
               currentItems.push(ingredient);

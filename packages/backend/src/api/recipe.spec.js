@@ -37,12 +37,8 @@ describe('recipe', () => {
   it('should create a recipe', async () => {
     const response = await request(mockServer)
       .post('/api/recipes')
-      .send({
-        ingredients: [],
-        steps: ['step 1'],
-        name: 'test recipe',
-      });
-    expect(response.body.message).toEqual('test recipe saved!');
+      .send(firebaseMock.recipes[0]);
+    expect(response.body.message).toEqual('MOCK Bacon And Leek Risotto saved!');
     expect(response.statusCode).toBe(200);
   });
 
@@ -50,11 +46,7 @@ describe('recipe', () => {
     fetch.mockRejectedValue(new Error('test error'));
     const response = await request(mockServer)
       .post('/api/recipes')
-      .send({
-        ingredients: [],
-        steps: ['step 1'],
-        name: 'test recipe',
-      });
+      .send(firebaseMock.recipes[0]);
     expect(response.body.message).toEqual('Could not save recipe: Error: test error');
     expect(response.statusCode).toBe(500);
   });
@@ -63,12 +55,10 @@ describe('recipe', () => {
     const response = await request(mockServer)
       .put('/api/recipes')
       .send({
-        ingredients: [],
-        steps: ['step 1'],
-        name: 'new recipe',
+        ...firebaseMock.recipes[0],
         originalName: 'test recipe',
       });
-    expect(response.body.message).toEqual('new recipe updated!');
+    expect(response.body.message).toEqual('MOCK Bacon And Leek Risotto updated!');
     expect(response.statusCode).toBe(200);
   });
 
@@ -77,9 +67,7 @@ describe('recipe', () => {
     const response = await request(mockServer)
       .put('/api/recipes')
       .send({
-        ingredients: [],
-        steps: ['step 1'],
-        name: 'new recipe',
+        ...firebaseMock.recipes[0],
         originalName: 'test recipe',
       });
     expect(response.body.message).toEqual('Could not update recipe: Error: test error');
