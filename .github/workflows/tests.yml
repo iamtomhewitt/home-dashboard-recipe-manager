@@ -42,7 +42,7 @@ jobs:
       uses: schneegans/dynamic-badges-action@v1.0.0
       with:
         auth: ${{ secrets.GIST_SECRET }}
-        gistID: 456c5a405c03c5e355b429f2d271bd31
+        gistID: 70cdd8c15770b5fc44e7bb2b8fac0042
         filename: home-dashboard-recipe-manager__${{ env.BRANCH }}.json
         label: coverage
         message: ${{ env.COVERAGE }}
