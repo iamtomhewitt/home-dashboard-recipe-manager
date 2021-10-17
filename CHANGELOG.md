@@ -1,3 +1,12 @@
+## 2.0.2 (17/10/2021) 
+
+
+### Issues in this release:
+
+* [#59](https://github.com/iamtomhewitt/home-dashboard-recipe-manager/issues/59) - Shopping list doesnt add ingredients together correctly
+
+
+
 ## 2.0.1 (14/10/2021) 
 
 
