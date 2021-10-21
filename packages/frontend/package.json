@@ -1,6 +1,6 @@
 {
 	"name": "home-dashboard-recipe-manager-frontend",
-	"version": "2.0.2",
+	"version": "2.0.3",
 	"private": true,
 	"author": "Tom Hewitt",
 	"proxy": "http://localhost:3001",
