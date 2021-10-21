@@ -13,6 +13,13 @@ class Landing extends React.Component {
     };
   }
 
+  componentDidMount() {
+    const plannerId = new URLSearchParams(window.location.search).get('plannerId');
+    if (plannerId) {
+      this.setState({ input: plannerId });
+    }
+  }
+
   onInputChange = (e) => {
     this.setState({
       [e.target.id]: e.target.value,
