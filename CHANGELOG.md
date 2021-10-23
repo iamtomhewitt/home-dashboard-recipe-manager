@@ -1,3 +1,12 @@
+## 2.0.4 (23/10/2021) 
+
+
+### Issues in this release:
+
+* [#61](https://github.com/iamtomhewitt/home-dashboard-recipe-manager/issues/61) - Auto fill planner id with query param
+
+
+
 ## 2.0.3 (21/10/2021) 
 
 
