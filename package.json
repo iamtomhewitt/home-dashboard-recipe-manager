@@ -14,7 +14,7 @@
         "lint": "lerna run lint",
         "lint-fix": "lerna run lint-fix",
         "lint-sass": "lerna run lint-sass",
-        "release": "github-releaser && lerna version --tag-version-prefix='' --no-git-tag-version",
+        "release": "github-releaser",
         "start": "npm run backend",
         "test": "lerna run test"
     },
@@ -39,7 +39,7 @@
         "eslint-plugin-jsx-a11y": "^6.2.3",
         "eslint-plugin-react": "^7.20.3",
         "eslint-plugin-react-hooks": "^2.5.1",
-        "github-releaser": "1.5.1",
+        "github-releaser": "^1.6.1",
         "husky": "^1.1.2",
         "validate-commit-msg": "^2.14.0"
     },
