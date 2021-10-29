@@ -7,6 +7,15 @@
 
 
 
+## 2.0.6 (29/10/2021) 
+
+
+### Issues in this release:
+
+* [#63](https://github.com/iamtomhewitt/home-dashboard-recipe-manager/issues/63) - Use new github-releaser for updating sub packages
+
+
+
 ## 2.0.5 (23/10/2021) 
 
 
