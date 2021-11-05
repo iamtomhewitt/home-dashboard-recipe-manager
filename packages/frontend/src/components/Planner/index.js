@@ -10,7 +10,6 @@ import './index.scss';
 const Planner = ({ planner, recipes, plannerId }) => {
   const { plan } = planner;
   const [isLoading, setIsLoading] = useState(false);
-  const [lastSavedDay, setLastSavedDay] = useState('');
   const [message, setMessage] = useState();
   const [state, setState] = useState({});
   const recipeOptions = recipes.map((r) => ({ value: r.name, label: r.name }));
@@ -27,7 +26,7 @@ const Planner = ({ planner, recipes, plannerId }) => {
 
     setIsLoading(false);
     setMessage('Planner saved!');
-  }
+  };
 
   const onChange = (e, day) => {
     if (e && e.value) {
@@ -64,21 +63,22 @@ const Planner = ({ planner, recipes, plannerId }) => {
                 <span>{recipeForSelected.steps.length} step(s)</span>
               </div>
             }
-
-            {isLoading && lastSavedDay === day &&
-              <div className='planner-loading'>
-                <LoadingIcon />
-              </div>
-            }
-
-            {message && lastSavedDay === day &&
-              <div className='planner-message'>
-                {message}
-              </div>
-            }
           </div>
         );
       })}
+
+      {isLoading &&
+        <div className='planner-loading'>
+          <LoadingIcon />
+        </div>
+      }
+
+      {message &&
+        <div className='planner-message'>
+          {message}
+        </div>
+      }
+
       <button className='planner-save-button' onClick={() => onSaveAll()} data-test-id='planner-save-button'>
         Save All
       </button>
