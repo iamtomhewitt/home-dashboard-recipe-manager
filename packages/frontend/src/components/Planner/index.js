@@ -27,6 +27,20 @@ const Planner = ({ planner, recipes, plannerId }) => {
     setMessage(`${day}: '${recipe}' saved!`);
   };
 
+  const onSaveAll = async () => {
+    setIsLoading(true);
+    setMessage('');
+
+    for (const day of Object.keys(state)) {
+      const recipe = state[day];
+      const body = { day, recipe };
+      await http.put(`/planner?id=${plannerId}`, body);
+    }
+
+    setIsLoading(false);
+    setMessage('Planner saved!');
+  }
+
   const onChange = (e, day) => {
     if (e && e.value) {
       setState({
@@ -81,6 +95,9 @@ const Planner = ({ planner, recipes, plannerId }) => {
           </div>
         );
       })}
+      <button className='planner-save-button' onClick={() => onSaveAll()} data-test-id='planner-save-button'>
+        Save All
+      </button>
     </div>
   );
 };
