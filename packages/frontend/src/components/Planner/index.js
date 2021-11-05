@@ -15,18 +15,6 @@ const Planner = ({ planner, recipes, plannerId }) => {
   const [state, setState] = useState({});
   const recipeOptions = recipes.map((r) => ({ value: r.name, label: r.name }));
 
-  const onSave = async (day, recipe) => {
-    setIsLoading(true);
-    setMessage('');
-    setLastSavedDay(day);
-
-    const body = { day, recipe };
-    await http.put(`/planner?id=${plannerId}`, body);
-
-    setIsLoading(false);
-    setMessage(`${day}: '${recipe}' saved!`);
-  };
-
   const onSaveAll = async () => {
     setIsLoading(true);
     setMessage('');
@@ -76,10 +64,6 @@ const Planner = ({ planner, recipes, plannerId }) => {
                 <span>{recipeForSelected.steps.length} step(s)</span>
               </div>
             }
-
-            <button className='planner-save-button' onClick={() => onSave(day, value)} data-test-id='planner-save-button'>
-              Save
-            </button>
 
             {isLoading && lastSavedDay === day &&
               <div className='planner-loading'>
