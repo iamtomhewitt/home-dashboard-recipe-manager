@@ -70,7 +70,9 @@
 		],
 		"operator-linebreak": "off",
 		"react/jsx-curly-newline": "off",
-		"react/button-has-type": "off"
+		"react/button-has-type": "off",
+		"no-restricted-syntax": "off",
+		"no-await-in-loop": "off"
 	},
 	"parser": "babel-eslint"
 }

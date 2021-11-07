@@ -39,9 +39,10 @@
     display: block;
     height: 30px;
     letter-spacing: 2px;
-    margin: 0 auto;
+    margin: 0 auto 20px;
+    min-width: 60%;
     text-transform: uppercase;
-    width: 100%;
+    width: fit-content;
   }
 
   &-loading {
