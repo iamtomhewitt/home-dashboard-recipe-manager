@@ -48,7 +48,7 @@ const Planner = ({ planner, recipes, plannerId }) => {
             <div className='planner-day'>
               <span>{day}</span>
             </div>
-            <div className='planner-recipe'>
+            <div className='planner-recipe' data-test-id='planner-recipe'>
               <CreatableSelect
                 day={day}
                 onChange={(e) => onChange(e, day)}
