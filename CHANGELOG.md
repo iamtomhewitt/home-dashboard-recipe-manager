@@ -1,3 +1,12 @@
+## 2.2.0 (09/11/2021) 
+
+
+### Issues in this release:
+
+* [#67](https://github.com/iamtomhewitt/home-dashboard-recipe-manager/issues/67) - Error when opening a planner
+
+
+
 ## 2.1.0 (07/11/2021) 
 
 
