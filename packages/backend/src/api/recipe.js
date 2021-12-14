@@ -5,6 +5,7 @@ const route = express.Router();
 
 route.get('/', async (req, res) => {
   const { recipes } = await service.getData();
+  recipes.sort((a, b) => a.name.localeCompare(b.name));
   return res.status(200).json(recipes);
 });
 
@@ -20,9 +21,7 @@ route.post('/', async (req, res) => {
 
 route.put('/', async (req, res) => {
   try {
-    const {
-      ingredients, name, steps, originalName,
-    } = req.body;
+    const { ingredients, name, steps, originalName } = req.body;
     await service.updateRecipe(ingredients, name, steps, originalName);
     return res.status(200).json({ message: `${name} updated!` });
   } catch (e) {
