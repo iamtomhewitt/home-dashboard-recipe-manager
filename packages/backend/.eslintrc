@@ -35,6 +35,7 @@
 		"no-restricted-syntax": "off",
 		"no-await-in-loop": "off",
 		"no-param-reassign": "off",
-		"radix": "off"
+		"radix": "off",
+		"object-curly-newline": "off"
 	}
 }
