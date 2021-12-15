@@ -41,8 +41,8 @@ const Recipes = ({ recipes, refreshRecipes }) => {
     <div className='recipes' data-test-id='recipes'>
       {recipes.map((recipe) => (
         <div className='recipes-row' key={recipe.name}>
-          <div className='recipes-name'>{recipe.name}</div>
           <div className='recipes-buttons'>
+            <div className='recipes-name'>{recipe.name}</div>
             <button onClick={() => openModal('view', recipe)} data-test-id='recipes-view'>View</button>
             <button onClick={() => openModal('edit', recipe)} data-test-id='recipes-edit'>Edit</button>
             <button onClick={() => openModal('delete', recipe)} data-test-id='recipes-delete'>Delete</button>

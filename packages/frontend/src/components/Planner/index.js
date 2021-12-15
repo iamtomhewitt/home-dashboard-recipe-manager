@@ -59,8 +59,8 @@ const Planner = ({ planner, recipes, plannerId }) => {
             </div>
             {recipeForSelected &&
               <div className='planner-recipe-info'>
-                <span>{recipeForSelected.ingredients?.length} ingredient(s)</span>
-                <span>{recipeForSelected.steps?.length} step(s)</span>
+                <span>{recipeForSelected.ingredients?.length || 0} ingredient(s)</span>
+                <span>{recipeForSelected.steps?.length || 0} step(s)</span>
               </div>
             }
           </div>

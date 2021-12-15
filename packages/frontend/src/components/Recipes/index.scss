@@ -12,7 +12,11 @@
 
   &-name {
     color: $label-colour;
+    font-size: 22px;
     letter-spacing: 1px;
+    margin: auto;
+    padding-left: 10px;
+    width: 100%;
   }
 
   &-buttons {
@@ -21,12 +25,13 @@
     button {
       background: $primary-colour;
       border: 0;
+      border-radius: 30px;
       color: $button-text-colour;
       height: 30px;
       letter-spacing: 2px;
       margin: 5px;
       text-transform: uppercase;
-      width: 100%;
+      width: 40%;
     }
   }
 
@@ -40,6 +45,7 @@
   &-refresh-button {
     background: $primary-colour;
     border: 0;
+    border-radius: 30px;
     color: $button-text-colour;
     display: block;
     height: 30px;
