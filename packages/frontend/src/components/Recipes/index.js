@@ -40,10 +40,10 @@ const Recipes = ({ recipes, refreshRecipes }) => {
   };
 
   const onFilter = (event) => {
-    const { value } = event.target
-    const updated = recipes.filter(r => r.name.toLowerCase().includes(value))
-    setFilteredRecipes(updated)
-  }
+    const { value } = event.target;
+    const updated = recipes.filter((r) => r.name.toLowerCase().includes(value.toLowerCase()));
+    setFilteredRecipes(updated);
+  };
 
   return (
     <div className='recipes' data-test-id='recipes'>
