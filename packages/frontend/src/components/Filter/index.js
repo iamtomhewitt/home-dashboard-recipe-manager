@@ -1,11 +1,12 @@
 import React from "react";
 
+import './index.scss';
+
 const Filter = ({ onFilter }) => {
 
   return (
-    <div>
-      Filter
-      <input type='search' onChange={onFilter} />
+    <div className="filter">
+      <input type='search' onChange={onFilter} placeholder='Search for recipe...' />
     </div>
   )
 }
