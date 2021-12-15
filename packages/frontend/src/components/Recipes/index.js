@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import DeleteRecipe from '../Modal/DeleteRecipe';
+import Filter from '../Filter';
 import Modal from '../Modal';
 import RecipeEditor from '../Modal/RecipeEditor';
 import ViewRecipe from '../Modal/ViewRecipe';
@@ -11,6 +12,7 @@ import './index.scss';
 const Recipes = ({ recipes, refreshRecipes }) => {
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState();
+  const [filteredRecipes, setFilteredRecipes] = useState(recipes);
 
   const openModal = (type, recipe) => {
     setShowModal(true);
@@ -37,9 +39,18 @@ const Recipes = ({ recipes, refreshRecipes }) => {
     );
   };
 
+  const onFilter = (event) => {
+    const { value } = event.target
+    const updated = recipes.filter(r => r.name.toLowerCase().includes(value))
+    setFilteredRecipes(updated)
+  }
+
   return (
     <div className='recipes' data-test-id='recipes'>
-      {recipes.map((recipe) => (
+
+      <Filter onFilter={onFilter} />
+
+      {filteredRecipes.map((recipe) => (
         <div className='recipes-row' key={recipe.name}>
           <div className='recipes-buttons'>
             <div className='recipes-name'>{recipe.name}</div>
