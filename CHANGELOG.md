@@ -1,3 +1,14 @@
+## 2.3.0 (15/12/2021) 
+
+
+### Issues in this release:
+
+* [#71](https://github.com/iamtomhewitt/home-dashboard-recipe-manager/issues/71) - Recipes are not returned alphabetically
+* [#70](https://github.com/iamtomhewitt/home-dashboard-recipe-manager/issues/70) - Better display of each recipe
+* [#69](https://github.com/iamtomhewitt/home-dashboard-recipe-manager/issues/69) - Add a filter search bar for recipes
+
+
+
 ## 2.2.0 (09/11/2021) 
 
 
