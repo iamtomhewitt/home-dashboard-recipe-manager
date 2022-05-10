@@ -18,7 +18,7 @@ module.exports = {
       const planner = await plannerService.getPlanner(id);
 
       for (const plan of planner.plan) {
-        const existingRecipe = await recipeService.findRecipe(plan.recipe);
+        const existingRecipe = await recipeService.findRecipe(plan.recipe, id);
 
         if (existingRecipe && existingRecipe.ingredients) {
           existingRecipe.ingredients.forEach((ingredient) => {

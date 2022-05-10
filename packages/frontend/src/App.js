@@ -13,19 +13,9 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      recipes: [],
       isLoading: false,
       tab: 'planner',
     };
-  }
-
-  async componentDidMount() {
-    this.getRecipes();
-  }
-
-  getRecipes = async () => {
-    const recipes = await http.get('/recipes');
-    this.setState({ recipes });
   }
 
   getPlanner = async (plannerId) => {
@@ -40,10 +30,12 @@ class App extends React.Component {
     }
   }
 
-  changeTab = (tab) => this.setState({ tab })
+  changeTab = (tab) => {
+    this.setState({ tab });
+  }
 
   render() {
-    const { error, isLoading, planner, plannerId, recipes, tab } = this.state;
+    const { error, isLoading, planner, plannerId, tab } = this.state;
 
     return (
       <div className='app' data-test-id='app'>
@@ -51,8 +43,8 @@ class App extends React.Component {
 
         {!planner && <Landing getPlanner={this.getPlanner} />}
 
-        {planner && tab === 'planner' && <Planner planner={planner} recipes={recipes} plannerId={plannerId} />}
-        {planner && tab === 'recipes' && <Recipes recipes={recipes} refreshRecipes={this.getRecipes} />}
+        {planner && tab === 'planner' && <Planner planner={planner} plannerId={plannerId} />}
+        {planner && tab === 'recipes' && <Recipes plannerId={plannerId} />}
 
         {isLoading &&
           <div className='app-loading'>

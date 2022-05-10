@@ -6,7 +6,7 @@ import Ingredient from '../../Ingredient';
 import http from '../../../lib/http';
 import './index.scss';
 
-const RecipeEditor = ({ isEditing, recipe }) => {
+const RecipeEditor = ({ isEditing, recipe, plannerId }) => {
   const [ingredients, setIngredients] = useState(recipe?.ingredients || []);
   const [message, setMessage] = useState('');
   const [name, setName] = useState(recipe?.name || '');
@@ -64,9 +64,10 @@ const RecipeEditor = ({ isEditing, recipe }) => {
       originalName,
     };
 
+    const url = `/recipes?id=${plannerId}`;
     const json = isEditing ?
-      await http.put('/recipes', body) :
-      await http.post('/recipes', body);
+      await http.put(url, body) :
+      await http.post(url, body);
 
     setMessage(json.message);
   };
@@ -122,6 +123,7 @@ const Step = ({ step, index, onChange, onRemove }) => (
 RecipeEditor.propTypes = {
   isEditing: PropTypes.bool,
   recipe: PropTypes.object,
+  plannerId: PropTypes.string.isRequired,
 };
 
 Step.propTypes = {

@@ -1,24 +1,40 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 
 import Recipes from '.';
-import { recipes } from '../../mocks/mocks.json';
+import http from '../../lib/http';
 
 describe('<Recipes/>', () => {
   const props = {
-    refreshRecipes: jest.fn(),
-    recipes,
+    plannerId: '12345',
   };
+
+  beforeEach(() => {
+    http.get = jest.fn().mockResolvedValue([{
+      ingredients: [{
+        amount: 25,
+        category: 'Dairy',
+        name: 'Butter',
+        weight: 'grams',
+      }],
+      name: 'Recipe',
+      steps: [''],
+    }]);
+  });
 
   it('should render', () => {
     const { getAllByTestId } = render(<Recipes {...props} />);
     expect(getAllByTestId('recipes')).toHaveLength(1);
   });
 
-  it('should refresh', () => {
+  it('should refresh', async () => {
     const { getByTestId } = render(<Recipes {...props} />);
-    fireEvent.click(getByTestId('recipes-refresh'));
-    expect(props.refreshRecipes).toHaveBeenCalled();
+
+    await waitFor(() => {
+      fireEvent.click(getByTestId('recipes-refresh'));
+    });
+
+    expect(http.get).toHaveBeenCalledWith('/recipes?id=12345');
   });
 
   describe('when clicking each of the buttons', () => {
@@ -37,12 +53,15 @@ describe('<Recipes/>', () => {
     }];
 
     data.forEach(({ type, testId }) => {
-      it(`should render a ${type} modal`, () => {
+      it(`should render a ${type} modal`, async () => {
         const { getByTestId, getAllByTestId, queryAllByTestId } = render(<Recipes {...props} />);
-        fireEvent.click(getAllByTestId(`recipes-${type}`)[0]);
-        expect(getAllByTestId(testId)).toHaveLength(1);
-        fireEvent.click(getByTestId('modal-close-button'));
-        expect(queryAllByTestId(testId)).toHaveLength(0);
+
+        await waitFor(() => {
+          fireEvent.click(getAllByTestId(`recipes-${type}`)[0]);
+          expect(getAllByTestId(testId)).toHaveLength(1);
+          fireEvent.click(getByTestId('modal-close-button'));
+          expect(queryAllByTestId(testId)).toHaveLength(0);
+        });
       });
     });
   });

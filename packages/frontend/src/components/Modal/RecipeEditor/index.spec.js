@@ -9,6 +9,7 @@ describe('<RecipeEditor/>', () => {
   const props = {
     isEditing: false,
     recipe: recipes[0],
+    plannerId: '12345',
   };
 
   beforeEach(() => {

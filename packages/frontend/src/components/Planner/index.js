@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CreatableSelect from 'react-select/creatable';
 import PropTypes from 'prop-types';
 
@@ -7,12 +7,21 @@ import http from '../../lib/http';
 
 import './index.scss';
 
-const Planner = ({ planner, recipes, plannerId }) => {
+const Planner = ({ planner, plannerId }) => {
   const { plan } = planner;
+  const [recipes, setRecipes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState();
   const [state, setState] = useState({});
   const recipeOptions = recipes.map((r) => ({ value: r.name, label: r.name }));
+
+  useEffect(() => {
+    const getRecipes = async () => {
+      const response = await http.get(`/recipes?id=${plannerId}`);
+      setRecipes(response);
+    };
+    getRecipes();
+  }, [plannerId]);
 
   const onSaveAll = async () => {
     setIsLoading(true);
@@ -88,7 +97,6 @@ const Planner = ({ planner, recipes, plannerId }) => {
 
 Planner.propTypes = {
   planner: PropTypes.object.isRequired,
-  recipes: PropTypes.array.isRequired,
   plannerId: PropTypes.string.isRequired,
 };
 
