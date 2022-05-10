@@ -1,3 +1,12 @@
+## 2.4.0 (10/05/2022) 
+
+
+### Issues in this release:
+
+* [#83](https://github.com/iamtomhewitt/home-dashboard-recipe-manager/issues/83) - Single cookbook instead of shared per user
+
+
+
 ## 2.3.0 (15/12/2021) 
 
 
