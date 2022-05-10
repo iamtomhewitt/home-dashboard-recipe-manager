@@ -15,15 +15,25 @@ module.exports = {
     return recipe;
   },
 
-  async saveRecipe(ingredients, name, steps) {
+  async findCookbook(id) {
+    const { cookbooks } = await this.getData();
+    const cookbook = cookbooks.find((cb) => cb.id === id);
+    return cookbook;
+  },
+
+  async saveRecipe(ingredients, name, steps, id) {
     try {
-      const updateUrl = `${process.env.FIREBASE}recipes.json`;
-      const { recipes } = await this.getData();
+      const { cookbooks } = await this.getData();
+      const cookbook = cookbooks.find((cb) => cb.id === id);
+      const cookbookIndex = cookbooks.findIndex((cb) => cb.id === id);
+      const { recipes } = cookbook;
       recipes.push({
         name,
         ingredients,
         steps,
       });
+
+      const updateUrl = `${process.env.FIREBASE}cookbooks/${cookbookIndex}/recipes.json`;
 
       await fetch(updateUrl, {
         method: 'put',
@@ -34,11 +44,14 @@ module.exports = {
     }
   },
 
-  async updateRecipe(ingredients, name, steps, originalName) {
+  async updateRecipe(ingredients, name, steps, originalName, id) {
     try {
-      const { recipes } = await this.getData();
+      const { cookbooks } = await this.getData();
+      const cookbook = cookbooks.find((cb) => cb.id === id);
+      const cookbookIndex = cookbooks.findIndex((cb) => cb.id === id);
+      const { recipes } = cookbook;
       const index = recipes.findIndex((r) => r.name === originalName);
-      const updateUrl = `${process.env.FIREBASE}recipes/${index}.json`;
+      const updateUrl = `${process.env.FIREBASE}cookbooks/${cookbookIndex}/recipes/${index}.json`;
 
       recipes[index] = {
         name,
@@ -55,11 +68,14 @@ module.exports = {
     }
   },
 
-  async deleteRecipe(name) {
+  async deleteRecipe(name, id) {
     try {
-      const { recipes } = await this.getData();
+      const { cookbooks } = await this.getData();
+      const cookbook = cookbooks.find((cb) => cb.id === id);
+      const cookbookIndex = cookbooks.findIndex((cb) => cb.id === id);
+      const { recipes } = cookbook;
       const newRecipes = recipes.filter((r) => r.name !== name);
-      const updateUrl = `${process.env.FIREBASE}recipes.json`;
+      const updateUrl = `${process.env.FIREBASE}cookbooks/${cookbookIndex}/recipes.json`;
 
       await fetch(updateUrl, {
         method: 'put',
