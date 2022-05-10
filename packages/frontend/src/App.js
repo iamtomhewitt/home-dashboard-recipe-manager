@@ -13,7 +13,6 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      recipes: [],
       isLoading: false,
       tab: 'planner',
     };
@@ -36,7 +35,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { error, isLoading, planner, plannerId, recipes, tab } = this.state;
+    const { error, isLoading, planner, plannerId, tab } = this.state;
 
     return (
       <div className='app' data-test-id='app'>
@@ -44,7 +43,7 @@ class App extends React.Component {
 
         {!planner && <Landing getPlanner={this.getPlanner} />}
 
-        {planner && tab === 'planner' && <Planner planner={planner} recipes={recipes} plannerId={plannerId} />}
+        {planner && tab === 'planner' && <Planner planner={planner} plannerId={plannerId} />}
         {planner && tab === 'recipes' && <Recipes plannerId={plannerId} />}
 
         {isLoading &&

@@ -22,7 +22,6 @@ describe('<App/>', () => {
   });
 
   it('should render a planner', async () => {
-    jest.spyOn(http, 'get').mockResolvedValueOnce(recipes);
     jest.spyOn(http, 'get').mockResolvedValueOnce(planner);
     const { getAllByTestId, getByTestId } = render(<App {...props} />);
     fireEvent.change(getByTestId('landing-input'), { target: { id: 'input', value: 'abc' } });
@@ -34,8 +33,8 @@ describe('<App/>', () => {
   });
 
   it('should render recipes', async () => {
-    jest.spyOn(http, 'get').mockResolvedValueOnce(recipes);
     jest.spyOn(http, 'get').mockResolvedValueOnce(planner);
+    jest.spyOn(http, 'get').mockResolvedValueOnce(recipes);
     const { getAllByTestId, getByTestId } = render(<App {...props} />);
     fireEvent.change(getByTestId('landing-input'), { target: { id: 'input', value: 'abc' } });
     fireEvent.click(getByTestId('landing-button'));
@@ -47,7 +46,6 @@ describe('<App/>', () => {
   });
 
   it('should render an error', async () => {
-    jest.spyOn(http, 'get').mockResolvedValueOnce(recipes);
     jest.spyOn(http, 'get').mockResolvedValueOnce({ error: 'test error' });
     const { getAllByTestId, getByTestId } = render(<App {...props} />);
     fireEvent.change(getByTestId('landing-input'), { target: { id: 'input', value: 'abc' } });

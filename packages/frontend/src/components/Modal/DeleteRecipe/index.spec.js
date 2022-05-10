@@ -12,6 +12,7 @@ describe('<DeleteRecipe/>', () => {
       ingredients: [],
       steps: [],
     },
+    plannerId: '12345',
   };
 
   it('should render', () => {
@@ -24,6 +25,6 @@ describe('<DeleteRecipe/>', () => {
 
     const { getByTestId } = render(<DeleteRecipe {...props} />);
     fireEvent.click(getByTestId('delete-recipe-yes'));
-    expect(http.delete).toHaveBeenCalledWith('/recipes?name=a recipe');
+    expect(http.delete).toHaveBeenCalledWith('/recipes?name=a recipe&id=12345');
   });
 });

@@ -8,9 +8,16 @@ import { planner, recipes } from '../../mocks/mocks.json';
 describe('<Planner/>', () => {
   const props = {
     planner,
-    recipes,
     plannerId: '12345',
   };
+
+  beforeEach(() => {
+    http.get = jest.fn().mockResolvedValueOnce([{
+      name: 'MOCK Bacon And Leek Risotto',
+      ingredients: [],
+      steps: [],
+    }]);
+  });
 
   it('should render', () => {
     const { getAllByTestId } = render(<Planner {...props} />);
