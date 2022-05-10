@@ -29,7 +29,7 @@ describe('recipe', () => {
   });
 
   it('should get recipes', async () => {
-    const response = await request(mockServer).get('/api/recipes?id=1234');
+    const response = await request(mockServer).get('/api/recipes?id=12345');
     expect(response.body).toEqual(firebaseMock.cookbooks[0].recipes);
     expect(response.statusCode).toBe(200);
   });
@@ -42,7 +42,7 @@ describe('recipe', () => {
 
   it('should create a recipe', async () => {
     const response = await request(mockServer)
-      .post('/api/recipes?id=1234')
+      .post('/api/recipes?id=12345')
       .send(firebaseMock.cookbooks[0].recipes[0]);
     expect(response.body.message).toEqual('MOCK Bacon And Leek Risotto saved!');
     expect(response.statusCode).toBe(200);
@@ -59,7 +59,7 @@ describe('recipe', () => {
   it('should return an error when trying to create a recipe', async () => {
     fetch.mockRejectedValue(new Error('test error'));
     const response = await request(mockServer)
-      .post('/api/recipes?id=1234')
+      .post('/api/recipes?id=12345')
       .send(firebaseMock.cookbooks[0].recipes[0]);
     expect(response.body.message).toEqual('Could not save recipe: Error: test error');
     expect(response.statusCode).toBe(500);
@@ -67,7 +67,7 @@ describe('recipe', () => {
 
   it('should update a recipe', async () => {
     const response = await request(mockServer)
-      .put('/api/recipes?id=1234')
+      .put('/api/recipes?id=12345')
       .send({
         ...firebaseMock.cookbooks[0].recipes[0],
         originalName: 'test recipe',
@@ -87,7 +87,7 @@ describe('recipe', () => {
   it('should return an error when trying to update a recipe', async () => {
     fetch.mockRejectedValue(new Error('test error'));
     const response = await request(mockServer)
-      .put('/api/recipes?id=1234')
+      .put('/api/recipes?id=12345')
       .send({
         ...firebaseMock.cookbooks[0].recipes[0],
         originalName: 'test recipe',
@@ -97,7 +97,7 @@ describe('recipe', () => {
   });
 
   it('should delete a recipe', async () => {
-    const response = await request(mockServer).delete('/api/recipes?name=recipe&id=1234');
+    const response = await request(mockServer).delete('/api/recipes?name=recipe&id=12345');
     expect(response.body.message).toEqual('recipe deleted!');
     expect(response.statusCode).toBe(200);
   });
@@ -110,7 +110,7 @@ describe('recipe', () => {
 
   it('should return an error when trying to delete a recipe', async () => {
     fetch.mockRejectedValue(new Error('test error'));
-    const response = await request(mockServer).delete('/api/recipes?name=recipe&id=1234');
+    const response = await request(mockServer).delete('/api/recipes?name=recipe&id=12345');
     expect(response.body.message).toEqual('Could not delete recipe: Error: test error');
     expect(response.statusCode).toBe(500);
   });

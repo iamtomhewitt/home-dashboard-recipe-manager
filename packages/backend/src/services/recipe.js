@@ -9,8 +9,10 @@ module.exports = {
     return json;
   },
 
-  async findRecipe(name) {
-    const { recipes } = await this.getData();
+  async findRecipe(name, id) {
+    const { cookbooks } = await this.getData();
+    const cookbook = cookbooks.find((cb) => cb.id === id);
+    const { recipes } = cookbook;
     const recipe = recipes.filter((r) => r.name === name)[0];
     return recipe;
   },
