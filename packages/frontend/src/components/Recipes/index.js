@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import DeleteRecipe from '../Modal/DeleteRecipe';
@@ -6,13 +6,30 @@ import Filter from '../Filter';
 import Modal from '../Modal';
 import RecipeEditor from '../Modal/RecipeEditor';
 import ViewRecipe from '../Modal/ViewRecipe';
+import http from '../../lib/http';
 
 import './index.scss';
 
-const Recipes = ({ recipes, refreshRecipes }) => {
+const Recipes = ({ plannerId }) => {
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState();
+  const [recipes, setRecipes] = useState([]);
   const [filteredRecipes, setFilteredRecipes] = useState(recipes);
+
+  useEffect(() => {
+    const getData = async () => {
+      const response = await http.get(`/recipes?id=${plannerId}`);
+      setRecipes(response);
+      setFilteredRecipes(response);
+    };
+    getData();
+  }, [plannerId]);
+
+  const getRecipes = async () => {
+    const response = await http.get(`/recipes?id=${plannerId}`);
+    setRecipes(response);
+    setFilteredRecipes(response);
+  };
 
   const openModal = (type, recipe) => {
     setShowModal(true);
@@ -26,10 +43,10 @@ const Recipes = ({ recipes, refreshRecipes }) => {
   const getModal = () => {
     const { type, recipe } = modalData;
     const modals = {
-      view: <ViewRecipe recipe={recipe} />,
-      edit: <RecipeEditor isEditing recipe={recipe} />,
-      delete: <DeleteRecipe recipe={recipe} hideModal={hideModal} />,
-      add: <RecipeEditor />,
+      view: <ViewRecipe recipe={recipe} plannerId={plannerId} />,
+      edit: <RecipeEditor isEditing recipe={recipe} plannerId={plannerId} />,
+      delete: <DeleteRecipe recipe={recipe} hideModal={hideModal} plannerId={plannerId} />,
+      add: <RecipeEditor plannerId={plannerId} />,
     };
 
     return (
@@ -64,7 +81,7 @@ const Recipes = ({ recipes, refreshRecipes }) => {
         <button className='recipes-add-button' onClick={() => openModal('add', {})} data-test-id='recipes-add'>
           Add New Recipe
         </button>
-        <button className='recipes-refresh-button' onClick={() => refreshRecipes()} data-test-id='recipes-refresh'>
+        <button className='recipes-refresh-button' onClick={() => getRecipes()} data-test-id='recipes-refresh'>
           Refresh
         </button>
       </div>
@@ -74,8 +91,7 @@ const Recipes = ({ recipes, refreshRecipes }) => {
 };
 
 Recipes.propTypes = {
-  recipes: PropTypes.array.isRequired,
-  refreshRecipes: PropTypes.func,
+  plannerId: PropTypes.string.isRequired,
 };
 
 export default Recipes;

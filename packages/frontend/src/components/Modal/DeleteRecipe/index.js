@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 import http from '../../../lib/http';
 import '../index.scss';
 
-const DeleteRecipe = ({ recipe, hideModal }) => {
+const DeleteRecipe = ({ recipe, hideModal, plannerId }) => {
   const { name } = recipe;
   const [message, setMessage] = useState('');
 
   const onDelete = async () => {
-    const json = await http.delete(`/recipes?name=${name}`);
+    const json = await http.delete(`/recipes?name=${name}&id=${plannerId}`);
     setMessage(json.message);
   };
 
@@ -38,6 +38,7 @@ const DeleteRecipe = ({ recipe, hideModal }) => {
 DeleteRecipe.propTypes = {
   recipe: PropTypes.object.isRequired,
   hideModal: PropTypes.func.isRequired,
+  plannerId: PropTypes.string.isRequired,
 };
 
 export default DeleteRecipe;
