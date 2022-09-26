@@ -6,17 +6,16 @@
     "version": "2.4.0",
     "scripts": {
         "backend": "cd packages/backend && npm start",
-        "bootstrap": "lerna bootstrap",
-        "coverage": "lerna run coverage",
+        "coverage": "npm run coverage --ws",
         "dev": "concurrently \"npm run frontend\" \"npm run backend\"",
         "frontend": "cd packages/frontend && npm start",
         "heroku-postbuild": "cd packages/frontend && npm install && npm run build && cd ../backend && npm install",
-        "lint": "lerna run lint",
-        "lint-fix": "lerna run lint-fix",
-        "lint-sass": "lerna run lint-sass",
+        "lint": "npm run lint --ws",
+        "lint-fix": "npm run lint-fix --ws",
+        "lint-sass": "npm run lint-sass --ws",
         "release": "github-releaser",
         "start": "npm run backend",
-        "test": "lerna run test"
+        "test": "npm run test --ws"
     },
     "repository": {
         "type": "git",
@@ -49,5 +48,8 @@
         "commitizen": {
             "path": "./node_modules/cz-conventional-changelog"
         }
-    }
+    },
+    "workspaces": [
+        "./packages/*"
+    ]
 }
