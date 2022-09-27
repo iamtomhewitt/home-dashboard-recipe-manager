@@ -25,6 +25,18 @@ functions:
           method: get
           path: /api/planner/all
           cors: true
+  get-planner-by-id:
+    name: home-dashboard-recipe-manager-get-planner-by-id
+    description: Get a single planner
+    handler: dist/src/api/planner/get-by-id.handler
+    logRetentionInDays: 7
+    environment:
+      FIREBASE: ${env:FIREBASE}
+    events:
+      - http:
+          method: get
+          path: /api/planner/{id}
+          cors: true
   get-plan-for-day:
     name: home-dashboard-recipe-manager-get-plan-for-day
     description: Gets the plan for a specified day for a planner

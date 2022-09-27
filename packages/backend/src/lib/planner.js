@@ -5,10 +5,10 @@ const getData = async () => {
   const response = await fetch(firebase);
   const json = await response.json();
   return json;
-}
+};
 
 const getPlanner = async (id) => {
-  const { planners } = await getData()
+  const { planners } = await getData();
   const planner = planners.find((p) => p.plannerId === id);
 
   if (!planner) {
@@ -16,9 +16,9 @@ const getPlanner = async (id) => {
   }
 
   return planner;
-}
+};
 
 module.exports = {
   getData,
-  getPlanner
-}
+  getPlanner,
+};

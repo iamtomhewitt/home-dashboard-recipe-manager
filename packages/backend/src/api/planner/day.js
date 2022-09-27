@@ -1,5 +1,5 @@
-const { getPlanner } = require("../../lib/planner");
-const { response } = require("../../http/response");
+const { getPlanner } = require('../../lib/planner');
+const { response } = require('../../http/response');
 
 module.exports.handler = async (event) => {
   try {
@@ -7,19 +7,19 @@ module.exports.handler = async (event) => {
 
     if (!id || !day) {
       return response.badRequest({
-        message: 'No "id" or "day" params supplied'
-      })
+        message: 'No "id" or "day" params supplied',
+      });
     }
 
     const { plan } = await getPlanner(id);
     const planForDay = plan.find((p) => p.day === day);
 
     return response.ok({
-      ...planForDay
-    })
+      ...planForDay,
+    });
   } catch (err) {
     return response.error({
-      message: err.message
-    })
+      message: err.message,
+    });
   }
-}
+};
