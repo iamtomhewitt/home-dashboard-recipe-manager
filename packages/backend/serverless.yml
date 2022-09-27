@@ -1,0 +1,27 @@
+service: home-dashboard-recipe-manager
+
+frameworkVersion: '3'
+
+useDotenv: true
+
+provider:
+  lambdaHashingVersion: 20201221
+  name: aws
+  region: eu-west-1
+  runtime: nodejs16.x
+  stage: dev
+  timeout: 600
+
+functions:
+  get-all-planners:
+    name: home-dashboard-recipe-manager-get-all-planners
+    description: Get all the planners for the recipe manager
+    handler: dist/src/api/planner/all.handler
+    logRetentionInDays: 7
+    environment:
+      FIREBASE: ${env:FIREBASE}
+    events:
+      - http:
+          method: get
+          path: /api/planner/all
+          cors: true

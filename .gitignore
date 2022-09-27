@@ -3,3 +3,5 @@ coverage
 coverage.txt
 build
 .env
+dist
+.serverless
