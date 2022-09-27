@@ -10,7 +10,7 @@ provider:
   region: eu-west-1
   runtime: nodejs16.x
   stage: dev
-  timeout: 600
+  timeout: 30
 
 functions:
   get-all-planners:
@@ -24,4 +24,16 @@ functions:
       - http:
           method: get
           path: /api/planner/all
+          cors: true
+  get-plan-for-day:
+    name: home-dashboard-recipe-manager-get-plan-for-day
+    description: Gets the plan for a specified day for a planner
+    handler: dist/src/api/planner/day.handler
+    logRetentionInDays: 7
+    environment:
+      FIREBASE: ${env:FIREBASE}
+    events:
+      - http:
+          method: get
+          path: /api/planner/day
           cors: true

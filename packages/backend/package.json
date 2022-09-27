@@ -4,7 +4,7 @@
 	"name": "home-dashboard-recipe-manager-backend",
 	"version": "2.4.0",
 	"scripts": {
-		"build": "rm -Rf dist && mkdir -p ./dist/src && cp -r ./src ./dist && cp package.json ./dist && cd ./dist && npm install --only=prod && rm package.json",
+		"build": "rm -Rf dist && mkdir -p ./dist/src && cp -r ./src ./dist && cp package.json ./dist && cd ./dist && npm install --omit=dev && rm package.json",
 		"coverage": "npm test >> coverage.txt",
 		"deploy": "npm run build && sls --aws-profile tom deploy",
 		"lint": "eslint --ignore-path ../../.gitignore .",
