@@ -21,7 +21,7 @@ const findCookbook = async (id) => {
   return cookbook;
 };
 
-const saveRecipe = async (ingredients, name, steps, id) => {
+const saveRecipe = async ({ ingredients, name, steps, id }) => {
   try {
     const { cookbooks } = await getData();
     const cookbook = cookbooks.find((cb) => cb.id === id);

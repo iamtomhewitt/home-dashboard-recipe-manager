@@ -52,7 +52,7 @@ functions:
   update-planner:
     name: home-dashboard-recipe-manager-update-planner
     description: Updates a planner
-    handler: dist/src/api/planner/update.handler
+    handler: dist/src/api/planner/update-planner.handler
     logRetentionInDays: 7
     environment:
       FIREBASE: ${env:FIREBASE}
@@ -71,5 +71,17 @@ functions:
     events:
       - http:
           method: get
+          path: /api/recipes
+          cors: true
+  create-recipe:
+    name: home-dashboard-recipe-manager-create-recipe
+    description: Creates a recipe for a cookbook
+    handler: dist/src/api/recipe/create-recipe.handler
+    logRetentionInDays: 7
+    environment:
+      FIREBASE: ${env:FIREBASE}
+    events:
+      - http:
+          method: post
           path: /api/recipes
           cors: true
