@@ -18,7 +18,20 @@ const getPlanner = async (id) => {
   return planner;
 };
 
+const updatePlanner = async ({ id, day, recipe }) => {
+  const { planners } = await getData();
+  const plannerIndex = planners.findIndex((p) => p.plannerId === id);
+  const dayToUpdateIndex = planners[plannerIndex].plan.findIndex((p) => p.day === day);
+  const updateUrl = `${process.env.FIREBASE}planners/${plannerIndex}/plan/${dayToUpdateIndex}/recipe.json`;
+
+  await fetch(updateUrl, {
+    method: 'put',
+    body: JSON.stringify(recipe),
+  });
+};
+
 module.exports = {
   getData,
   getPlanner,
+  updatePlanner,
 };

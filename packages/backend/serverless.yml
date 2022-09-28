@@ -49,3 +49,15 @@ functions:
           method: get
           path: /api/planner/day
           cors: true
+  update-planner:
+    name: home-dashboard-recipe-manager-update-planner
+    description: Updates a planner
+    handler: dist/src/api/planner/update.handler
+    logRetentionInDays: 7
+    environment:
+      FIREBASE: ${env:FIREBASE}
+    events:
+      - http:
+          method: post
+          path: /api/planner
+          cors: true
