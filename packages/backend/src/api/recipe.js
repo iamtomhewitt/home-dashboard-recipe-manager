@@ -3,25 +3,6 @@ const service = require('../services/recipe');
 
 const route = express.Router();
 
-route.get('/', async (req, res) => {
-  const { id } = req.query;
-
-  if (!id) {
-    return res.status(400).json({ message: '\'id\' is missing from query parameter' });
-  }
-
-  const cookbook = await service.findCookbook(id);
-
-  if (!cookbook) {
-    return res.status(404).json({ message: `Cookbook with id '${id}' not found!` });
-  }
-
-  const { recipes } = cookbook;
-  recipes.sort((a, b) => a.name.localeCompare(b.name));
-
-  return res.status(200).json(recipes);
-});
-
 route.post('/', async (req, res) => {
   try {
     const { id } = req.query;

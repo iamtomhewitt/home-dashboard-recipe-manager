@@ -61,3 +61,15 @@ functions:
           method: post
           path: /api/planner
           cors: true
+  get-recipes:
+    name: home-dashboard-recipe-manager-get-recipes
+    description: Gets recipes for a cookbook id
+    handler: dist/src/api/recipe/get-recipes.handler
+    logRetentionInDays: 7
+    environment:
+      FIREBASE: ${env:FIREBASE}
+    events:
+      - http:
+          method: get
+          path: /api/recipes
+          cors: true
