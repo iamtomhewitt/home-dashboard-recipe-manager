@@ -109,3 +109,15 @@ functions:
           method: delete
           path: /api/recipes
           cors: true
+  get-shopping-list:
+    name: home-dashboard-recipe-manager-get-shopping-list
+    description: Gets a shopping list for a planner id
+    handler: dist/src/api/shopping-list/get-shopping-list.handler
+    logRetentionInDays: 7
+    environment:
+      FIREBASE: ${env:FIREBASE}
+    events:
+      - http:
+          method: get
+          path: /api/shoppingList
+          cors: true
