@@ -85,3 +85,15 @@ functions:
           method: post
           path: /api/recipes
           cors: true
+  update-recipe:
+    name: home-dashboard-recipe-manager-update-recipe
+    description: Updates a recipe for a cookbook
+    handler: dist/src/api/recipe/update-recipe.handler
+    logRetentionInDays: 7
+    environment:
+      FIREBASE: ${env:FIREBASE}
+    events:
+      - http:
+          method: put
+          path: /api/recipes
+          cors: true

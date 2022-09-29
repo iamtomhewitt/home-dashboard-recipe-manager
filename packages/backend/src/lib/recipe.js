@@ -44,7 +44,7 @@ const saveRecipe = async ({ ingredients, name, steps, id }) => {
   }
 };
 
-const updateRecipe = async (ingredients, name, steps, originalName, id) => {
+const updateRecipe = async ({ ingredients, name, steps, originalName, id }) => {
   try {
     const { cookbooks } = await getData();
     const cookbook = cookbooks.find((cb) => cb.id === id);
