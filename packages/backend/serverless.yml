@@ -97,3 +97,15 @@ functions:
           method: put
           path: /api/recipes
           cors: true
+  delete-recipe:
+    name: home-dashboard-recipe-manager-delete-recipe
+    description: Deletes a recipe from a cookbook
+    handler: dist/src/api/recipe/delete-recipe.handler
+    logRetentionInDays: 7
+    environment:
+      FIREBASE: ${env:FIREBASE}
+    events:
+      - http:
+          method: delete
+          path: /api/recipes
+          cors: true
