@@ -58,7 +58,7 @@ functions:
       FIREBASE: ${env:FIREBASE}
     events:
       - http:
-          method: post
+          method: put
           path: /api/planner
           cors: true
   get-recipes:

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Landing from './components/Landing';
 import LoadingIcon from './components/LoadingIcon';
@@ -9,57 +9,55 @@ import http from './lib/http';
 
 import './App.scss';
 
-class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      isLoading: false,
-      tab: 'planner',
-    };
-  }
+const App = () => {
+  const [error, setError] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+  const [planner, setPlanner] = useState();
+  const [plannerId, setPlannerId] = useState();
+  const [tab, setTab] = useState('planner');
 
-  getPlanner = async (plannerId) => {
-    this.setState({ isLoading: true, error: '', plannerId });
+  const getPlanner = async (id) => {
+    try {
+      setPlannerId(id);
+      setError('');
+      setIsLoading(true);
 
-    const json = await http.get(`/planner/${plannerId}`);
+      const json = await http.get(`/planner/${id}`);
 
-    if (json.error) {
-      this.setState({ isLoading: false, error: json.error });
-    } else {
-      this.setState({ isLoading: false, planner: json, error: '' });
+      setPlanner(json);
+      setIsLoading(false);
+    } catch (err) {
+      setError(err.message);
+      setIsLoading(false);
     }
-  }
+  };
 
-  changeTab = (tab) => {
-    this.setState({ tab });
-  }
+  const changeTab = (t) => {
+    setTab(t);
+  };
 
-  render() {
-    const { error, isLoading, planner, plannerId, tab } = this.state;
+  return (
+    <div className='app' data-test-id='app'>
+      <Navigation planner={planner} changeTab={changeTab} tab={tab} />
 
-    return (
-      <div className='app' data-test-id='app'>
-        <Navigation planner={planner} changeTab={this.changeTab} tab={tab} />
+      {!planner && <Landing getPlanner={getPlanner} />}
 
-        {!planner && <Landing getPlanner={this.getPlanner} />}
+      {planner && tab === 'planner' && <Planner planner={planner} plannerId={plannerId} />}
+      {planner && tab === 'recipes' && <Recipes plannerId={plannerId} />}
 
-        {planner && tab === 'planner' && <Planner planner={planner} plannerId={plannerId} />}
-        {planner && tab === 'recipes' && <Recipes plannerId={plannerId} />}
+      {isLoading &&
+        <div className='app-loading'>
+          <LoadingIcon />
+        </div>
+      }
 
-        {isLoading &&
-          <div className='app-loading'>
-            <LoadingIcon />
-          </div>
-        }
-
-        {error &&
-          <div className='app-error' data-test-id='app-error'>
-            {error}
-          </div>
-        }
-      </div>
-    );
-  }
-}
+      {error &&
+        <div className='app-error' data-test-id='app-error'>
+          {error}
+        </div>
+      }
+    </div>
+  );
+};
 
 export default App;

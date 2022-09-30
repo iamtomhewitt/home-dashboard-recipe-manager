@@ -1,7 +1,5 @@
-import config from '../config';
-
 const request = async (path, body, method) => {
-  const finalUrl = `${config.baseUrl}/api${path}`;
+  const finalUrl = `${process.env.REACT_APP_API_URL}/api${path}`;
   console.log('Making a', method, 'request to', finalUrl);
   const response = await fetch(finalUrl, {
     method,
@@ -12,16 +10,11 @@ const request = async (path, body, method) => {
     },
   });
 
-  const json = await response.json();
-
-  if (!response.ok) {
-    return {
-      status: response.status,
-      error: json.message,
-    };
+  if (response.ok) {
+    return response.json();
   }
 
-  return json;
+  return Promise.reject(await response.json());
 };
 
 const get = async (url) => {
