@@ -1,3 +1,13 @@
+## 2.4.1 (01/10/2022) 
+
+
+### Issues in this release:
+
+* [#90](https://github.com/iamtomhewitt/home-dashboard-recipe-manager/issues/90) - Move to AWS
+* [#84](https://github.com/iamtomhewitt/home-dashboard-recipe-manager/issues/84) - Use node 16 and npm 8
+
+
+
 ## 2.4.0 (10/05/2022) 
 
 
