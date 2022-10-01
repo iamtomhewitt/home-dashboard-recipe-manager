@@ -6,6 +6,7 @@
     "scripts": {
         "build": "react-scripts build",
         "coverage": "npm test >> coverage.txt",
+        "deploy": "npm run build && sls --aws-profile tom deploy",
         "lint": "eslint --ignore-path ../../.gitignore ./src",
         "lint-fix": "npm run lint -- --fix",
         "lint-sass": "sass-lint '**/src/*.scss' --verbose --no-exit",
@@ -40,6 +41,7 @@
         "eslint-plugin-react-hooks": "^1.7.0",
         "husky": "^1.1.2",
         "sass": "^1.55.0",
+        "serverless-s3-sync": "^3.0.0",
         "validate-commit-msg": "^2.14.0"
     },
     "overrides": {

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactSelect from 'react-select';
+import ReactSelect from 'react-dropdown';
 
 import CloseIcon from '../CloseIcon';
 import './index.scss';

@@ -7,14 +7,10 @@
     "scripts": {
         "backend": "cd packages/backend && npm start",
         "coverage": "npm run coverage --ws",
-        "dev": "concurrently \"npm run frontend\" \"npm run backend\"",
-        "frontend": "cd packages/frontend && npm start",
-        "heroku-postbuild": "cd packages/frontend && npm install && npm run build && cd ../backend && npm install",
+        "deploy-all": "npm run deploy --ws",
         "lint": "npm run lint --ws",
         "lint-fix": "npm run lint-fix --ws",
-        "lint-sass": "npm run lint-sass --ws",
         "release": "github-releaser",
-        "start": "npm run backend",
         "test": "npm run test --ws"
     },
     "repository": {
