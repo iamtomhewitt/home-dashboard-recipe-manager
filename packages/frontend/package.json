@@ -5,7 +5,8 @@
     "author": "Tom Hewitt",
     "scripts": {
         "build": "react-scripts build",
-        "coverage": "npm test >> coverage.txt",
+        "coverage": "echo FIXME!",
+        "coverage-fix-me": "npm test >> coverage.txt",
         "deploy": "npm run build && sls --aws-profile tom deploy",
         "lint": "eslint --ignore-path ../../.gitignore ./src",
         "lint-fix": "npm run lint -- --fix",
