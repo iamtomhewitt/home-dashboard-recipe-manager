@@ -1,0 +1,123 @@
+service: home-dashboard-recipe-manager
+
+frameworkVersion: '3'
+
+useDotenv: true
+
+provider:
+  lambdaHashingVersion: 20201221
+  name: aws
+  region: eu-west-1
+  runtime: nodejs16.x
+  stage: dev
+  timeout: 30
+
+functions:
+  get-all-planners:
+    name: home-dashboard-recipe-manager-get-all-planners
+    description: Get all the planners for the recipe manager
+    handler: dist/src/api/planner/all.handler
+    logRetentionInDays: 7
+    environment:
+      FIREBASE: ${env:FIREBASE}
+    events:
+      - http:
+          method: get
+          path: /api/planner/all
+          cors: true
+  get-planner-by-id:
+    name: home-dashboard-recipe-manager-get-planner-by-id
+    description: Get a single planner
+    handler: dist/src/api/planner/get-by-id.handler
+    logRetentionInDays: 7
+    environment:
+      FIREBASE: ${env:FIREBASE}
+    events:
+      - http:
+          method: get
+          path: /api/planner/{id}
+          cors: true
+  get-plan-for-day:
+    name: home-dashboard-recipe-manager-get-plan-for-day
+    description: Gets the plan for a specified day for a planner
+    handler: dist/src/api/planner/day.handler
+    logRetentionInDays: 7
+    environment:
+      FIREBASE: ${env:FIREBASE}
+    events:
+      - http:
+          method: get
+          path: /api/planner/day
+          cors: true
+  update-planner:
+    name: home-dashboard-recipe-manager-update-planner
+    description: Updates a planner
+    handler: dist/src/api/planner/update-planner.handler
+    logRetentionInDays: 7
+    environment:
+      FIREBASE: ${env:FIREBASE}
+    events:
+      - http:
+          method: put
+          path: /api/planner
+          cors: true
+  get-recipes:
+    name: home-dashboard-recipe-manager-get-recipes
+    description: Gets recipes for a cookbook id
+    handler: dist/src/api/recipe/get-recipes.handler
+    logRetentionInDays: 7
+    environment:
+      FIREBASE: ${env:FIREBASE}
+    events:
+      - http:
+          method: get
+          path: /api/recipes
+          cors: true
+  create-recipe:
+    name: home-dashboard-recipe-manager-create-recipe
+    description: Creates a recipe for a cookbook
+    handler: dist/src/api/recipe/create-recipe.handler
+    logRetentionInDays: 7
+    environment:
+      FIREBASE: ${env:FIREBASE}
+    events:
+      - http:
+          method: post
+          path: /api/recipes
+          cors: true
+  update-recipe:
+    name: home-dashboard-recipe-manager-update-recipe
+    description: Updates a recipe for a cookbook
+    handler: dist/src/api/recipe/update-recipe.handler
+    logRetentionInDays: 7
+    environment:
+      FIREBASE: ${env:FIREBASE}
+    events:
+      - http:
+          method: put
+          path: /api/recipes
+          cors: true
+  delete-recipe:
+    name: home-dashboard-recipe-manager-delete-recipe
+    description: Deletes a recipe from a cookbook
+    handler: dist/src/api/recipe/delete-recipe.handler
+    logRetentionInDays: 7
+    environment:
+      FIREBASE: ${env:FIREBASE}
+    events:
+      - http:
+          method: delete
+          path: /api/recipes
+          cors: true
+  get-shopping-list:
+    name: home-dashboard-recipe-manager-get-shopping-list
+    description: Gets a shopping list for a planner id
+    handler: dist/src/api/shopping-list/get-shopping-list.handler
+    logRetentionInDays: 7
+    environment:
+      FIREBASE: ${env:FIREBASE}
+    events:
+      - http:
+          method: get
+          path: /api/shoppingList
+          cors: true

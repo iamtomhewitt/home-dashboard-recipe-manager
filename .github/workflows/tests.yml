@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        node-version: [10.x]
+        node-version: [16.x]
 
     steps:
     - uses: actions/checkout@v2
@@ -23,12 +23,12 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
     - run: npm ci
-    - run: npm run bootstrap
     - run: npm run lint
-    - run: npm run coverage
+    - run: echo "TODO include frontend coverage!"
+    - run: npm run coverage --w packages/backend
 
     # Only run the coverage once
-    - if: ${{ matrix.node-version == '10.x' }}
+    - if: ${{ matrix.node-version == '16.x' }}
       name: Get coverage
       run: |
         REF=${{ github.ref }}
@@ -38,7 +38,7 @@ jobs:
         echo $BRANCH_NAME
         echo "BRANCH=$(echo ${BRANCH_NAME})" >> $GITHUB_ENV
         echo "COVERAGE=$(node coverage.js)" >> $GITHUB_ENV
-    - if: ${{ matrix.node-version == '10.x' }}
+    - if: ${{ matrix.node-version == '16.x' }}
       name: Create badge
       uses: schneegans/dynamic-badges-action@v1.0.0
       with:

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import CreatableSelect from 'react-select/creatable';
 import PropTypes from 'prop-types';
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
 
 import LoadingIcon from '../LoadingIcon';
 import http from '../../lib/http';
@@ -58,7 +59,7 @@ const Planner = ({ planner, plannerId }) => {
               <span>{day}</span>
             </div>
             <div className='planner-recipe' data-test-id='planner-recipe'>
-              <CreatableSelect
+              <Dropdown
                 day={day}
                 onChange={(e) => onChange(e, day)}
                 onInputChange={(e) => onChange(e, day)}
