@@ -13,7 +13,6 @@
   &-name {
     color: $label-colour;
     font-size: 22px;
-    letter-spacing: 1px;
     margin: auto;
     padding-left: 10px;
     width: 100%;
@@ -25,13 +24,12 @@
     button {
       background: $primary-colour;
       border: 0;
-      border-radius: 30px;
+      border-radius: 3px;
       color: $button-text-colour;
       height: 30px;
-      letter-spacing: 2px;
       margin: 5px;
-      text-transform: uppercase;
       width: 40%;
+      font-family: inherit;
     }
   }
 
@@ -45,13 +43,12 @@
   &-refresh-button {
     background: $primary-colour;
     border: 0;
-    border-radius: 30px;
+    border-radius: 3px;
     color: $button-text-colour;
     display: block;
     height: 30px;
-    letter-spacing: 2px;
     margin: 10px auto;
-    text-transform: uppercase;
     width: 100%;
+    font-family: inherit;
   }
 }

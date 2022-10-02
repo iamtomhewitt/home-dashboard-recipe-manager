@@ -89,9 +89,11 @@ const Planner = ({ planner, plannerId }) => {
         </div>
       }
 
-      <button className='planner-save-button' onClick={() => onSaveAll()} data-test-id='planner-save-button'>
-        Save All
-      </button>
+      <div className='planner-save-button'>
+        <button onClick={() => onSaveAll()} data-test-id='planner-save-button'>
+          Save All
+        </button>
+      </div>
     </div>
   );
 };

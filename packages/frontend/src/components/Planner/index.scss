@@ -3,47 +3,44 @@
 .planner {
   &-row {
     background-color: $white;
-    border-radius: 20px;
-    margin: 10px auto;
+    border-radius: 3px;
+    margin: 10px 15px;
     min-width: 60%;
-    padding: 20px 10px;
-    width: fit-content;
+    padding: 10px;
   }
 
   &-day {
     color: $label-colour;
-    letter-spacing: 2px;
     margin-bottom: 5px;
     width: 100%;
   }
-  
+
   &-recipe {
     margin-bottom: 5px;
-    
+
     &-info {
       color: $label-colour;
-      margin-bottom: 5px;
-      
+
       span {
         font-size: small;
-        letter-spacing: 1px;
         margin-right: 10px;
       }
     }
   }
 
   &-save-button {
-    background: $primary-colour;
-    border: 0;
-    border-radius: 30px;
-    color: $button-text-colour;
-    display: block;
-    height: 30px;
-    letter-spacing: 2px;
-    margin: 0 auto 20px;
-    min-width: 60%;
-    text-transform: uppercase;
-    width: fit-content;
+    text-align: center;
+
+    button {
+      background: $primary-colour;
+      border-radius: 3px;
+      border: 0;
+      color: $button-text-colour;
+      font-family: inherit;
+      height: 40px;
+      margin: 10px 15px;
+      width: 160px;
+    }
   }
 
   &-loading {

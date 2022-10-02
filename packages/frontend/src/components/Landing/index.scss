@@ -4,6 +4,7 @@
   h1 {
     background-color: $primary-colour;
     color: $white;
+    font-size: 26px;
     font-weight: lighter;
     letter-spacing: 5px;
     margin: 0;
@@ -20,13 +21,14 @@
 
   &-version {
     color: $label-colour;
+    font-size: 12px;
     margin: 10px 0;
     text-align: center;
   }
 
   &-login {
     background-color: $white;
-    border-radius: 20px;
+    border-radius: 3px;
     margin: auto;
     min-width: 60%;
     padding: 20px 10px;
@@ -34,14 +36,13 @@
 
     button {
       background: $primary-colour;
+      border-radius: 3px;
       border: 0;
-      border-radius: 30px;
       color: $button-text-colour;
       display: block;
+      font-family: inherit;
       height: 30px;
-      letter-spacing: 2px;
       margin: 0 auto;
-      text-transform: uppercase;
       width: 100%;
     }
 
@@ -51,6 +52,8 @@
       height: 25px;
       margin: 5px 0;
       width: 100%;
+      font-family: inherit;
+      border-radius: 3px;
     }
   }
 }

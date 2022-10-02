@@ -1,4 +1,4 @@
-@import '../../colours.scss';
+@import "../../colours.scss";
 
 .filter {
   margin: 20px auto;
@@ -6,10 +6,10 @@
   width: fit-content;
 
   input {
-    font-family: 'Product Sans';
-    color: $label-colour;
-    border-radius: 20px;
+    border-radius: 3px;
+    font-family: inherit;
     border: 0;
+    color: $label-colour;
     font-size: 22px;
     height: 60px;
     padding: 20px;

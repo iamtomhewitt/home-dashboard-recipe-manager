@@ -5,7 +5,8 @@
 
   input {
     border: 1px solid $input-border-colour;
-    border-radius: 4px;
+    border-radius: 3px;
+    font-family: inherit;
     display: block;
     font-size: 16px;
     height: 40px;
