@@ -1,22 +1,22 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import Dropdown from 'react-dropdown';
+import PropTypes from 'prop-types';
 
 import 'react-dropdown/style.css';
-import './index.scss'
+import './index.scss';
 
 const PlannerRow = ({ day, recipeOptions, value, recipeForSelected, onChange }) => {
-
   const [useCustom, setUseCustom] = useState(false);
-  const [customEntry, setCustomEntry] = useState('')
+  const [customEntry, setCustomEntry] = useState('');
 
-  const onToggleCheckbox = (e) => {
-    setUseCustom(!useCustom)
-  }
+  const onToggleCheckbox = () => {
+    setUseCustom(!useCustom);
+  };
 
   const onChangeCustomEntry = (e) => {
     setCustomEntry(e.target.value);
-    onChange(e.target, day)
-  }
+    onChange(e.target, day);
+  };
 
   return (
     <div className='planner-row' key={day}>
@@ -48,6 +48,14 @@ const PlannerRow = ({ day, recipeOptions, value, recipeForSelected, onChange }) 
       }
     </div>
   );
-}
+};
+
+PlannerRow.propTypes = {
+  day: PropTypes.string.isRequired,
+  onChange: PropTypes.func,
+  recipeForSelected: PropTypes.any,
+  recipeOptions: PropTypes.array,
+  value: PropTypes.string.isRequired,
+};
 
 export default PlannerRow;

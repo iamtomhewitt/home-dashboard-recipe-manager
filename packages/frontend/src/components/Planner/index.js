@@ -60,7 +60,7 @@ const Planner = ({ planner, plannerId }) => {
             recipeOptions={recipeOptions}
             onChange={(e) => onChange(e, day)}
           />
-        )
+        );
       })}
 
       {isLoading &&

@@ -1,35 +1,51 @@
 @import "../../colours.scss";
 
 .recipes {
+  &-tiles {
+    -webkit-box-pack: justify;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: auto;
+    width: 95%;
+  }
+
   &-row {
     background-color: $white;
-    border-radius: 20px;
+    border-radius: 3px;
+    filter: drop-shadow(rgba(16, 24, 40, 0.06) 0px 0px 16px);
+    height: 70px;
     margin: 10px auto;
-    min-width: 60%;
     padding: 20px 10px;
-    width: fit-content;
+    width: 350px;
   }
 
   &-name {
     color: $label-colour;
     font-size: 22px;
     margin: auto;
+    overflow: hidden;
     padding-left: 10px;
+    white-space: nowrap;
     width: 100%;
+    text-overflow: ellipsis;
   }
 
   &-buttons {
     display: flex;
+    justify-content: center;
+    margin: 10px auto;
 
     button {
-      background: $primary-colour;
-      border: 0;
+      background: $secondary-colour;
       border-radius: 3px;
-      color: $button-text-colour;
+      border: 0;
+      color: $primary-colour;
+      font-family: inherit;
+      font-size: 16px;
       height: 30px;
       margin: 5px;
       width: 40%;
-      font-family: inherit;
     }
   }
 

@@ -64,19 +64,20 @@ const Recipes = ({ plannerId }) => {
 
   return (
     <div className='recipes' data-test-id='recipes'>
-
       <Filter onFilter={onFilter} />
 
-      {filteredRecipes.map((recipe) => (
-        <div className='recipes-row' key={recipe.name}>
-          <div className='recipes-buttons'>
+      <div className='recipes-tiles'>
+        {filteredRecipes.map((recipe) => (
+          <div className='recipes-row' key={recipe.name}>
             <div className='recipes-name'>{recipe.name}</div>
-            <button onClick={() => openModal('view', recipe)} data-test-id='recipes-view'>View</button>
-            <button onClick={() => openModal('edit', recipe)} data-test-id='recipes-edit'>Edit</button>
-            <button onClick={() => openModal('delete', recipe)} data-test-id='recipes-delete'>Delete</button>
+            <div className='recipes-buttons'>
+              <button onClick={() => openModal('view', recipe)} data-test-id='recipes-view'>View</button>
+              <button onClick={() => openModal('edit', recipe)} data-test-id='recipes-edit'>Edit</button>
+              <button onClick={() => openModal('delete', recipe)} data-test-id='recipes-delete'>Delete</button>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
       <div className='recipes-page-buttons'>
         <button className='recipes-add-button' onClick={() => openModal('add', {})} data-test-id='recipes-add'>
           Add New Recipe
