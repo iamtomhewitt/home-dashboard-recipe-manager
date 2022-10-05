@@ -1,33 +1,6 @@
 @import "../../colours";
 
 .planner {
-  &-row {
-    background-color: $white;
-    border-radius: 3px;
-    margin: 10px 15px;
-    min-width: 60%;
-    padding: 10px;
-  }
-
-  &-day {
-    color: $label-colour;
-    margin-bottom: 5px;
-    width: 100%;
-  }
-
-  &-recipe {
-    margin-bottom: 5px;
-
-    &-info {
-      color: $label-colour;
-
-      span {
-        font-size: small;
-        margin-right: 10px;
-      }
-    }
-  }
-
   &-save-button {
     text-align: center;
 

@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import Dropdown from 'react-dropdown';
-import 'react-dropdown/style.css';
 
 import LoadingIcon from '../LoadingIcon';
+import PlannerRow from '../PlannerRow';
 import http from '../../lib/http';
 
 import './index.scss';
@@ -13,7 +12,7 @@ const Planner = ({ planner, plannerId }) => {
   const [recipes, setRecipes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState();
-  const [state, setState] = useState({});
+  const [days, setDays] = useState({});
   const recipeOptions = recipes.map((r) => ({ value: r.name, label: r.name }));
 
   useEffect(() => {
@@ -28,8 +27,8 @@ const Planner = ({ planner, plannerId }) => {
     setIsLoading(true);
     setMessage('');
 
-    for (const day of Object.keys(state)) {
-      const recipe = state[day];
+    for (const day of Object.keys(days)) {
+      const recipe = days[day];
       const body = { day, recipe };
       await http.put(`/planner?id=${plannerId}`, body);
     }
@@ -40,8 +39,8 @@ const Planner = ({ planner, plannerId }) => {
 
   const onChange = (e, day) => {
     if (e && e.value) {
-      setState({
-        ...state,
+      setDays({
+        ...days,
         [day]: e.value,
       });
     }
@@ -50,31 +49,18 @@ const Planner = ({ planner, plannerId }) => {
   return (
     <div className='planner' data-test-id='planner'>
       {plan.map(({ day, recipe }) => {
-        const value = state[day] || recipe;
+        const value = days[day] || recipe;
         const recipeForSelected = recipes.filter((x) => x.name === value)[0];
 
         return (
-          <div className='planner-row' key={day}>
-            <div className='planner-day'>
-              <span>{day}</span>
-            </div>
-            <div className='planner-recipe' data-test-id='planner-recipe'>
-              <Dropdown
-                day={day}
-                onChange={(e) => onChange(e, day)}
-                onInputChange={(e) => onChange(e, day)}
-                options={recipeOptions}
-                value={{ label: value, value }}
-              />
-            </div>
-            {recipeForSelected &&
-              <div className='planner-recipe-info'>
-                <span>{recipeForSelected.ingredients?.length || 0} ingredient(s)</span>
-                <span>{recipeForSelected.steps?.length || 0} step(s)</span>
-              </div>
-            }
-          </div>
-        );
+          <PlannerRow
+            day={day}
+            value={value}
+            recipeForSelected={recipeForSelected}
+            recipeOptions={recipeOptions}
+            onChange={(e) => onChange(e, day)}
+          />
+        )
       })}
 
       {isLoading &&
