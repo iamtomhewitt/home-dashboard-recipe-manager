@@ -12,7 +12,7 @@
   h1 {
     font-weight: 300;
     text-align: center;
-    font-family: 'font-bold';
+    font-family: "font-bold";
   }
 
   &-main {
@@ -39,84 +39,6 @@
       right: 0px;
       top: 0px;
       width: 50px;
-    }
-  }
-
-  &-view-recipe {
-    ul {
-      color: $text-colour;
-      margin: 0 60px 20px;
-
-      @media screen and (max-width: 1024px) {
-        margin: 0 10px 20px 0;
-        overflow-y: scroll;
-        width: 80%;
-      }
-    }
-
-    li {
-      margin-bottom: 5px;
-    }
-
-    &-info {
-      display: flex;
-      justify-content: center;
-
-      @media screen and (max-width: 1024px) {
-        display: inherit;
-      }
-
-      &-left {
-        width: 40%;
-      }
-
-      &-right {
-        width: 60%;
-      }
-    }
-  }
-
-  &-delete-recipe {
-    &-buttons {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 10px;
-    }
-
-    &-button-yes {
-      button {
-        background-color: transparent;
-        border: 1px solid $primary-colour;
-        border-radius: 3px;
-        color: $primary-colour;
-        font-size: 16px;
-        font-weight: 200;
-        height: 40px;
-        margin: 0 10px;
-        font-family: inherit;
-        width: 100px;
-      }
-    }
-
-    &-button-no {
-      button {
-        background-color: $primary-colour;
-        border: 0;
-        border-radius: 3px;
-        color: $white;
-        font-size: 16px;
-        font-weight: 200;
-        font-family: inherit;
-        height: 40px;
-        margin: 0 10px;
-        width: 100px;
-      }
-    }
-
-    &-message {
-      color: $submit-button-colour;
-      margin: 20px 0;
-      text-align: center;
     }
   }
 }

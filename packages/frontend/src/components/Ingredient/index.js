@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactSelect from 'react-dropdown';
 
-import CloseIcon from '../CloseIcon';
 import './index.scss';
 
 const categories = [
@@ -30,9 +29,6 @@ const weights = [
 
 const Ingredient = ({ index, ingredient, onChange, onRemove }) => (
   <div className='ingredient' data-test-id='ingredient'>
-    <div className='ingredient-close-button' onClick={() => onRemove(index)} data-test-id='ingredient-remove-button'>
-      <CloseIcon />
-    </div>
     <div className='ingredient-row'>
       <input value={ingredient.name} onChange={(e) => onChange(e, index)} id='name' placeholder='name' data-test-id='ingredient-input-name' />
       <input value={ingredient.amount} onChange={(e) => onChange(e, index)} id='amount' placeholder='amount' type='number' data-test-id='ingredient-input-amount' />
@@ -40,6 +36,9 @@ const Ingredient = ({ index, ingredient, onChange, onRemove }) => (
     <div className='ingredient-row'>
       <Options value={ingredient.weight} type='weight' options={weights} onChange={onChange} index={index} />
       <Options value={ingredient.category} type='category' options={categories} onChange={onChange} index={index} />
+    </div>
+    <div className='ingredient-remove-button'>
+      <button onClick={() => onRemove(index)} data-test-id='ingredient-remove-button'>Remove {ingredient.name}</button>
     </div>
   </div>
 );
