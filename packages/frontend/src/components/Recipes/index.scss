@@ -50,21 +50,33 @@
   }
 
   &-page-buttons {
-    max-width: 60%;
-    align-items: center;
     margin: auto;
+    display: flex;
+    width: 350px;
   }
 
-  &-add-button,
-  &-refresh-button {
+  &-add-button {
     background: $primary-colour;
-    border: 0;
     border-radius: 3px;
+    border: 0;
     color: $button-text-colour;
     display: block;
-    height: 30px;
-    margin: 10px auto;
-    width: 100%;
     font-family: inherit;
+    font-size: 16px;
+    height: 40px;
+    margin: 10px auto;
+    width: 150px;
+  }
+  &-refresh-button {
+    background: $secondary-colour;
+    border-radius: 3px;
+    border: 0;
+    color: $primary-colour;
+    display: block;
+    font-family: inherit;
+    font-size: 16px;
+    height: 40px;
+    margin: 10px auto;
+    width: 150px;
   }
 }

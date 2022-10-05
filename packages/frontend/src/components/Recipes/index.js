@@ -78,11 +78,20 @@ const Recipes = ({ plannerId }) => {
           </div>
         ))}
       </div>
+      
       <div className='recipes-page-buttons'>
-        <button className='recipes-add-button' onClick={() => openModal('add', {})} data-test-id='recipes-add'>
+        <button
+          className='recipes-add-button'
+          onClick={() => openModal('add', {})}
+          data-test-id='recipes-add'
+        >
           Add New Recipe
         </button>
-        <button className='recipes-refresh-button' onClick={() => getRecipes()} data-test-id='recipes-refresh'>
+        <button
+          className='recipes-refresh-button'
+          onClick={() => getRecipes()}
+          data-test-id='recipes-refresh'
+        >
           Refresh
         </button>
       </div>
