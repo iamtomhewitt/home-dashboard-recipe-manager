@@ -3,9 +3,19 @@
 body {
   background-color: $background-colour;
   color: $text-colour;
-  font-family: 'Product Sans';
+  font-family: 'font-regular';
   font-size: 16px;
   font-weight: lighter;
   margin: 0;
   padding: 0;
+}
+
+@font-face {
+  font-family: 'font-regular';
+  src: url('./assets/fonts/regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'font-bold';
+  src: url('./assets/fonts/bold.woff2') format('woff2');
 }

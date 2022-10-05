@@ -1,11 +1,9 @@
 @import "../../../colours";
 
-.modal-recipe-editor {
+.recipe-editor {
   h3 {
-    font-weight: 300;
-    letter-spacing: 2px;
-    margin-bottom: 0;
-    text-align: center;
+    font-family: "font-bold";
+    margin-bottom: 20px;
   }
 
   &-name {
@@ -14,44 +12,54 @@
 
     input {
       border: 1px solid $input-border-colour;
+      border-radius: 3px;
+      font-family: inherit;
       display: inline-block;
       font-size: 18px;
       height: 30px;
-      margin: 0 50px;
+      margin: 0 30px;
       text-align: center;
       width: 100%;
     }
   }
 
   &-ingredients {
-    text-align: center;
+    padding: 30px;
 
-    button {
-      background: $primary-colour;
-      border: 0;
-      border-radius: 30px;
-      color: $button-text-colour;
-      height: 40px;
-      letter-spacing: 2px;
-      margin: 0 50px;
-      text-transform: uppercase;
-      width: 200px;
+    &-add-button {
+      text-align: center;
+
+      button {
+        background: $primary-colour;
+        border-radius: 3px;
+        border: 0;
+        color: $secondary-colour;
+        font-family: inherit;
+        height: 40px;
+        margin: auto;
+        width: 200px;
+        font-size: 16px;
+      }
     }
   }
 
   &-steps {
-    text-align: center;
+    padding: 30px;
 
-    button {
-      background: $primary-colour;
-      border: 0;
-      border-radius: 30px;
-      color: $button-text-colour;
-      height: 40px;
-      letter-spacing: 2px;
-      margin: 0 50px;
-      text-transform: uppercase;
-      width: 200px;
+    &-add-button {
+      text-align: center;
+
+      button {
+        background: $primary-colour;
+        border-radius: 3px;
+        border: 0;
+        color: $secondary-colour;
+        font-family: inherit;
+        height: 40px;
+        margin: auto;
+        width: 200px;
+        font-size: 16px;
+      }
     }
   }
 
@@ -61,13 +69,32 @@
     div {
       display: flex;
       justify-content: center;
-      margin: 0 50px;
+      font-family: inherit;
     }
 
     textarea {
       border: 1px solid $input-border-colour;
-      font-family: 'Open Sans', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+      font-family: "font-regular";
       width: 100%;
+      border-radius: 3px;
+      min-height: 50px;
+      min-width: 100%;
+      font-size: 14px;
+    }
+
+    &-remove-button {
+      text-align: center;
+      button {
+        background: $secondary-colour;
+        border-radius: 3px;
+        border: 0;
+        color: $primary-colour;
+        font-family: inherit;
+        font-size: 16px;
+        height: 40px;
+        margin: 10px auto 10px;
+        width: 100%;
+      }
     }
   }
 
@@ -82,13 +109,13 @@
 
     button {
       background: $primary-colour;
+      border-radius: 3px;
       border: 0;
-      border-radius: 30px;
       color: $button-text-colour;
-      height: 45px;
-      letter-spacing: 2px;
+      font-family: inherit;
+      font-size: 16px;
+      height: 40px;
       margin: 10px 50px;
-      text-transform: uppercase;
       width: 200px;
     }
   }

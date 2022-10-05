@@ -44,6 +44,7 @@
         "husky": "^1.1.2",
         "jest": "^24.9.0",
         "sass": "^1.55.0",
+        "sass-lint": "^1.13.1",
         "serverless-s3-sync": "^3.0.0",
         "validate-commit-msg": "^2.14.0"
     },

@@ -1,0 +1,49 @@
+@import "../../colours";
+
+.planner-row {
+  background-color: $white;
+  border-radius: 3px;
+  margin: 10px 15px;
+  min-width: 60%;
+  padding: 10px;
+
+  input[type="checkbox"] {
+    margin: 3px 3px 3px 20px;
+  }
+
+  &-header {
+    color: $label-colour;
+    display: inline-flex;
+    margin-bottom: 5px;
+    width: 100%;
+    vertical-align: middle;
+  }
+
+  &-custom-toggle {
+    color: $primary-colour;
+    font-size: 12px;
+  }
+
+  &-recipe {
+    margin-bottom: 5px;
+
+    input {
+      border: 1px solid $input-border-colour;
+      box-sizing: border-box;
+      height: 35px;
+      margin: 5px 0;
+      width: 100%;
+      font-family: inherit;
+      border-radius: 3px;
+    }
+    
+    &-info {
+      color: $label-colour;
+
+      span {
+        font-size: small;
+        margin-right: 10px;
+      }
+    }
+  }
+}

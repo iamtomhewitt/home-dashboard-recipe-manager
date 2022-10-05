@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import http from '../../../lib/http';
-import '../index.scss';
+import './index.scss';
 
 const DeleteRecipe = ({ recipe, hideModal, plannerId }) => {
   const { name } = recipe;
@@ -14,21 +14,21 @@ const DeleteRecipe = ({ recipe, hideModal, plannerId }) => {
   };
 
   return (
-    <div className='modal-delete-recipe' data-test-id='delete-recipe'>
+    <div className='delete-recipe' data-test-id='delete-recipe'>
       <h1>Delete "{name}"?</h1>
-      <div className='modal-delete-recipe-buttons'>
-        <div className='modal-delete-recipe-button-yes'>
+      <div className='delete-recipe-buttons'>
+        <div className='delete-recipe-button-yes'>
           <button onClick={onDelete} data-test-id='delete-recipe-yes'>
             Yes
           </button>
         </div>
-        <div className='modal-delete-recipe-button-no'>
+        <div className='delete-recipe-button-no'>
           <button onClick={hideModal}>
             No
           </button>
         </div>
       </div>
-      <div className='modal-delete-recipe-message'>
+      <div className='delete-recipe-message'>
         {message}
       </div>
     </div>

@@ -1,57 +1,82 @@
 @import "../../colours.scss";
 
 .recipes {
+  &-tiles {
+    -webkit-box-pack: justify;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: auto;
+    width: 95%;
+  }
+
   &-row {
     background-color: $white;
-    border-radius: 20px;
+    border-radius: 3px;
+    filter: drop-shadow(rgba(16, 24, 40, 0.06) 0px 0px 16px);
+    height: 70px;
     margin: 10px auto;
-    min-width: 60%;
     padding: 20px 10px;
-    width: fit-content;
+    width: 350px;
   }
 
   &-name {
     color: $label-colour;
     font-size: 22px;
-    letter-spacing: 1px;
     margin: auto;
+    overflow: hidden;
     padding-left: 10px;
+    white-space: nowrap;
     width: 100%;
+    text-overflow: ellipsis;
   }
 
   &-buttons {
     display: flex;
+    justify-content: center;
+    margin: 10px auto;
 
     button {
-      background: $primary-colour;
+      background: $secondary-colour;
+      border-radius: 3px;
       border: 0;
-      border-radius: 30px;
-      color: $button-text-colour;
+      color: $primary-colour;
+      font-family: inherit;
+      font-size: 16px;
       height: 30px;
-      letter-spacing: 2px;
       margin: 5px;
-      text-transform: uppercase;
       width: 40%;
     }
   }
 
   &-page-buttons {
-    max-width: 60%;
-    align-items: center;
     margin: auto;
+    display: flex;
+    width: 350px;
   }
 
-  &-add-button,
-  &-refresh-button {
+  &-add-button {
     background: $primary-colour;
+    border-radius: 3px;
     border: 0;
-    border-radius: 30px;
     color: $button-text-colour;
     display: block;
-    height: 30px;
-    letter-spacing: 2px;
+    font-family: inherit;
+    font-size: 16px;
+    height: 40px;
     margin: 10px auto;
-    text-transform: uppercase;
-    width: 100%;
+    width: 150px;
+  }
+  &-refresh-button {
+    background: $secondary-colour;
+    border-radius: 3px;
+    border: 0;
+    color: $primary-colour;
+    display: block;
+    font-family: inherit;
+    font-size: 16px;
+    height: 40px;
+    margin: 10px auto;
+    width: 150px;
   }
 }

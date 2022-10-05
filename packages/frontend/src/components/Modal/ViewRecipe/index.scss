@@ -1,0 +1,39 @@
+@import "../../../colours.scss";
+
+.view-recipe {
+  h1 {
+    font-size: 32px;
+  }
+
+  ul {
+    color: $text-colour;
+    margin: 0 60px 20px;
+
+    @media screen and (max-width: 1024px) {
+      margin: 0 10px 20px 0;
+      overflow-y: scroll;
+      width: 80%;
+    }
+  }
+
+  li {
+    margin-bottom: 5px;
+  }
+
+  &-info {
+    display: flex;
+    justify-content: center;
+
+    @media screen and (max-width: 1024px) {
+      display: inherit;
+    }
+
+    &-left {
+      width: 40%;
+    }
+
+    &-right {
+      width: 60%;
+    }
+  }
+}

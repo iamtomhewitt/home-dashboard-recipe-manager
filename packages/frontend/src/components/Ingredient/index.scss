@@ -1,11 +1,27 @@
 @import "../../colours";
 
 .ingredient {
-  margin: 0 50px 20px;
+  margin: 0 0 30px;
+
+  &-remove-button {
+    text-align: center;
+    button {
+      background: $secondary-colour;
+      border-radius: 3px;
+      border: 0;
+      color: $primary-colour;
+      font-family: inherit;
+      font-size: 16px;
+      height: 40px;
+      margin: 20px auto 0px;
+      width: 100%;
+    }
+  }
 
   input {
     border: 1px solid $input-border-colour;
-    border-radius: 4px;
+    border-radius: 3px;
+    font-family: inherit;
     display: block;
     font-size: 16px;
     height: 40px;
@@ -36,13 +52,11 @@
     margin-right: 5px;
   }
 
-  &-close-button {    
+  &-close-button {
     svg {
-      // To change the main colour of the svg
-      filter: invert(40%) sepia(21%) saturate(1937%) hue-rotate(316deg) brightness(109%) contrast(92%);
       height: 35px;
-      position: relative;
-      left: 50%;
+      position: absolute;
+      right: 0;
     }
   }
 }

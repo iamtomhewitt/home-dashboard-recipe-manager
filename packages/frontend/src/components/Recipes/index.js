@@ -43,7 +43,7 @@ const Recipes = ({ plannerId }) => {
   const getModal = () => {
     const { type, recipe } = modalData;
     const modals = {
-      view: <ViewRecipe recipe={recipe} plannerId={plannerId} />,
+      view: <ViewRecipe recipe={recipe} />,
       edit: <RecipeEditor isEditing recipe={recipe} plannerId={plannerId} />,
       delete: <DeleteRecipe recipe={recipe} hideModal={hideModal} plannerId={plannerId} />,
       add: <RecipeEditor plannerId={plannerId} />,
@@ -64,27 +64,38 @@ const Recipes = ({ plannerId }) => {
 
   return (
     <div className='recipes' data-test-id='recipes'>
-
       <Filter onFilter={onFilter} />
 
-      {filteredRecipes.map((recipe) => (
-        <div className='recipes-row' key={recipe.name}>
-          <div className='recipes-buttons'>
-            <div className='recipes-name'>{recipe.name}</div>
-            <button onClick={() => openModal('view', recipe)} data-test-id='recipes-view'>View</button>
-            <button onClick={() => openModal('edit', recipe)} data-test-id='recipes-edit'>Edit</button>
-            <button onClick={() => openModal('delete', recipe)} data-test-id='recipes-delete'>Delete</button>
-          </div>
-        </div>
-      ))}
       <div className='recipes-page-buttons'>
-        <button className='recipes-add-button' onClick={() => openModal('add', {})} data-test-id='recipes-add'>
+        <button
+          className='recipes-add-button'
+          onClick={() => openModal('add', {})}
+          data-test-id='recipes-add'
+        >
           Add New Recipe
         </button>
-        <button className='recipes-refresh-button' onClick={() => getRecipes()} data-test-id='recipes-refresh'>
+        <button
+          className='recipes-refresh-button'
+          onClick={() => getRecipes()}
+          data-test-id='recipes-refresh'
+        >
           Refresh
         </button>
       </div>
+
+      <div className='recipes-tiles'>
+        {filteredRecipes.map((recipe) => (
+          <div className='recipes-row' key={recipe.name}>
+            <div className='recipes-name'>{recipe.name}</div>
+            <div className='recipes-buttons'>
+              <button onClick={() => openModal('view', recipe)} data-test-id='recipes-view'>View</button>
+              <button onClick={() => openModal('edit', recipe)} data-test-id='recipes-edit'>Edit</button>
+              <button onClick={() => openModal('delete', recipe)} data-test-id='recipes-delete'>Delete</button>
+            </div>
+          </div>
+        ))}
+      </div>
+
       {showModal && getModal()}
     </div>
   );
