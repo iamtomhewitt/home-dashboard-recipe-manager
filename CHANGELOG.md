@@ -1,3 +1,12 @@
+## 2.5.0 (11/02/2023) 
+
+
+### Issues in this release:
+
+* [#94](https://github.com/iamtomhewitt/home-dashboard-recipe-manager/issues/94) - Add to shopping list button
+
+
+
 ## 2.4.2 (05/10/2022) 
 
 

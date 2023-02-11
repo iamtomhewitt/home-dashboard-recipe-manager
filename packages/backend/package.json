@@ -2,7 +2,7 @@
     "author": "Tom Hewitt",
     "homepage": "https://github.com/iamtomhewitt/home-dashboard-recipe-manager#readme",
     "name": "home-dashboard-recipe-manager-backend",
-    "version": "2.4.2",
+    "version": "2.5.0",
     "scripts": {
         "build": "rm -Rf dist && mkdir -p ./dist/src && cp -r ./src ./dist && cp package.json ./dist && cd ./dist && npm install --omit=dev && rm package.json",
         "coverage": "npm test >> coverage.txt",

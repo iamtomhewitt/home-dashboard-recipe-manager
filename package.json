@@ -3,7 +3,7 @@
     "description": "An app for managing recipes and ingredients for my home dashboard.",
     "homepage": "https://github.com/iamtomhewitt/home-dashboard-recipe-manager#readme",
     "name": "home-dashboard-recipe-manager",
-    "version": "2.4.2",
+    "version": "2.5.0",
     "scripts": {
         "coverage": "npm run coverage --ws",
         "deploy-all": "npm run deploy --ws",
