@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import http from '../../../lib/http';
+import api from '../../../lib/api/recipe';
 import './index.scss';
 
 const DeleteRecipe = ({ recipe, hideModal, plannerId }) => {
@@ -9,7 +9,7 @@ const DeleteRecipe = ({ recipe, hideModal, plannerId }) => {
   const [message, setMessage] = useState('');
 
   const onDelete = async () => {
-    const json = await http.delete(`/recipes?name=${name}&id=${plannerId}`);
+    const json = await api.delete(`/recipes?name=${name}&id=${plannerId}`);
     setMessage(json.message);
   };
 

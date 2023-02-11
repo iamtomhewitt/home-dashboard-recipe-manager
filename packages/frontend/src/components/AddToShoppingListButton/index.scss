@@ -1,0 +1,26 @@
+@import "../../colours.scss";
+
+.add-to-shopping-list-button {
+  margin: auto;
+  text-align: center;
+
+  &-error {
+    color: $error-colour;
+  }
+
+  &-success {
+    color: $success-colour;
+  }
+
+  button {
+    background: $secondary-colour;
+    border-radius: 3px;
+    border: 0;
+    color: $primary-colour;
+    font-family: inherit;
+    font-size: 14px;
+    height: 40px;
+    margin: 10px 15px;
+    width: 160px;
+  }
+}

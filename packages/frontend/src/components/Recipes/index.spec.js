@@ -2,7 +2,7 @@ import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 
 import Recipes from '.';
-import http from '../../lib/http';
+import api from '../../lib/api/recipe';
 
 describe('<Recipes/>', () => {
   const props = {
@@ -10,7 +10,7 @@ describe('<Recipes/>', () => {
   };
 
   beforeEach(() => {
-    http.get = jest.fn().mockResolvedValue([{
+    api.get = jest.fn().mockResolvedValue([{
       ingredients: [{
         amount: 25,
         category: 'Dairy',
@@ -34,7 +34,7 @@ describe('<Recipes/>', () => {
       fireEvent.click(getByTestId('recipes-refresh'));
     });
 
-    expect(http.get).toHaveBeenCalledWith('/recipes?id=12345');
+    expect(api.get).toHaveBeenCalledWith('/recipes?id=12345');
   });
 
   describe('when clicking each of the buttons', () => {

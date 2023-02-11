@@ -1,19 +1,22 @@
 @import "../../colours";
 
 .planner {
-  &-save-button {
+  &-buttons {
     text-align: center;
+    &-container {
+      display: inline-flex;
 
-    button {
-      background: $primary-colour;
-      border-radius: 3px;
-      border: 0;
-      color: $button-text-colour;
-      font-family: inherit;
-      font-size: 16px;
-      height: 40px;
-      margin: 10px 15px;
-      width: 160px;
+      &-save-button {
+        background: $primary-colour;
+        border-radius: 3px;
+        border: 0;
+        color: $button-text-colour;
+        font-family: inherit;
+        font-size: 14px;
+        height: 40px;
+        margin: 10px 15px;
+        width: 160px;
+      }
     }
   }
 

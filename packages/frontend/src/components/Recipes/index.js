@@ -6,7 +6,7 @@ import Filter from '../Filter';
 import Modal from '../Modal';
 import RecipeEditor from '../Modal/RecipeEditor';
 import ViewRecipe from '../Modal/ViewRecipe';
-import http from '../../lib/http';
+import api from '../../lib/api/recipe';
 
 import './index.scss';
 
@@ -18,7 +18,7 @@ const Recipes = ({ plannerId }) => {
 
   useEffect(() => {
     const getData = async () => {
-      const response = await http.get(`/recipes?id=${plannerId}`);
+      const response = await api.get(`/recipes?id=${plannerId}`);
       setRecipes(response);
       setFilteredRecipes(response);
     };
@@ -26,7 +26,7 @@ const Recipes = ({ plannerId }) => {
   }, [plannerId]);
 
   const getRecipes = async () => {
-    const response = await http.get(`/recipes?id=${plannerId}`);
+    const response = await api.get(`/recipes?id=${plannerId}`);
     setRecipes(response);
     setFilteredRecipes(response);
   };

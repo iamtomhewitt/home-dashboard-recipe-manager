@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import Ingredient from '../../Ingredient';
-import http from '../../../lib/http';
+import api from '../../../lib/api/recipe';
 import './index.scss';
 
 const RecipeEditor = ({ isEditing, recipe, plannerId }) => {
@@ -65,8 +65,8 @@ const RecipeEditor = ({ isEditing, recipe, plannerId }) => {
 
     const url = `/recipes?id=${plannerId}`;
     const json = isEditing ?
-      await http.put(url, body) :
-      await http.post(url, body);
+      await api.put(url, body) :
+      await api.post(url, body);
 
     setMessage(json.message);
   };

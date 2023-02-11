@@ -5,7 +5,7 @@ import LoadingIcon from './components/LoadingIcon';
 import Navigation from './components/Navigation';
 import Planner from './components/Planner';
 import Recipes from './components/Recipes';
-import http from './lib/http';
+import api from './lib/api/recipe';
 
 import './App.scss';
 
@@ -22,7 +22,7 @@ const App = () => {
       setError('');
       setIsLoading(true);
 
-      const json = await http.get(`/planner/${id}`);
+      const json = await api.get(`/planner/${id}`);
 
       setPlanner(json);
       setIsLoading(false);

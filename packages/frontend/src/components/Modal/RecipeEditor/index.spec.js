@@ -2,7 +2,7 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 
 import RecipeEditor from '.';
-import http from '../../../lib/http';
+import api from '../../../lib/api/recipe';
 import { recipes } from '../../../mocks/mocks.json';
 
 describe('<RecipeEditor/>', () => {
@@ -53,12 +53,12 @@ describe('<RecipeEditor/>', () => {
     });
 
     it('should make correct request', () => {
-      jest.spyOn(http, 'post').mockResolvedValue({ message: 'Done!' });
-      jest.spyOn(http, 'put').mockResolvedValue({ message: 'Done!' });
+      jest.spyOn(api, 'post').mockResolvedValue({ message: 'Done!' });
+      jest.spyOn(api, 'put').mockResolvedValue({ message: 'Done!' });
       const { getByTestId } = render(<RecipeEditor {...props} />);
       fireEvent.click(getByTestId('recipe-editor-submit-button'));
-      expect(http.post).toHaveBeenCalled();
-      expect(http.put).not.toHaveBeenCalled();
+      expect(api.post).toHaveBeenCalled();
+      expect(api.put).not.toHaveBeenCalled();
     });
   });
 
@@ -68,12 +68,12 @@ describe('<RecipeEditor/>', () => {
     });
 
     it('should make correct request editing', () => {
-      jest.spyOn(http, 'post').mockResolvedValue({ message: 'Done!' });
-      jest.spyOn(http, 'put').mockResolvedValue({ message: 'Done!' });
+      jest.spyOn(api, 'post').mockResolvedValue({ message: 'Done!' });
+      jest.spyOn(api, 'put').mockResolvedValue({ message: 'Done!' });
       const { getByTestId } = render(<RecipeEditor {...props} />);
       fireEvent.click(getByTestId('recipe-editor-submit-button'));
-      expect(http.put).toHaveBeenCalled();
-      expect(http.post).not.toHaveBeenCalled();
+      expect(api.put).toHaveBeenCalled();
+      expect(api.post).not.toHaveBeenCalled();
     });
   });
 });

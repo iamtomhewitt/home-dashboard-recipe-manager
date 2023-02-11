@@ -37,11 +37,11 @@ const remove = async (url) => {
   return json;
 };
 
-const http = {
+const api = {
   get,
   delete: remove,
   post,
   put,
 };
 
-export default http;
+export default api;

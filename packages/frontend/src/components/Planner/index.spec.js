@@ -2,7 +2,7 @@ import React from 'react';
 import { render, fireEvent, getByText, findByText } from '@testing-library/react';
 
 import Planner from '.';
-import http from '../../lib/http';
+import api from '../../lib/api/recipe';
 import { planner, recipes } from '../../mocks/mocks.json';
 
 describe('<Planner/>', () => {
@@ -12,7 +12,7 @@ describe('<Planner/>', () => {
   };
 
   beforeEach(() => {
-    http.get = jest.fn().mockResolvedValueOnce([{
+    api.get = jest.fn().mockResolvedValueOnce([{
       name: 'MOCK Bacon And Leek Risotto',
       ingredients: [],
       steps: [],
@@ -25,7 +25,7 @@ describe('<Planner/>', () => {
   });
 
   it('should save when updating planner', async () => {
-    jest.spyOn(http, 'put').mockResolvedValue({ message: 'test message' });
+    jest.spyOn(api, 'put').mockResolvedValue({ message: 'test message' });
 
     const keyDownEvent = { key: 'ArrowDown' };
     const firstRecipe = 'Food Monday';
@@ -45,6 +45,6 @@ describe('<Planner/>', () => {
     const saveButton = getByTestId('planner-save-button');
     fireEvent.click(saveButton);
 
-    expect(http.put).toHaveBeenCalledWith('/planner?id=12345', { day: 'Monday', recipe: 'MOCK Bacon And Leek Risotto' });
+    expect(api.put).toHaveBeenCalledWith('/planner?id=12345', { day: 'Monday', recipe: 'MOCK Bacon And Leek Risotto' });
   });
 });

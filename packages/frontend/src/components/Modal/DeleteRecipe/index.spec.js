@@ -2,7 +2,7 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 
 import DeleteRecipe from '.';
-import http from '../../../lib/http';
+import api from '../../../lib/api/recipe';
 
 describe('<DeleteRecipe/>', () => {
   const props = {
@@ -21,10 +21,10 @@ describe('<DeleteRecipe/>', () => {
   });
 
   it('should delete a recipe', () => {
-    jest.spyOn(http, 'delete').mockResolvedValue({ message: 'test message' });
+    jest.spyOn(api, 'delete').mockResolvedValue({ message: 'test message' });
 
     const { getByTestId } = render(<DeleteRecipe {...props} />);
     fireEvent.click(getByTestId('delete-recipe-yes'));
-    expect(http.delete).toHaveBeenCalledWith('/recipes?name=a recipe&id=12345');
+    expect(api.delete).toHaveBeenCalledWith('/recipes?name=a recipe&id=12345');
   });
 });

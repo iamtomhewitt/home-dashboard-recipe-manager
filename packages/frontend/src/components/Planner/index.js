@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
+import AddToShoppingListButton from '../AddToShoppingListButton';
 import LoadingIcon from '../LoadingIcon';
 import PlannerRow from '../PlannerRow';
-import http from '../../lib/http';
+import api from '../../lib/api/recipe';
 
 import './index.scss';
 
 const Planner = ({ planner, plannerId }) => {
-  const { plan } = planner;
-  const [recipes, setRecipes] = useState([]);
+  const { plan, shoppingListApiKey, shoppingListId } = planner;
+  const [days, setDays] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState();
-  const [days, setDays] = useState({});
+  const [recipes, setRecipes] = useState([]);
   const recipeOptions = recipes.map((r) => ({ value: r.name, label: r.name }));
+  const hasShoppingListConfig = !!shoppingListApiKey && !!shoppingListId;
 
   useEffect(() => {
     const getRecipes = async () => {
-      const response = await http.get(`/recipes?id=${plannerId}`);
+      const response = await api.get(`/recipes?id=${plannerId}`);
       setRecipes(response);
     };
     getRecipes();
@@ -30,7 +32,7 @@ const Planner = ({ planner, plannerId }) => {
     for (const day of Object.keys(days)) {
       const recipe = days[day];
       const body = { day, recipe };
-      await http.put(`/planner?id=${plannerId}`, body);
+      await api.put(`/planner?id=${plannerId}`, body);
     }
 
     setIsLoading(false);
@@ -55,10 +57,10 @@ const Planner = ({ planner, plannerId }) => {
         return (
           <PlannerRow
             day={day}
-            value={value}
+            onChange={(e) => onChange(e, day)}
             recipeForSelected={recipeForSelected}
             recipeOptions={recipeOptions}
-            onChange={(e) => onChange(e, day)}
+            value={value}
           />
         );
       })}
@@ -75,10 +77,24 @@ const Planner = ({ planner, plannerId }) => {
         </div>
       }
 
-      <div className='planner-save-button'>
-        <button onClick={() => onSaveAll()} data-test-id='planner-save-button'>
-          Save All
-        </button>
+      <div className='planner-buttons'>
+        <div className='planner-buttons-container'>
+          {hasShoppingListConfig && (
+            <AddToShoppingListButton
+              plannerId={plannerId}
+              shoppingListApiKey={planner.shoppingListApiKey}
+              shoppingListId={planner.shoppingListId}
+            />
+          )}
+
+          <button
+            className='planner-buttons-container-save-button'
+            data-test-id='planner-save-button'
+            onClick={() => onSaveAll()}
+          >
+            Save All
+          </button>
+        </div>
       </div>
     </div>
   );

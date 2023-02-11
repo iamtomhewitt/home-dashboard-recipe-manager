@@ -9,7 +9,6 @@
         "deploy": "npm run build && sls --aws-profile tom deploy",
         "lint": "eslint --ignore-path ../../.gitignore .",
         "lint-fix": "npm run lint -- --fix",
-        "start": "node src/app.js",
         "test": "jest --coverage --coverageReporters='text'"
     },
     "dependencies": {
