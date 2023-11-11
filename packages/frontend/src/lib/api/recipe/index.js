@@ -10,11 +10,11 @@ const request = async (path, body, method) => {
     },
   });
 
-  if (response.ok) {
-    return response.json();
+  if (apiResponse.ok) {
+    return apiResponse.json();
   }
 
-  return Promise.reject(await response.json());
+  return Promise.reject(await apiResponse.json());
 };
 
 const get = async (url) => {
